@@ -31,6 +31,7 @@ function showheader(Websites $forWebsite, string $route, RBACSupport $rbac): str
     ['route' => 'logging.php', 'permission' => Permission_Admin_Panel, 'title' => 'Apache Logfiles'],
     ['route' => 'attestation_users.php', 'permission' => Permission_Admin_Panel, 'title' => 'Attestation - Gebruikers'],
     ['route' => 'attestation_roles.php', 'permission' => Permission_Admin_Panel, 'title' => 'Attestation - Rollen'],
+    ['route' => 'manage_roles.php', 'permission' => Permission_Admin_Panel, 'title' => 'Rollen'],
   ];
   $navigationMarketing = [
     ['route' => 'new-campaign.php', 'permission' => Permission_Marketing_Create_Campaign, 'title' => 'Nieuwe campagne'],
