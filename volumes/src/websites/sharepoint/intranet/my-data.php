@@ -8,7 +8,7 @@ $rbac = new RBACSupport($_SERVER["AUTHENTICATE_UID"]);
 if (!$rbac->process()) {
   die('Could not connect to RBAC server.');
 }
-if (!$rbac->has(Permission_Grades_Show_Self)) {
+if (!$rbac->has(Permission_SharePoint_All_Users)) {
   echo "You do not have permission to access this page to show your student info.";
   die();
 }
@@ -21,7 +21,7 @@ if (!$rbac->has(Permission_Grades_Show_Self)) {
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Blackboard - Mijn gegevens</title>
+    <title>Intranet - Mijn gegevens</title>
     <link href="css/globals.css" rel="stylesheet">
     <link href="css/header.css" rel="stylesheet">
     <link href="css/my-data.css" rel="stylesheet">

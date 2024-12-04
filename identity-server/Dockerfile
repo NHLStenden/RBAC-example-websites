@@ -12,7 +12,7 @@ WORKDIR /app
 
 # Update repositories
 RUN apt update
-RUN apt install -y debconf-utils python3 python3-ldap
+RUN apt install -y debconf-utils python3 python3-venv
 
 COPY *.sh /app
 
@@ -27,8 +27,7 @@ COPY ldif-base/*.base /app
 
 RUN mkdir avatars
 COPY avatars/*.jpeg avatars
-COPY upload_avatars.py upload_avatars.py
-RUN chmod a+x upload_avatars.py
+COPY *.py /app
 
 
 # Now start the LDAP daemon. it is not possible to execute commands after this

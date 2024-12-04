@@ -89,8 +89,21 @@ done
 ########################################################################################
 ########################################################################################
 
-./upload_avatars.py
+# Create Python virtual environment
+python3 -m venv /app/ldap-updates-venv
+cd /app/ldap-updates-venv
 
-# when all goes well....
-# rm avatars/*.jpeg
-# rmdir avatars
+# Activate virtual environment
+source bin/activate
+pip install ldap3
+cd /app
+
+python3 /app/upload_avatars.py
+python3 /app/add-more-info.py
+
+# when all went well....
+rm avatars/*.jpeg
+rmdir avatars
+rm -rf /app/ldap-updates-venv
+
+apt purge -y python3 && apt -y autoremove

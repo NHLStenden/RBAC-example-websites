@@ -2,34 +2,30 @@
 
 function GenerateSectionForMyLdapInfo(RBACSupport $rbac): string|null
 {
-  $fullname = $rbac->userInfoLDAP['cn'];
-  $dn       = $rbac->userInfoLDAP['dn'];
-  $surname  = $rbac->userInfoLDAP['sn'];
-  $uid      = $rbac->userInfoLDAP['uid'];
 
-  return <<< SECTION_MY_LDAP_INFO
-    <section class="info">
-        <table>
-            <tr>
-                <td class="label">Distinguised Name</td>
-                <td class="value">$dn</td>
-            </tr>
-            <tr>
-                <td class="label">Volledige naam</td>
-                <td class="value">$fullname</td>
-            </tr>
-            <tr>
-                <td class="label">Achternaam</td>
-                <td class="value">$surname</td>
-            </tr>
-            <tr>
-                <td class="label">Username</td>
-                <td class="value">$uid</td>
-            </tr>
-        </table>
-    </section>
-SECTION_MY_LDAP_INFO;
+  $items = [
+    "Distinguised Name" => $rbac->userInfoLDAP['dn'],
+    "Volledige naam" => $rbac->userInfoLDAP['cn'],
+    "Voornaam" => $rbac->userInfoLDAP['givenname'],
+    "Achternaam" => $rbac->userInfoLDAP['sn'],
+    "Username" => $rbac->userInfoLDAP['uid'],
+    "Medewerkernummer" => $rbac->userInfoLDAP['employeenumber'],
+    "Type medewerker" => $rbac->userInfoLDAP['employeetype'],
+    "Organisatie" => $rbac->userInfoLDAP['o'],
+    "Postcode" => $rbac->userInfoLDAP['postalcode'],
+    "Kamernummer" => $rbac->userInfoLDAP['roomnumber'],
+  ];
+  $jpegPhoto = base64_encode($rbac->userInfoLDAP['jpegphoto']);
 
+  $result = '<section class="my-info"><table>';
+  foreach ($items as $key => $item) {
+    $result .= "<tr><td>$key:</td><td>$item</td></tr>";
+  }
+  $result .= "</table>";
+  $result .= "<div><img src='data:image/jpeg;base64,$jpegPhoto' /></div>";
+  $result .= "</section>";
+
+  return $result;
 }
 
 
@@ -37,12 +33,12 @@ function GenerateSectionForMyLdapRoles(RBACSupport $rbac): string|null
 {
   $groups = implode("\n", array_map(function ($group) {
     $groupParts = explode(",", $group);
-    $rolename = explode("=", $groupParts[0])[1];
+    $rolename   = explode("=", $groupParts[0])[1];
     return "<li>$rolename</li>";
   }, $rbac->groups));
 
   return <<< SECTION_MY_LDAP_ROLES
-    <section class="ldap-groups">
+    <section class="ldap-permissions">
         <h3>Rollen</h3>
         <ul>$groups</ul>
    </section>
