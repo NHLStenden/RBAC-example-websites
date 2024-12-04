@@ -25,8 +25,30 @@ Om deze oefeningen uit te kunnen voeren heb je de volgende zaken nodig:
 
 ## Ophalen repository
 
+Gebruik je favoriete GIT-client of open een Command Prompt en typ onderstaande commando. De repository wordt dan aangemaakt
+in de map waar je op dat moment staat. 
 
-## Open Command Prompt
+```text
+c:\sources > git clone https://github.com/NHLStenden/RBAC-example-websites.git 
+```
+
+## Controle bestanden
+
+Let op: veel bestanden worden gebruikt binnen een Linux Docker omgeving (Debian). Tekstbestanden worden daar opgemaakt
+met regelovergangen die alleen een Linefeed (ASCII code 10) `LF` gebruiken. Bij het ophalen en uitpakken van de repository
+kan het zijn dat bestanden omgezet worden naar Windows opmaakt met een Carriage Return (ASCII code 13) en LineFeed. Dit
+wordt ook wel de CRLF of CR+LF opmaak genoemd. 
+
+Als die bestanden tijdens het uitpakken omgezet zijn naar CR+LF, dan werken deze niet meer in Docker. Als het goed is
+zou het bestand `.gitattributes` dit moeten voorkomen. Daar staat een instelling in dat bestanden altijd alleen LF moeten
+bevatten voor de regelovergangen.
+
+Fouten die voor kunnen komen zijn onder andere `exit code 127: file not found`. 
+
+Eventueel kan GIT ingesteld worden om dit globaal te negeren door onderstaande commando uit te voeren.
+```text
+git config --global core.autocrlf false
+```
 
 
 ## Bouw en start de containers

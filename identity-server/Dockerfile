@@ -10,13 +10,11 @@ FROM debian:latest
 RUN mkdir /app
 WORKDIR /app
 
-# Update repositories
-RUN apt update
-RUN apt install -y debconf-utils python3 python3-venv
-
 COPY *.sh /app
-
 RUN chmod a+x /app/*.sh
+
+# Update repositories
+RUN apt update && apt install -y debconf-utils python3 python3-venv
 
 RUN /app/configure_ldap.sh
 
