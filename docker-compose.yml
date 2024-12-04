@@ -1,0 +1,93 @@
+services:
+  iam-example-webserver:
+    # In the subfolder ./php/ there is a Dockerfile which can be used to further build the container and RUN scripts
+    build: ./webserver/
+    container_name: iam-example-webserver
+    links:
+      - iam-example-db-server
+      - iam-example-identity-server
+    networks:
+      - iam-example
+    ports:
+      - '80:80'
+    expose:
+      - '80'
+      - '9003'
+#    extra_hosts:
+#      - "marketing.docker:127.0.0.1"
+#      - "grades.docker:127.0.0.1"
+#      - "admin.docker:127.0.0.1"
+#      - "sharepoint.docker:127.0.0.1"
+    hostname: webserver
+    working_dir: /app
+    # XDEBUG options can be set in the php.ini file in this directory
+    volumes:
+      - type: bind
+        source: ./volumes/src/websites
+        target: /var/www/
+#    labels:
+#      traefik.http.routers.web.rule: HostRegexp(".*docker")
+
+  iam-example-identity-server:
+    # In the subfolder ./php/ there is a Dockerfile which can be used to further build the container and RUN scripts
+    build: identity-server/
+    container_name: iam-example-identity-server
+    networks:
+      - iam-example
+    ports:
+      - '389:389'
+    expose:
+      - '389'
+    extra_hosts:
+      - "iam-identity-server.docker:127.0.0.1"
+    hostname: identityserver
+    working_dir: /app
+    volumes:
+      - type: bind
+        source: ./volumes/ldap-data
+        target: /etc/slapd
+
+  iam-example-db-server:
+    # https://hub.docker.com/_/mariadb/
+    build: ./dbserver/
+    container_name: iam-example-db-server
+    hostname: dbserver
+    networks:
+      - iam-example
+    working_dir: /app
+    volumes:
+      - type: bind
+        source: ./volumes/mariadb-data
+        target: /var/lib/mysql
+      - type: bind
+        source: ./volumes/src/dbserver
+        target: /app
+    ports:
+      - '3306:3306'
+    expose:
+      - 3306
+    environment:
+      MARIADB_ROOT_PASSWORD: test1234!
+
+#  ingress:
+#    image: traefik:v3.2
+#    command: |
+#      --api.insecure
+#      --providers.docker
+#      --entryPoints.web.address=:80
+#    networks:
+#      - iam-example
+#    volumes:
+#      - /var/run/docker.sock:/var/run/docker.sock
+#    ports:
+#      - 80:80
+#      - 8080:8080
+#    labels:
+#      traefik.http.routers.ingress.rule: HostRegexp("traefik.*")
+#      traefik.http.services.ingress.loadbalancer.server.port: 8080
+
+
+networks:
+  iam-example:
+    driver: bridge
+

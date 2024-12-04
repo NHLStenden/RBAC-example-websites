@@ -1,0 +1,57 @@
+version: 1
+
+dn: ou=Applications,dc=NHLStenden,dc=com
+objectClass: organizationalUnit
+objectClass: top
+ou: Applications
+
+dn: ou=users,ou=Applications,dc=NHLStenden,dc=com
+objectClass: organizationalUnit
+objectClass: top
+ou: users
+
+dn: cn=Grades application,ou=users,ou=Applications,dc=NHLStenden,dc=com
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+objectClass: top
+cn: Grades application
+sn: Grades application
+uid: app_blackboard
+userPassword:: e0NSWVBUfSQ1JGI5WHY4VU1QJGF0akZEMmVtTFpLZE0xQlAvYlBOVTlqcGFpO
+ DQwVS9XU0swdGhTQkhYbzE=
+
+
+dn: cn=SharePoint application,ou=users,ou=Applications,dc=NHLStenden,dc=com
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+objectClass: top
+cn: SharePoint application
+sn: SharePoint application
+uid: app_sharepoint
+userPassword:: e0NSWVBUfSQ1JGI5WHY4VU1QJGF0akZEMmVtTFpLZE0xQlAvYlBOVTlqcGFpO
+ DQwVS9XU0swdGhTQkhYbzE=
+
+dn: cn=Admin application,ou=users,ou=Applications,dc=NHLStenden,dc=com
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+objectClass: top
+cn: Admin application
+sn: admin application
+uid: app_admin
+userPassword:: e0NSWVBUfSQ1JGI5WHY4VU1QJGF0akZEMmVtTFpLZE0xQlAvYlBOVTlqcGFpO
+ DQwVS9XU0swdGhTQkhYbzE=
+
+dn: cn=Marketing application,ou=users,ou=Applications,dc=NHLStenden,dc=com
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+objectClass: top
+cn: Marketing application
+sn: Marketing application
+uid: app_marketing
+userPassword:: e0NSWVBUfSQ1JGI5WHY4VU1QJGF0akZEMmVtTFpLZE0xQlAvYlBOVTlqcGFpO
+ DQwVS9XU0swdGhTQkhYbzE=
+

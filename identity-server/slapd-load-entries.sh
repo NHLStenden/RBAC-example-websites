@@ -1,0 +1,96 @@
+#!/usr/bin/bash
+#
+# To execute this run:
+#    docker exec -it iam-example-identity-server /bin/bash -c /app/slapd-load-entries.sh
+#
+# Most passwords are : Test1234!
+
+cd /app
+
+########################################################################################################################
+# First collect all the unique users from the ldap-data create user scripts and add them to the mail-role
+########################################################################################################################
+
+# create a new file
+touch role_assignment_mail.lst
+
+## loop through all files creating users and collect the unique DN's
+#for LDIF_FILE in ./Ldap-data-[0-9]*-Create-Users*.ldif ; do
+#  echo "Collecting users from file $LDIF_FILE" >&2
+#  grep 'dn:' $LDIF_FILE | awk -F \: '{print "uniqueMember:" $2}' >> role_assignment_mail.lst
+#done
+
+# Now split the teachers and students in two lists per course
+grep 'dn:' Ldap-data-02a-Create-Users-Opleiding-AD.ldif | awk -F \: '/ou=Teachers/{print "uniqueMember:" $2}' > role_assignment_teachers-ADCSS.lst
+grep 'dn:' Ldap-data-02a-Create-Users-Opleiding-AD.ldif | awk -F \: '/ou=Students/{print "uniqueMember:" $2}' > role_assignment_students-ADCSS.lst
+
+grep 'dn:' Ldap-data-02b-Create-Users-Opleiding-HBO-ICT.ldif | awk -F \: '/ou=Teachers/{print "uniqueMember:" $2}' > role_assignment_teachers-HBOICT.lst
+grep 'dn:' Ldap-data-02b-Create-Users-Opleiding-HBO-ICT.ldif | awk -F \: '/ou=Students/{print "uniqueMember:" $2}' > role_assignment_students-HBOICT.lst
+
+# Collect all teachers in one list
+cat role_assignment_teachers-ADCSS.lst role_assignment_teachers-HBOICT.lst > role_assignment_all_teachers.lst
+
+# Collect all students in one list
+cat role_assignment_students-ADCSS.lst role_assignment_students-HBOICT.lst > role_assignment_all_students.lst
+
+# Now assign these list also to a different role for grades
+cp role_assignment_all_teachers.lst role_assignment_grades-teachers.lst
+cp role_assignment_all_students.lst role_assignment_grades-students.lst
+
+# Now process the marketing users
+grep 'dn:' Ldap-data-03-Create-Users-marketing.ldif | awk -F \: '/dn:/{print "uniqueMember:" $2}' > role_assignment_marketing.lst
+grep 'dn:' Ldap-data-03-Create-Users-marketing.ldif | tail -n 3 | awk -F \: '/dn:/{print "uniqueMember:" $2}' > role_assignment_marketing-managers.lst
+
+# Now process the ICT Support users
+grep 'dn:' Ldap-data-04-Create-Users-ict_support.ldif | tail -n 3 | awk -F \: '/dn:/{print "uniqueMember:" $2}' > role_assignment_ict-support.lst
+
+
+# Copy for access to SharePoint sub-parts for teachers and students.
+cp role_assignment_all_teachers.lst role_assignment_sharepoint-teachers.lst
+cp role_assignment_all_students.lst role_assignment_sharepoint-students.lst
+
+# Collect all personell in one list
+cat role_assignment_grades-teachers.lst role_assignment_marketing.lst role_assignment_ict-support.lst > role_assignment_all_personell.lst
+
+# Collect all users (teachers, students, staff) into one list for the sharepoint list
+# cat role_assignment_all_personell.lst role_assignment_all_students.lst  role_assignment_all_teachers.lst > role_assignment_sharepoint-all.lst
+
+for LDIF_FILE in ./Ldap-data-[0-9]*.ldif ; do
+ echo "Adding  file $LDIF_FILE" >&2
+ ldapadd -x -D cn=admin,dc=NHLStenden,dc=com -w test12345! -f $LDIF_FILE
+done;
+
+# Finally create LDIF files from the base role and add the list of users.
+echo "Creating roles and members" >&2
+
+# Loop through all the .base files, add the user list and execute in LDAP
+for ROLE_FILE in *.base ;  do
+  NEW_FILENAME="${ROLE_FILE%.base}.ldif"
+  USERS_LIST_FILENAME="${ROLE_FILE%.base}.lst"
+
+  if [ -f "$USERS_LIST_FILENAME" ] ; then
+
+    echo "----------------------------------------------------------------------------------------------"
+    echo "Found file: $ROLE_FILE"
+    echo "Creating LDIF $NEW_FILENAME"
+    echo "Adding users from $USERS_LIST_FILENAME"
+    NrOfEntries=`wc -l $USERS_LIST_FILENAME`
+    echo "- Found $NrOfEntries  entries"
+
+    cp $ROLE_FILE $NEW_FILENAME
+    cat $USERS_LIST_FILENAME >> $NEW_FILENAME
+    ldapadd -x -D cn=admin,dc=NHLStenden,dc=com -w test12345! -f $NEW_FILENAME
+  fi
+done
+
+########################################################################################
+########################################################################################
+############# NOW UPLOAD THE IMAGES ####################################################
+########################################################################################
+########################################################################################
+
+./upload_avatars.py
+
+# when all goes well....
+# rm avatars/*.jpeg
+# rmdir avatars
