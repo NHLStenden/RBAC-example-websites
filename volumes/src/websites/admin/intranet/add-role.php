@@ -12,22 +12,17 @@ if (!$rbac->has(Permission_Admin_Panel)) {
   die();
 }
 
+$idRole       = (int)$_POST["idRole"];
+$idPermission = (int)$_POST["idPermission"];
 
-$idRolePermission = (int)$_GET['id'];
+echo "$idRole | $idPermission\n";
 
 $pdo = new PDO('mysql:host=iam-example-db-server;dbname=IAM;', "student", "test1234");
 
-$sql  = "SELECT * FROM `vw_Role_Permissions` WHERE idRolePermission = :idRole";
+$sql  = "INSERT INTO role_permissions (fk_idPermission, fk_idRole) VALUES(:idPermission, :idRole)";
 $stmt = $pdo->prepare($sql);
-$stmt->bindValue(':idRole', $idRolePermission, PDO::PARAM_INT);
-$stmt->execute();
-$role = $stmt->fetchAll()[0];
-
-$idRole = $role['idRole'];
-
-$sql = "DELETE FROM role_permissions WHERE idRolePermission = :idRole";
-$stmt = $pdo->prepare($sql);
-$stmt->bindValue(':idRole', $idRolePermission, PDO::PARAM_INT);
+$stmt->bindValue(':idPermission', $idPermission, PDO::PARAM_INT);
+$stmt->bindValue(':idRole', $idRole, PDO::PARAM_INT);
 $stmt->execute();
 
 // set expires header

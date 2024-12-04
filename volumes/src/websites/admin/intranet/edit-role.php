@@ -46,6 +46,19 @@ if (count($role) != 1) {
             </tr>";
   }, $permissions));
 }
+
+$sql  = "SELECT * FROM `permissions`  WHERE idPermission NOT IN (SELECT fk_idPermission FROM role_permissions WHERE fk_idRole = :idRole) ORDER BY title";
+$stmt = $pdo->prepare($sql);
+$stmt->bindValue(':idRole', $idRole, PDO::PARAM_INT);
+$stmt->execute();
+$allExistingPermissions = $stmt->fetchAll();
+
+$optionsListForSelectPermissions = implode("\n", array_map(
+        function ($p) {
+    return "<option value='{$p['idPermission']}'>{$p['title']}</option>";
+}, $allExistingPermissions));
+
+
 // set expires header
 header('Expires: Thu, 1 Jan 1970 00:00:00 GMT');
 
@@ -84,6 +97,15 @@ header('Pragma: no-cache');
 NO_DATA;
           }
           ?>
+        </section>
+        <section class="new-record">
+            <h3>Nieuwe Permissie aanmaken</h3>
+            <form action="add-role.php" method="post">
+                <input type="hidden" name="idRole" value="<?= $idRole ?>">
+                <label for="newpermission">Permissie:</label>
+                <select id="newpermission" name="idPermission"><?= $optionsListForSelectPermissions ?></select>
+                <button type="submit">Toevoegen</button>
+            </form>
         </section>
     </article>
 </main>
