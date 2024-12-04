@@ -204,3 +204,40 @@ CREATE OR REPLACE VIEW vw_Role_Permissions AS
          JOIN permissions p on rp.fk_idPermission = p.idPermission
 ;
 
+/**
+  Create a stored function to get all roles and permissions in a pivot table
+  */
+
+DELIMITER $$
+
+CREATE FUNCTION GenerateRolePermissionCrossTable()
+    RETURNS TEXT
+BEGIN
+    DECLARE sql_query TEXT;
+    DECLARE header TEXT;
+    DECLARE result TEXT;
+
+    SET @sql = NULL;
+    SELECT
+        GROUP_CONCAT(
+                DISTINCT
+                CONCAT(
+                        'MAX(CASE WHEN r.title = ''',
+                        r.title,
+                        ''' THEN 1 ELSE 0 END) AS `',
+                        r.title,
+                        '`'
+                )
+        ) INTO @sql
+    FROM roles r;
+
+    SET sql_query = CONCAT('SELECT p.title AS Permission, ', @sql, '
+                           FROM permissions p
+                           LEFT JOIN role_permissions rp ON p.idPermission = rp.fk_idPermission
+                           LEFT JOIN roles r ON rp.fk_idRole = r.idRole
+                           GROUP BY p.title');
+
+    RETURN sql_query;
+END$$
+
+DELIMITER ;

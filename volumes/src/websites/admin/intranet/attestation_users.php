@@ -45,7 +45,7 @@ function createAttestationTable()
 ?>
 <html lang="NL">
 <head>
-    <title>Attestation</title>
+    <title>Attestation - Gebruikers</title>
     <link href="css/globals.css" rel="stylesheet">
     <link href="css/index.css" rel="stylesheet">
     <link href="css/header.css" rel="stylesheet">
@@ -65,7 +65,7 @@ function createAttestationTable()
 
         </section>
         <section class="report">
-            <button><a href="download_attestation.php">Download</a></button>
+            <button><a href="download_attestation_user.php">Download</a></button>
           <?php createAttestationTable(); ?>
         </section>
 

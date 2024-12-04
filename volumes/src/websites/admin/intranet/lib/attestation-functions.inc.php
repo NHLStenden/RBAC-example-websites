@@ -60,3 +60,37 @@ function collectAllUsersAndGroupMemberships(): array
 
   return [$header,$report ];
 }
+function getRolePermissionCrossTable($pdo) {
+  $sql = "SELECT GenerateRolePermissionCrossTable() AS query";
+  $stmt = $pdo->prepare($sql);
+  $stmt->execute();
+  $row = $stmt->fetch(PDO::FETCH_ASSOC);
+  $query = $row['query'];
+
+  $header = [];
+  $report = [];
+
+  $stmt = $pdo->prepare($query);
+  $stmt->execute();
+
+  for ($i = 0; $i < $stmt->columnCount(); $i++) {
+    $col = $stmt->getColumnMeta($i);
+    $header[] = $col['name'];
+  }
+
+  while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+    $report[] = array_map(function($x) {
+      $val = $x;
+      if ($x === 0 ) {
+        $val = '';
+      }
+      elseif ($x === 1) {
+        $val = 'X';
+      }
+      return $val;
+    }, $row);
+
+  }
+
+  return [$header, $report];
+}

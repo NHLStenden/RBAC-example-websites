@@ -11,11 +11,14 @@ fputcsv($fp, $header);
 foreach ($report as $user_info) {
   fputcsv($fp, $user_info);
 }
-rewind($fp);
-$csvString = stream_get_contents($fp);
-fclose($fp);
 
 // Offer file as download
 header('Content-Type: text/csv');
 header('Content-Disposition: attachment; filename="attestation.csv"');
+
+rewind($fp);
+fpassthru($fp);
+fclose($fp);
+
+
 echo $csvString;
