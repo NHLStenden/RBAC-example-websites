@@ -34,3 +34,9 @@ section.my-info {
         border-radius: 30%;
     }
 }
+
+button a {
+    font-family: inherit;
+    text-decoration: none;
+    color:black;
+}
