@@ -31,16 +31,35 @@ Om deze oefeningen uit te kunnen voeren heb je de volgende zaken nodig:
 
 ## Bouw en start de containers
 
+In de eerste stap worden de containers gebouwd. De optie `--no-cache` zorgt er voor dat je eerdere instanties/images
+van je containers niet hergebruikt, maar echt helemaal opnieuw begint.
+
+De tweede stap start daadwerkelijk de containers.
+
 ```cmd
-  docker compose up --build
+  c:\> docker compose build --no-cache
+  c:\> docker compose up
 ```
+
+Als de containers eenmaal draaien open je *nog* een command prompt en start je het script om alle accounts en gerelateerde
+informatie te genereren. Dit doe je door een script dat in de container zit te starten.
+
+```cmd
+c:\> docker exec -it iam-example-identity-server /bin/bash -c /app/slapd-load-entries.sh
+```
+
 
 Als de containers eenmaal zijn gebouwd, kunnen ze ook eenvoudig beheerd worden via bijvoorbeeld een plug-in in je IDE of 
 via de Docker Desktop applicatie (niet beschikbaar op Linux).
 
 ## Aanpassingen in de hosts file
+Voeg onderstaande items toe aan je `hosts` file.
 
+```text
+# Docker RBAC Example
+127.0.0.1	grades.docker sharepoint.docker admin.docker marketing.docker
 
+```
 
 # Testen van de websites
 
