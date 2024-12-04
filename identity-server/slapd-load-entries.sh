@@ -83,6 +83,8 @@ for ROLE_FILE in *.base ;  do
   fi
 done
 
+rm /app/*.base /app/*.ldif /app/*.lst
+
 ########################################################################################
 ########################################################################################
 ############# NOW UPLOAD THE IMAGES ####################################################
@@ -105,5 +107,6 @@ python3 /app/add-more-info.py
 rm avatars/*.jpeg
 rmdir avatars
 rm -rf /app/ldap-updates-venv
+rm /app/*.py
 
 apt purge -y python3 && apt -y autoremove
