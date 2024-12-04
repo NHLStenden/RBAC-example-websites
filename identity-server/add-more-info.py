@@ -7,6 +7,13 @@
 from ldap3 import Server, Connection, ALL, MODIFY_REPLACE
 import random
 
+
+# LDAP server verbindingsgegevens
+ldap_server = "ldap://localhost"
+ldap_user = "cn=admin,dc=NHLStenden,dc=com"
+ldap_password = "test12345!"
+
+
 # Functie om een willekeurig 6-cijferig medewerkersnummer te genereren
 def generate_employee_number():
     return str(random.randint(100000, 999999))
@@ -38,14 +45,10 @@ def generate_postal_code():
 # Functie om een willekeurig kamernummer te genereren
 def generate_room_number():
     building = random.choice(['N', 'Z'])
+    wing = random.choice(['A','B','C','D','E'])
     floor = random.randint(1, 5)
-    room = random.randint(1, 50)
-    return f"{building}-{floor}-{room}"
-
-# LDAP server verbindingsgegevens
-ldap_server = "ldap://localhost"
-ldap_user = "cn=admin,dc=NHLStenden,dc=com"
-ldap_password = "test12345!"
+    room = random.randint(1, 150)
+    return f"{building}-{wing}{floor}-{room:03}"
 
 # Verbinden met de LDAP server
 server = Server(ldap_server, get_info=ALL)
