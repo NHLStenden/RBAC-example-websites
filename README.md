@@ -128,6 +128,45 @@ Zie https://answers.microsoft.com/en-us/microsoftedge/forum/all/latest-version-o
 en `edge://policy/` (zoek naar AuthSchemes) en check of `basic` daar bij staat. Zo niet, gebruik dan een andere browser
 (Brave, Firefox, Chromium, Opera, Vivaldi of Google Chrome).
 
+# Uitleg over LDAP
+
+**LDAP** staat voor **Lightweight Directory Access Protocol**. Het is een protocol dat wordt gebruikt om informatie op
+te slaan en te organiseren in een directory service, zoals gebruikersgegevens, wachtwoorden en andere attributen. LDAP
+maakt het mogelijk om deze informatie op een gestructureerde en efficiënte manier te beheren en te doorzoeken.
+
+## Hoe werkt LDAP?
+
+LDAP organiseert gegevens in een hiërarchische structuur, vergelijkbaar met een boom. Deze structuur wordt een *
+*Directory Information Tree (DIT)** genoemd. Elk item in deze boom wordt een **entry** genoemd en bevat een reeks
+attributen (zoals naam, e-mailadres, etc.). Deze attributen zijn sleutel-waarde paren,
+bijvoorbeeld `mail: student@example.com`.
+
+LDAP-servers slaan deze gegevens op en bieden een manier om ze te beheren en te doorzoeken. Wanneer een gebruiker
+probeert in te loggen op een systeem dat LDAP gebruikt, wordt hun gebruikersnaam en wachtwoord gecontroleerd tegen de
+gegevens in de LDAP-directory. Als de gegevens overeenkomen, krijgt de gebruiker
+toegang[1](https://imrunning.org/nl/wat-is-ldap/)[2](https://jarnobaselier.nl/ldap-lightweight-directory-access-protocol/).
+
+## Rol van LDAP bij een centrale identity store
+
+LDAP kan een cruciale rol spelen bij het opzetten van een centrale identity store voor meerdere websites. Hier zijn
+enkele voordelen:
+
+1. **Gecentraliseerd gebruikersbeheer**: Met LDAP kunnen alle gebruikersgegevens op één centrale locatie worden
+   opgeslagen en beheerd. Dit maakt het eenvoudiger om gebruikersaccounts te beheren en te onderhouden.
+
+2. **Single Sign-On (SSO)**: Gebruikers kunnen met één set inloggegevens toegang krijgen tot meerdere websites en
+   applicaties. Dit vermindert de noodzaak voor meerdere wachtwoorden en maakt het inloggen eenvoudiger en veiliger.
+
+3. **Toegangscontrole**: LDAP kan worden gebruikt om toegangsrechten en permissies te beheren. Dit betekent dat je kunt
+   bepalen welke gebruikers toegang hebben tot welke bronnen op basis van hun rol of andere attributen.
+
+4. **Schaalbaarheid**: LDAP is ontworpen om efficiënt te werken, zelfs met grote hoeveelheden gegevens en veel
+   gelijktijdige gebruikers. Dit maakt het geschikt voor gebruik in grote organisaties met veel gebruikers en
+   applicaties [3](https://teletopix.org/nl/wat-is-ldap-en-hoe-werkt-het/) [4](https://www.lastpass.com/nl/solutions/integrations/ldap).
+
+Door LDAP te gebruiken als een centrale identity store, kunnen organisaties een consistente en veilige manier bieden om
+gebruikers te authenticeren en te autoriseren over verschillende systemen en applicaties.
+
 # Aanpassen van autorisaties
 
 Er zijn nu veel autorisaties toegekend. Deze zijn te wijzigen door gebruik te maken van een programma als Apache
@@ -199,22 +238,75 @@ Als we bijvoorbeeld navigeren naar gebruiker naar Isabel Vos, dan krijgen we ond
 
 - **Rollenbeheer**: Rollen worden centraal beheerd in de LDAP-server. Elke rol in de LDAP-server heeft een unieke naam (
   distinguishedName) die overeenkomt met een record in de `roles` tabel van de database.
-- **Permissiebeheer**: Permissies worden beheerd in de database. Elke permissie heeft een unieke code en beschrijving. Alleen een programmeur 
-kan nieuwe permissies voorstellen als er nieuwe functionaliteiten geimplementeerd worden.
+- **Permissiebeheer**: Permissies worden beheerd in de database. Elke permissie heeft een unieke code en beschrijving.
+  Alleen een programmeur
+  kan nieuwe permissies voorstellen als er nieuwe functionaliteiten geimplementeerd worden.
 - **Koppeling van rollen en permissies**: De tabel `role_permissions` koppelt rollen aan permissies. Dit betekent dat je
   kunt specificeren welke permissies aan welke rollen zijn toegewezen.
 - **Gebruik van de website**: Studenten kunnen via een website permissies aan rollen koppelen. Dit stelt hen in staat om
   de toegangsrechten te beheren zonder nieuwe permissies te hoeven aanmaken.
 
+## Menu structuur van de websites
+
+Deze menubalk wordt gebruikt om navigatie te bieden voor vier verschillende websites: **Cijferadministratie**, *
+*Sharepoint | Intranet**, **Marketing**, en **Admin Panel**. Afhankelijk van de website waarvoor de menubalk wordt
+weergegeven, worden verschillende navigatieopties getoond.
+
+### Websites
+
+1. **Cijferadministratie**
+
+- **Cijfers**: Toont je eigen cijfers.
+- **Mijn gegevens**: Toont je persoonlijke gegevens.
+- **Nieuwe cijferlijst**: Maakt een nieuwe cijferlijst aan.
+- **Bekijk student**: Toont details van een student.
+- **Lijsten goedkeuren**: Keurt cijferlijsten goed.
+
+2. **Sharepoint | Intranet**
+
+- **Mijn gegevens**: Toont je persoonlijke gegevens.
+- **Human Resource Management**: Toegang tot HRM.
+- **Cijfers**: Link naar de cijferadministratie.
+- **Marketing**: Link naar de marketingwebsite.
+- **Admin Panel**: Link naar het admin panel.
+
+3. **Marketing**
+
+- **Nieuwe campagne**: Maakt een nieuwe marketingcampagne aan.
+- **Bekijk campagne**: Toont details van een campagne.
+- **Campagne goedkeuren**: Keurt marketingcampagnes goed.
+- **Verwijder campagne**: Verwijdert een marketingcampagne.
+
+4. **Admin Panel**
+
+- **Apache Logfiles**: Toont Apache logbestanden.
+- **Attestation - Gebruikers**: Inzage in gebruikers en hun gekoppelde rollen.
+- **Attestation - Rollen**: Inzage in rollen en permissies.
+- **Rollen**: Beheert rollen.
+
+### Navigatie
+
+De menubalk wordt dynamisch gegenereerd op basis van de website en de gebruikersrechten. Alleen de opties waarvoor de
+gebruiker de juiste permissies heeft, worden getoond. De actieve route wordt gemarkeerd om de huidige pagina aan te
+geven.
+
+### Welkomstbericht
+
+Bovenaan de menubalk wordt een welkomstbericht weergegeven met de naam van de gebruiker en een gebruikersafbeelding. Er
+is ook een link om uit te loggen.
+
 # Oefeningen
 
-Hier worden een aantal oefeningen beschreven. 
+Hier worden een aantal oefeningen beschreven.
 
 ## Basis - inloggen bij websites.
 
-Het beste startpunt is de *Intranet Pagina*: http://sharepoint.docker. 
+Het beste startpunt is de *Intranet Pagina*: http://sharepoint.docker.
 
 # Hercompileren van CR-LF converteren
+
+Kijk hiervoor in de map `_resources/support/conver-crlf` en het daar aanwezige
+[`README.md`](./_resources/support/convert-crlf/README.md) bestand.
 
 # Verantwoording testgegevens
 
