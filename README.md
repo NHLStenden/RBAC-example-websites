@@ -1,10 +1,15 @@
 # Welkom
 
-Welkom bij de repository voor de oefeningen rondom het thema Identity & Access Management (IAM).
+Welkom bij de repository voor de oefeningen rondom het thema Identity & Access Management (IAM). In deze handleiding
+wordt uitgelegd hoe je de Docker Containers aan de praat kunt krijgen. Onderaan deze handleiding vind je veel
+verwijzingen naar websites (**Referenties**), een verantwoording van het tot stand komen van de gegevens en afbeeldingen
+en tips hoe je wél een veilige website kunt (laten) bouwen.
 
 **Disclaimer**
 De code in dit voorbeeld vormt geen goed voorbeeld voor het opzetten van een veilige website! De focus ligt voornamelijk
 op het kunnen spelen met autorisaties op basis van een Role Based Access (RBAC) model met gebruik van permissies.
+
+# Verantwoording en architectuur
 
 # Installatie en activeren
 
@@ -27,8 +32,7 @@ Om deze oefeningen uit te kunnen voeren heb je de volgende zaken nodig:
 ## Ophalen repository
 
 Gebruik je favoriete GIT-client of open een Command Prompt en typ onderstaande commando. De repository wordt dan
-aangemaakt
-in de map waar je op dat moment staat.
+aangemaakt in de map waar je op dat moment staat.
 
 ```text
 c:\sources > git clone https://github.com/NHLStenden/RBAC-example-websites.git 
@@ -38,14 +42,12 @@ c:\sources > git clone https://github.com/NHLStenden/RBAC-example-websites.git
 
 Let op: veel bestanden worden gebruikt binnen een Linux Docker omgeving (Debian). Tekstbestanden worden daar opgemaakt
 met regelovergangen die alleen een Linefeed (ASCII code 10) `LF` gebruiken. Bij het ophalen en uitpakken van de
-repository
-kan het zijn dat bestanden omgezet worden naar Windows opmaakt met een Carriage Return (ASCII code 13) en LineFeed. Dit
-wordt ook wel de CRLF of CR+LF opmaak genoemd.
+repository kan het zijn dat bestanden omgezet worden naar Windows opmaakt met een Carriage Return (ASCII code 13) en
+LineFeed. Dit wordt ook wel de CRLF of CR+LF opmaak genoemd.
 
 Als die bestanden tijdens het uitpakken omgezet zijn naar CR+LF, dan werken deze niet meer in Docker. Als het goed is
 zou het bestand `.gitattributes` dit moeten voorkomen. Daar staat een instelling in dat bestanden altijd alleen LF
-moeten
-bevatten voor de regelovergangen.
+moeten bevatten voor de regelovergangen.
 
 Fouten die voor kunnen komen zijn onder andere `exit code 127: file not found`.
 
@@ -60,7 +62,9 @@ In de folder van deze repository staan ook twee programma's die de bestanden kun
 * Voor Windows: `convert-cr-lf.exe`
 * Voor onder WSL: `convert-cr-lf-wsl`
 
-Zie onderaan deze handleiding mocht het nodig zijn om deze programma's aan te passen of te hercompileren.
+Mocht het nodig zijn om deze programma's aan te passen of te hercompileren, kijk dan in de map
+`_resources/support/conver-crlf` en het daar aanwezige [`README.md`](./_resources/support/convert-crlf/README.md)
+bestand voor instructies.
 
 ## Bouw en start de containers
 
@@ -75,8 +79,7 @@ De tweede stap start daadwerkelijk de containers.
 ```
 
 Als de containers eenmaal draaien open je *nog* een command prompt en start je het script om alle accounts en
-gerelateerde
-informatie te genereren. Dit doe je door een script dat in de container zit te starten.
+gerelateerde informatie te genereren. Dit doe je door een script dat in de container zit te starten.
 
 ```cmd
 c:\> docker exec -it iam-example-identity-server /bin/bash -c /app/slapd-load-entries.sh
@@ -95,7 +98,79 @@ Voeg onderstaande items toe aan je `hosts` file.
 
 ```
 
+### Windows
+
+1. **Open Notepad als administrator**:
+    - Zoek naar "Notepad" in het Startmenu.
+    - Klik met de rechtermuisknop op Notepad en selecteer "Als administrator uitvoeren".
+
+2. **Open het hosts-bestand**:
+    - In Notepad, ga naar `Bestand` > `Openen`.
+    - Navigeer naar `C:\Windows\System32\drivers\etc`.
+    - Selecteer "Alle bestanden (\*.\*)" in het dropdown-menu rechtsonder.
+    - Selecteer het bestand `hosts` en klik op `Openen`.
+
+3. **Voeg de regels toe**:
+    - Voeg de volgende regels aan het einde van het bestand toe:
+      ```
+      127.0.0.1    grades.docker sharepoint.docker admin.docker marketing.docker
+      ```
+
+4. **Sla het bestand op**:
+    - Ga naar `Bestand` > `Opslaan`.
+
+### macOS
+
+1. **Open Terminal**:
+    - Zoek naar "Terminal" in Spotlight (Cmd + Spatie) en open het.
+
+2. **Open het hosts-bestand met nano**:
+    - Typ het volgende commando en druk op Enter:
+      ```bash
+      sudo nano /etc/hosts
+      ```
+    - Voer je wachtwoord in wanneer daarom wordt gevraagd.
+
+3. **Voeg de regels toe**:
+    - Voeg de volgende regels aan het einde van het bestand toe:
+      ```
+      127.0.0.1    grades.docker sharepoint.docker admin.docker marketing.docker
+      ```
+
+4. **Sla het bestand op en sluit nano**:
+    - Druk op `Ctrl + O` om op te slaan, druk op Enter om te bevestigen.
+    - Druk op `Ctrl + X` om nano af te sluiten.
+
+### Linux
+
+1. **Open Terminal**:
+    - Open je terminaltoepassing.
+
+2. **Open het hosts-bestand met nano**:
+    - Typ het volgende commando en druk op Enter:
+      ```bash
+      sudo nano /etc/hosts
+      ```
+    - Voer je wachtwoord in wanneer daarom wordt gevraagd.
+
+3. **Voeg de regels toe**:
+    - Voeg de volgende regels aan het einde van het bestand toe:
+      ```
+      127.0.0.1    grades.docker sharepoint.docker admin.docker marketing.docker
+      ```
+
+4. **Sla het bestand op en sluit nano**:
+    - Druk op `Ctrl + O` om op te slaan, druk op Enter om te bevestigen.
+    - Druk op `Ctrl + X` om nano af te sluiten.
+
 # Testen van de websites
+
+Nu de Docker Containers goed draaien is het tijd om een eerste test uit te voeren. Dit doen we door de websites te
+openen in een browser die BasicAuthentication beschikbaar heeft. Let op: in Microsoft Edge kan het zijn dat een policy
+niet langer BasicAuthentication (`basic`) toestaat.
+Zie https://answers.microsoft.com/en-us/microsoftedge/forum/all/latest-version-of-edge-no-longer-shows-basic/3601252b-e56b-46c0-a088-0f6084eabe47
+en `edge://policy/` (zoek naar AuthSchemes) en check of `basic` daar bij staat. Zo niet, gebruik dan een andere browser
+(Brave, Firefox, Chromium, Opera, Vivaldi of Google Chrome).
 
 De volgende websites zijn beschikbaar:
 
@@ -107,10 +182,8 @@ De volgende websites zijn beschikbaar:
 | Het SharePoint platform voor gedeelde informatie | http://sharepoint.docker/ | `cn=SharePoint Students,ou=roles,dc=NHLStenden,dc=com` of `cn=SharePoint Teachers,ou=roles,dc=NHLStenden,dc=com` |
 
 Je kunt hierbij inloggen met de volgende gebruikers. Het wachtwoord is altijd  `Test1234!`. Je kunt met Apache Directory
-Studio
-ook kijken in de aangegeven rollen in de Identity Server. De onderstaande gebruikersaccounts zijn willekeurig gekozen
-uit
-die rollen.
+Studio ook kijken in de aangegeven rollen in de Identity Server. De onderstaande gebruikersaccounts zijn willekeurig
+gekozen uit die rollen.
 
 * http://marketing.docker/
     * username : `fbos`
@@ -123,58 +196,9 @@ die rollen.
     * student username : `edeboer`
     * teacher username : `gwillems`
 
-Let op: in Microsoft Edge kan het zijn dat een policy niet langer BasicAuthentication (`basic`) toestaat.
-Zie https://answers.microsoft.com/en-us/microsoftedge/forum/all/latest-version-of-edge-no-longer-shows-basic/3601252b-e56b-46c0-a088-0f6084eabe47
-en `edge://policy/` (zoek naar AuthSchemes) en check of `basic` daar bij staat. Zo niet, gebruik dan een andere browser
-(Brave, Firefox, Chromium, Opera, Vivaldi of Google Chrome).
-
-# Uitleg over LDAP
-
-**LDAP** staat voor **Lightweight Directory Access Protocol**. Het is een protocol dat wordt gebruikt om informatie op
-te slaan en te organiseren in een directory service, zoals gebruikersgegevens, wachtwoorden en andere attributen. LDAP
-maakt het mogelijk om deze informatie op een gestructureerde en efficiënte manier te beheren en te doorzoeken.
-
-## Hoe werkt LDAP?
-
-LDAP organiseert gegevens in een hiërarchische structuur, vergelijkbaar met een boom. Deze structuur wordt een *
-*Directory Information Tree (DIT)** genoemd. Elk item in deze boom wordt een **entry** genoemd en bevat een reeks
-attributen (zoals naam, e-mailadres, etc.). Deze attributen zijn sleutel-waarde paren,
-bijvoorbeeld `mail: student@example.com`.
-
-LDAP-servers slaan deze gegevens op en bieden een manier om ze te beheren en te doorzoeken. Wanneer een gebruiker
-probeert in te loggen op een systeem dat LDAP gebruikt, wordt hun gebruikersnaam en wachtwoord gecontroleerd tegen de
-gegevens in de LDAP-directory. Als de gegevens overeenkomen, krijgt de gebruiker
-toegang[1](https://imrunning.org/nl/wat-is-ldap/)[2](https://jarnobaselier.nl/ldap-lightweight-directory-access-protocol/).
-
-## Rol van LDAP bij een centrale identity store
-
-LDAP kan een cruciale rol spelen bij het opzetten van een centrale identity store voor meerdere websites. Hier zijn
-enkele voordelen:
-
-1. **Gecentraliseerd gebruikersbeheer**: Met LDAP kunnen alle gebruikersgegevens op één centrale locatie worden
-   opgeslagen en beheerd. Dit maakt het eenvoudiger om gebruikersaccounts te beheren en te onderhouden.
-
-2. **Single Sign-On (SSO)**: Gebruikers kunnen met één set inloggegevens toegang krijgen tot meerdere websites en
-   applicaties. Dit vermindert de noodzaak voor meerdere wachtwoorden en maakt het inloggen eenvoudiger en veiliger.
-
-3. **Toegangscontrole**: LDAP kan worden gebruikt om toegangsrechten en permissies te beheren. Dit betekent dat je kunt
-   bepalen welke gebruikers toegang hebben tot welke bronnen op basis van hun rol of andere attributen.
-
-4. **Schaalbaarheid**: LDAP is ontworpen om efficiënt te werken, zelfs met grote hoeveelheden gegevens en veel
-   gelijktijdige gebruikers. Dit maakt het geschikt voor gebruik in grote organisaties met veel gebruikers en
-   applicaties [3](https://teletopix.org/nl/wat-is-ldap-en-hoe-werkt-het/) [4](https://www.lastpass.com/nl/solutions/integrations/ldap).
-
-Door LDAP te gebruiken als een centrale identity store, kunnen organisaties een consistente en veilige manier bieden om
-gebruikers te authenticeren en te autoriseren over verschillende systemen en applicaties.
-
-# Aanpassen van autorisaties
-
-Er zijn nu veel autorisaties toegekend. Deze zijn te wijzigen door gebruik te maken van een programma als Apache
-Directory Studio.
-
 # Verbinding maken met de Identity Server (LDAP)
 
-Als je een applicatie hebt geinstalleerd die kan werken met een LDAP-server gebruik dan onderstaande gegevens:
+Als je een applicatie hebt geïnstalleerd die kan werken met een LDAP-server gebruik dan onderstaande gegevens:
 
 * Connection:
     * Hostname: `localhost`
@@ -207,7 +231,7 @@ activeren van de Docker Containers.
 
 ![ldap-browse-01.png](images/ldap-browse-01.png)
 
-## Autorisaties aanpassen
+## Autorisaties bekijken
 
 Autorisaties zijn vormgegeven door gebruikers in groepen te verzamelen. Dit zijn LDAP-objecten
 genaamd `groupOfUniqueNames`.
@@ -234,7 +258,7 @@ Als we bijvoorbeeld navigeren naar gebruiker naar Isabel Vos, dan krijgen we ond
 - Elke rol in LDAP heeft een corresponderende entry in de `roles` tabel via het veld `distinguishedName`.
 - Dit zorgt ervoor dat de rollen consistent zijn tussen de LDAP-server en de database.
 
-#### Praktische uitleg
+## Praktische uitleg
 
 - **Rollenbeheer**: Rollen worden centraal beheerd in de LDAP-server. Elke rol in de LDAP-server heeft een unieke naam (
   distinguishedName) die overeenkomt met een record in de `roles` tabel van de database.
@@ -246,13 +270,13 @@ Als we bijvoorbeeld navigeren naar gebruiker naar Isabel Vos, dan krijgen we ond
 - **Gebruik van de website**: Studenten kunnen via een website permissies aan rollen koppelen. Dit stelt hen in staat om
   de toegangsrechten te beheren zonder nieuwe permissies te hoeven aanmaken.
 
-## Menu structuur van de websites
+# Menu structuur van de websites
 
 Deze menubalk wordt gebruikt om navigatie te bieden voor vier verschillende websites: **Cijferadministratie**, *
 *Sharepoint | Intranet**, **Marketing**, en **Admin Panel**. Afhankelijk van de website waarvoor de menubalk wordt
 weergegeven, worden verschillende navigatieopties getoond.
 
-### Websites
+## Websites
 
 1. **Cijferadministratie**
 
@@ -284,29 +308,20 @@ weergegeven, worden verschillende navigatieopties getoond.
 - **Attestation - Rollen**: Inzage in rollen en permissies.
 - **Rollen**: Beheert rollen.
 
-### Navigatie
+## Navigatie
 
 De menubalk wordt dynamisch gegenereerd op basis van de website en de gebruikersrechten. Alleen de opties waarvoor de
 gebruiker de juiste permissies heeft, worden getoond. De actieve route wordt gemarkeerd om de huidige pagina aan te
 geven.
 
-### Welkomstbericht
+## Welkomstbericht
 
 Bovenaan de menubalk wordt een welkomstbericht weergegeven met de naam van de gebruiker en een gebruikersafbeelding. Er
 is ook een link om uit te loggen.
 
 # Oefeningen
 
-Hier worden een aantal oefeningen beschreven.
-
-## Basis - inloggen bij websites.
-
-Het beste startpunt is de *Intranet Pagina*: http://sharepoint.docker.
-
-# Hercompileren van CR-LF converteren
-
-Kijk hiervoor in de map `_resources/support/conver-crlf` en het daar aanwezige
-[`README.md`](./_resources/support/convert-crlf/README.md) bestand.
+Deze zijn opgenomen in een aparte [map](./excersises/README.md).
 
 # Verantwoording testgegevens
 
@@ -316,10 +331,46 @@ ook beter de attestation te kunnen demonstreren.
 
 De grote aantallen gebruikers zijn tot stand gekomen door middel van generatieve AI (Chat GPT). Daardoor is geen grip op
 de kwaliteit van de namen. Zo zijn er vooral nederlandstalige namen gekozen en is er bijvoorbeeld geen rekening gehouden
-met
-demografische spreiding op geslacht etc.
+met demografische spreiding op geslacht etc.
+
+# A word on security and quality
+
+Deze website is gebouwd met het oog op het kunnen oefenen met IAM en RBAC principes. Daarbij zijn concessies gedaan aan
+de kwaliteit van de broncode en de algemene cyber security. Er zijn een aantal basismaatregelen getroffen zoals het
+werken met *prepared statements* en *geparametriseerde queries* in SQL-expressies, het converteren van input naar echte
+getallen als dat kan. Er zijn echter zaken ook niet geregeld.
+
+* Er is voor de websites (nog) geen Content Security Policy (CSP) gedefinieerd.
+* Er is geen penetratie test uitgevoerd. Een geschikt middel is bijvoorbeeld de **Zed Attack Proxy** (ZAP).
+* Hoewel er weinig door gebruikers ingevoerde data gebruikt wordt, zou meer *Input Sanitizing* gebruikt moeten worden
+* Er worden geen headers meegestuurd die de browser instrueren om bijvoorbeeld plaatsing in een iFrame te voorkomen
+  of Cross-Site (XSS) Scripting te voorkomen
+* Er wordt in de formulieren geen gebruik gemaakt van CSRF-tokens. Een CSRF-token (Cross-Site Request Forgery-token) is
+  een unieke, geheimgehouden waarde die wordt gegenereerd door een server en toegevoegd aan formulieren om te verifiëren
+  dat de verzoeken afkomstig zijn van de geauthenticeerde gebruiker. Dit voorkomt dat kwaadwillende websites
+  ongeautoriseerde acties uitvoeren namens de gebruiker.
+
+Voor een goed inzicht hoe je wél veilige websites maakt, verwijs ik je naar bijvoorbeeld OWASP en het NSCS.
 
 # Referenties / bronnen
 
 * [Apache Directory Studio](https://directory.apache.org/studio/)
 * [Docker Install](https://docs.docker.com/engine/install/)
+* [NCSC ICT-beveiligingsrichtlijnen voor webapplicaties](https://www.ncsc.nl/documenten/publicaties/2019/mei/01/ict-beveiligingsrichtlijnen-voor-webapplicaties)
+    * **Nationaal Cyber Security Centrum**. Als expert werken wij aan een digitaal veilig Nederland. De digitale
+      infrastructuur is van levensbelang: voor het betalingsverkeer, schoon water uit de kraan en om de voeten droog te
+      houden.
+* [OWASP](https://owasp.org/)
+    * The Open Worldwide Application Security Project (**OWASP**) is a nonprofit foundation that works to improve the
+      security of software
+* [Zed Attack Proxy](https://www.zaproxy.org/)
+
+# Colofon
+
+Martin Molema, ing MSc
+
+Docent bij NHL Stenden, opleidingen Bachelor HBO-ICT en Associate Degree Cyber Safety & Security.
+
+[martin.molema@nhlstenden.com](mailto:martin.molema@nhlstenden.com)
+
+December 2024.
