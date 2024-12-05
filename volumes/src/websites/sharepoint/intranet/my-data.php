@@ -31,7 +31,7 @@ if (!$rbac->has(Permission_SharePoint_All_Users)) {
 <article>
   <?php
    echo showheader(Websites::WEBSITE_SHAREPOINT, 'my-data.php', $rbac);
-   echo GenerateSectionForMyLdapInfo($rbac);
+   echo GenerateSectionForMyLdapInfoFromRBAC($rbac);
    echo GenerateSectionForMyLdapRoles($rbac);
    echo GenerateSectionForMyLdapPermissions($rbac);
   ?>

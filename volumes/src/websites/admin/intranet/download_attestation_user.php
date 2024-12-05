@@ -19,6 +19,3 @@ header('Content-Disposition: attachment; filename="attestation.csv"');
 rewind($fp);
 fpassthru($fp);
 fclose($fp);
-
-
-echo $csvString;

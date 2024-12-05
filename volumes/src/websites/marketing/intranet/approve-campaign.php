@@ -1,14 +1,6 @@
 <?php
 
 
-/** @file intranet/logging.php
- * Index for the intranet. Users need to login using BasicAuth
- *
- * @author Martin Molema <martin.molema@nhlstenden.com>
- * @copyright 2024
- *
- * Show the user's DN and all group memberships + permissions
- */
 
 include_once '../../shared/lib/RBACSupport.php';
 include_once '../../shared/partials/header.php';

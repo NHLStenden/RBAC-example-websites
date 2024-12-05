@@ -1,15 +1,6 @@
 <?php
 
 
-/** @file intranet/logging.php
- * Index for the intranet. Users need to login using BasicAuth
- *
- * @author Martin Molema <martin.molema@nhlstenden.com>
- * @copyright 2024
- *
- * Show the user's DN and all group memberships + permissions
- */
-
 include_once '../../shared/lib/RBACSupport.php';
 include_once '../../shared/partials/header.php';
 include_once 'lib/attestation-functions.inc.php';
@@ -61,7 +52,7 @@ function createAttestationTable()
 <main class="container-fluid">
 
     <article>
-      <?= showheader(Websites::WEBSITE_ADMIN, '', $rbac) ?>
+      <?= showheader(Websites::WEBSITE_ADMIN, 'attestation_roles.php', $rbac) ?>
         <section class="welcome" aria-label="Welcome section">
             <h1>Welkom bij het Admin panel van NHL Stenden.</h1>
             <p>
