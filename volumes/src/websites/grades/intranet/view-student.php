@@ -1,44 +1,45 @@
 <?php
 include_once '../../shared/lib/RBACSupport.php';
 include_once '../../shared/partials/header.php';
+include_once '../../shared/partials/my-ldap-info.php';
 
 $rbac = new RBACSupport($_SERVER["AUTHENTICATE_UID"]);
 
 if (!$rbac->process()) {
-  die('Could not connect to RBAC server.');
+    die('Could not connect to RBAC server.');
 }
 if (!$rbac->has(Permission_Grades_Read_StudentDetails)) {
-  echo "You do not have permission to access this page and view student details.";
-  die();
+    echo "You do not have permission to access this page and view student details.";
+    die();
 }
 $searchResults = [];
 $studentDetails = null;
 
 if (isset($_POST) && isset($_GET['search'])) {
-  $studentToSearch = $_POST["studentName"];
-  $lnk             = ConnectAndCheckLDAP();
-  $students        = SearchStudentByName($lnk, $studentToSearch);
+    $studentToSearch = $_POST["studentName"];
+    $lnk = ConnectAndCheckLDAP();
+    $students = SearchStudentByName($lnk, $studentToSearch);
 
 
-  $nrOfItems = $students["count"];
-  for ($i = 0; $i < $nrOfItems; $i++) {
-    $student    = $students[$i];
-    $oneStudent = [];
-    $nrOfFields = $student["count"];
+    $nrOfItems = $students["count"];
+    for ($i = 0; $i < $nrOfItems; $i++) {
+        $student = $students[$i];
+        $oneStudent = [];
+        $nrOfFields = $student["count"];
 
-    for ($j = 0; $j < $nrOfFields; $j++) {
-      $key   = $student[$j];
-      $item  = $student[$key];
-      $value = $item[0];
+        for ($j = 0; $j < $nrOfFields; $j++) {
+            $key = $student[$j];
+            $item = $student[$key];
+            $value = $item[0];
 
-      $oneStudent[$key] = $value;
+            $oneStudent[$key] = $value;
+        }
+        $searchResults[] = $oneStudent;
     }
-    $searchResults[] = $oneStudent;
-  }
 } else if (isset($_GET['id'])) {
-  $id  = $_GET['id'];
-  $lnk = ConnectAndCheckLDAP();
-  $studentDetails = SearchStudentByUID($lnk, $id);
+    $id = $_GET['id'];
+    $lnk = ConnectAndCheckLDAP();
+    $studentDetails = SearchStudentByUID($lnk, $id);
 }
 
 ?>
@@ -57,7 +58,7 @@ if (isset($_POST) && isset($_GET['search'])) {
 </head>
 <body>
 <article>
-  <?php echo showheader(Websites::WEBSITE_GRADES, 'view-student.php', $rbac) ?>
+    <?php echo showheader(Websites::WEBSITE_GRADES, 'view-student.php', $rbac) ?>
     <section class="search">
         <form method="post" action="view-student.php?search">
             <label>Studentname:
@@ -67,60 +68,37 @@ if (isset($_POST) && isset($_GET['search'])) {
             <button type="submit">Search!</button>
         </form>
     </section>
-  <?php if (count($searchResults) > 0) { ?>
-      <section class="results">
-          <table>
-              <thead>
-              <tr>
-                  <th>CN</th>
-                  <th>Username</th>
-              </tr>
-              </thead>
-              <tbody>
-              <?php foreach ($searchResults as $student) { $uid = $student['uid']; $cn = $student['cn']; ?>
-                  <tr>
-                      <td><a href="/intranet/view-student.php?id=<?= $uid ?>"><?= $cn ?></a></td>
-                      <td><?= $student['uid'] ?></td>
-                  </tr>
-              <?php } ?>
-              </tbody>
-              <tfoot>
-              <tr>
-                  <td colspan="2"><?= count($searchResults) ?> Studenten gevonden</td>
-              </tr>
-              </tfoot>
-          </table>
-      </section>
-  <?php } ?>
+    <?php if (count($searchResults) > 0) { ?>
+        <section class="results">
+            <table>
+                <thead>
+                <tr>
+                    <th>CN</th>
+                    <th>Username</th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php foreach ($searchResults as $student) {
+                    $uid = $student['uid'];
+                    $cn = $student['cn']; ?>
+                    <tr>
+                        <td><a href="/intranet/view-student.php?id=<?= $uid ?>"><?= $cn ?></a></td>
+                        <td><?= $student['uid'] ?></td>
+                    </tr>
+                <?php } ?>
+                </tbody>
+                <tfoot>
+                <tr>
+                    <td colspan="2"><?= count($searchResults) ?> Studenten gevonden</td>
+                </tr>
+                </tfoot>
+            </table>
+        </section>
+    <?php } ?>
     <?php
-      if ($studentDetails !== null) {
-        $fullname = $studentDetails['cn'];
-        $dn       = $studentDetails['dn'];
-        $surname  = $studentDetails['sn'];
-        $uid      = $studentDetails['uid'];
-
-          echo <<< STUDENT_EOF
-    <section class="info">
-    <h3>Details van student</h3>
-        <table>
-        <caption>$fullname</caption>
-            <tr>
-                <td class="label">Distinguised Name</td>
-                <td class="value">$dn</td>
-            </tr>
-            <tr>
-                <td class="label">Achternaam</td>
-                <td class="value">$surname</td>
-            </tr>
-            <tr>
-                <td class="label">Username</td>
-                <td class="value">$uid</td>
-            </tr>
-        </table>
-    </section>
-STUDENT_EOF;
-
-      }
+    if ($studentDetails !== null) {
+        echo GenerateSectionForMyLdapInfo($studentDetails);
+    }
     ?>
 </article>
 </body>
