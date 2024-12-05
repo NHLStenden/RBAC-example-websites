@@ -1,2 +1,2 @@
-REM This will compile for Linux if using WSL!
-g++ -std=c++17 -o ../../../convert-cr-lf convert-cr-lf.cpp
+REM Compile for windows using MSYS2 and G++
+g++ -std=c++17 -o ..\..\..\convert-cr-lf-win.exe convert-cr-lf.cpp
