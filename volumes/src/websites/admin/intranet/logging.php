@@ -29,6 +29,10 @@ $regexPatterns = [
   [
     'regex' => '/\[(.*?)\]\s+\[(authnz_ldap:.*?)\]\s+(\[.*?\])\s+(\[.*?\])\s+([A-Za-z0-9]*):\s(.*?):\s(.*?)\s+\[(.*?)\]\[(.*?)\]/m',
     'columns' => [1, 2, 5, 7, 9] // Specificeer de groepnummers
+  ],
+  [
+    'regex' => '/\[(.*?)\]\s+\[(authz_core:.*?)\]\s+\[(.*?)\]\s+\[(.*?)\]\s+([A-Za-z0-9]*):(.*)/m',
+    'columns' => [1, 2, 5, 6, -1] // Specificeer de groepnummers
   ]
 ];
 
@@ -106,7 +110,7 @@ echo <<< HTML_HEADER
 HTML_HEADER
 ;
 
-$header =  showheader(Websites::WEBSITE_ADMIN,'', $rbac);
+$header =  showheader(Websites::WEBSITE_ADMIN,'logging.php', $rbac);
 
 echo <<< HTML_BODY1
 <main class="container-fluid">
