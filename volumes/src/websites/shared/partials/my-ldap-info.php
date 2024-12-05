@@ -1,21 +1,26 @@
 <?php
 
-function GenerateSectionForMyLdapInfo(RBACSupport $rbac): string|null
+function GenerateSectionForMyLdapInfoFromRBAC(RBACSupport $rbac): string|null
+{
+   return    GenerateSectionForMyLdapInfo($rbac->userInfoLDAP);
+}
+
+function GenerateSectionForMyLdapInfo(array $userInfoLDAP): string|null
 {
 
   $items = [
-    "Distinguised Name" => $rbac->userInfoLDAP['dn'],
-    "Volledige naam" => $rbac->userInfoLDAP['cn'],
-    "Voornaam" => $rbac->userInfoLDAP['givenname'],
-    "Achternaam" => $rbac->userInfoLDAP['sn'],
-    "Username" => $rbac->userInfoLDAP['uid'],
-    "Medewerkernummer" => $rbac->userInfoLDAP['employeenumber'],
-    "Type medewerker" => $rbac->userInfoLDAP['employeetype'],
-    "Organisatie" => $rbac->userInfoLDAP['o'],
-    "Postcode" => $rbac->userInfoLDAP['postalcode'],
-    "Kamernummer" => $rbac->userInfoLDAP['roomnumber'],
+    "Distinguised Name" => $userInfoLDAP['dn'],
+    "Volledige naam" => $userInfoLDAP['cn'],
+    "Voornaam" => $userInfoLDAP['givenname'],
+    "Achternaam" => $userInfoLDAP['sn'],
+    "Username" => $userInfoLDAP['uid'],
+    "Medewerkernummer" => $userInfoLDAP['employeenumber'],
+    "Type medewerker" => $userInfoLDAP['employeetype'],
+    "Organisatie" => $userInfoLDAP['o'],
+    "Postcode" => $userInfoLDAP['postalcode'],
+    "Kamernummer" => $userInfoLDAP['roomnumber'],
   ];
-  $jpegPhoto = base64_encode($rbac->userInfoLDAP['jpegphoto']);
+  $jpegPhoto = base64_encode($userInfoLDAP['jpegphoto']);
 
   $result = '<section class="my-info"><table>';
   foreach ($items as $key => $item) {
