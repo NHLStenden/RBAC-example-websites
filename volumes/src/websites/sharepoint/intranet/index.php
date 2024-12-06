@@ -45,7 +45,7 @@ if ($rbac->has(Permission_SharePoint_News)) {
 <main class="container-fluid">
 
     <article>
-      <?= showheader(Websites::WEBSITE_SHAREPOINT, '', $rbac) ?>
+      <?= showheader(Websites::WEBSITE_SHAREPOINT,basename(__FILE__), $rbac) ?>
         <section class="welcome" aria-label="Welcome section">
             <h1>Welkom bij ons Intranet</h1>
             <p>

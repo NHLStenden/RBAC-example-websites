@@ -33,7 +33,7 @@ $roles = $stmt->fetchAll();
 <main class="container-fluid">
 
     <article>
-      <?= showheader(Websites::WEBSITE_ADMIN, 'manage_roles.php', $rbac) ?>
+      <?= showheader(Websites::WEBSITE_ADMIN,basename(__FILE__), $rbac) ?>
 
         <section class="roles">
             <p>

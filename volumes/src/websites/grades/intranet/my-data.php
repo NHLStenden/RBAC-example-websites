@@ -30,7 +30,7 @@ if (!$rbac->has(Permission_Grades_Show_Self)) {
 <body>
 <article>
   <?php
-   echo showheader(Websites::WEBSITE_GRADES,'my-data.php', $rbac);
+   echo showheader(Websites::WEBSITE_GRADES,basename(__FILE__), $rbac);
    echo GenerateSectionForMyLdapInfoFromRBAC($rbac);
    echo GenerateSectionForMyLdapRoles($rbac);
    echo GenerateSectionForMyLdapPermissions($rbac);

@@ -25,7 +25,7 @@ if (!$rbac->has(Permission_Admin_Panel)) {
 <main class="container-fluid">
 
   <article>
-    <?= showheader(Websites::WEBSITE_ADMIN,'', $rbac) ?>
+    <?= showheader(Websites::WEBSITE_ADMIN,basename(__FILE__), $rbac) ?>
     <section class="welcome" aria-label="Welcome section">
       <h1>Welkom bij het Admin panel van NHL Stenden.</h1>
       <p>

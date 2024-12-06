@@ -58,7 +58,7 @@ if (isset($_POST) && isset($_GET['search'])) {
 </head>
 <body>
 <article>
-    <?php echo showheader(Websites::WEBSITE_GRADES, 'view-student.php', $rbac) ?>
+    <?php echo showheader(Websites::WEBSITE_GRADES,basename(__FILE__), $rbac) ?>
     <section class="search">
         <form method="post" action="view-student.php?search">
             <label>Studentname:

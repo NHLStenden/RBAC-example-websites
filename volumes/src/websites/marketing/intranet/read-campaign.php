@@ -26,7 +26,7 @@ $campaignListButtonCaption = 'Openen';
 <main class="container-fluid">
 
     <article>
-      <?= showheader(Websites::WEBSITE_MARKETING, '', $rbac) ?>
+      <?= showheader(Websites::WEBSITE_MARKETING,basename(__FILE__), $rbac) ?>
         <section class="welcome" aria-label="Welcome section">
             <h1>Campagne bekijken</h1>
         </section>

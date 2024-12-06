@@ -28,7 +28,7 @@ if (!$rbac->has(Permission_Grades_Create_Gradelists)) {
 </head>
 <body>
 <article>
-  <?php echo showheader(Websites::WEBSITE_GRADES, 'approve-list.php', $rbac) ?>
+  <?php echo showheader(Websites::WEBSITE_GRADES,basename(__FILE__), $rbac) ?>
     <section class="gradelist">
       <?php
       include_once './lib/subjects.php';

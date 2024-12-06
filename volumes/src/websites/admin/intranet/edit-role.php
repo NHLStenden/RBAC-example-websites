@@ -114,7 +114,7 @@ header('Pragma: no-cache');
 <main class="container-fluid">
 
     <article>
-      <?= showheader(Websites::WEBSITE_ADMIN, '', $rbac) ?>
+      <?= showheader(Websites::WEBSITE_ADMIN,basename(__FILE__), $rbac) ?>
         <section class="permissions">
             <h3>Rol: <?= $title ?></h3>
           <?php if ($nrOfPermissions != 0) { ?>

@@ -35,7 +35,7 @@ if ($isTeacher) {
 <main class="container-fluid">
 
     <article>
-      <?= showheader(Websites::WEBSITE_GRADES,'', $rbac) ?>
+      <?= showheader(Websites::WEBSITE_GRADES,basename(__FILE__), $rbac) ?>
         <section class="welcome" aria-label="Welcome section">
             <h1>Welkom bij de cijferadministratie</h1>
             <p aria-label="Welcome text">Je kunt hier navigeren naar verschillende onderdelen van de cijfer

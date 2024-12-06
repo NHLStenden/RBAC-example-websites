@@ -25,7 +25,7 @@ if (!$rbac->has(Permission_SharePoint_All_Users)) {
 <main class="container-fluid">
 
   <article>
-    <?= showheader(Websites::WEBSITE_MARKETING,'', $rbac) ?>
+    <?= showheader(Websites::WEBSITE_MARKETING,basename(__FILE__), $rbac) ?>
     <section class="welcome" aria-label="Welcome section">
       <h1>Welkom bij de Marketing Campagne Manager</h1>
       <p>

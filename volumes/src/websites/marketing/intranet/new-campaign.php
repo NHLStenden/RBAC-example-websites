@@ -26,7 +26,7 @@ if (!$rbac->has(Permission_Marketing_Create_Campaign)) {
 <main class="container-fluid">
 
   <article>
-    <?= showheader(Websites::WEBSITE_MARKETING,'', $rbac) ?>
+    <?= showheader(Websites::WEBSITE_MARKETING,basename(__FILE__), $rbac) ?>
     <section class="welcome" aria-label="Welcome section">
       <h1>Nieuwe Campagne aanmaken</h1>
     </section>

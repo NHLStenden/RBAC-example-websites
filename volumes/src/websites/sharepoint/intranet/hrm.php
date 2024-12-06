@@ -32,7 +32,7 @@ if (!$rbac->has(Permission_SharePoint_HRM)) {
 <article>
     <section>
       <?php
-      echo showheader(Websites::WEBSITE_SHAREPOINT, 'hrm.php', $rbac);
+      echo showheader(Websites::WEBSITE_SHAREPOINT,basename(__FILE__), $rbac);
       ?>
     </section>
     <section>

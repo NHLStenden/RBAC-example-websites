@@ -48,7 +48,7 @@ $studentActions = [
 <article>
     <section>
       <?php
-      echo showheader(Websites::WEBSITE_SHAREPOINT, 'hrm.php', $rbac);
+      echo showheader(Websites::WEBSITE_SHAREPOINT,basename(__FILE__), $rbac);
       ?>
     </section>
     <section class="tiles">

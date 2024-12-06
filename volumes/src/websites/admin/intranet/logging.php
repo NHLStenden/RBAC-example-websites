@@ -110,7 +110,7 @@ echo <<< HTML_HEADER
 HTML_HEADER
 ;
 
-$header =  showheader(Websites::WEBSITE_ADMIN,'logging.php', $rbac);
+$header =  showheader(Websites::WEBSITE_ADMIN,basename(__FILE__), $rbac);
 
 echo <<< HTML_BODY1
 <main class="container-fluid">

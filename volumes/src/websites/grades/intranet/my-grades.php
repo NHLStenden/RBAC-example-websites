@@ -28,7 +28,7 @@ if (!$rbac->has(Permission_Grades_Read_Own_Grades)) {
 </head>
 <body>
 <article>
-  <?php echo showheader(Websites::WEBSITE_GRADES, 'my-grades.php', $rbac) ?>
+  <?php echo showheader(Websites::WEBSITE_GRADES,basename(__FILE__), $rbac) ?>
     <section class="grades">
       <?php
       include_once './lib/subjects.php';
