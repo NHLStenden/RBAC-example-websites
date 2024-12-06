@@ -9,7 +9,7 @@ $rbac = new RBACSupport($_SERVER["AUTHENTICATE_UID"]);
 if (!$rbac->process()) {
   die('Could not connect to RBAC server.');
 }
-if (!$rbac->has(Permission_SharePoint_All_Users)) {
+if (!$rbac->has(Permission_Marketing_Approve_Campaign)) {
   echo "Not allowed to open the SharePoint intranet\n";
   die();
 }
@@ -19,7 +19,7 @@ $campaignListButtonCaption = 'Approve';
 ?>
 <html lang="NL">
 <head>
-    <title>Marketing</title>
+    <title>Marketing | Goedkeuren campagne</title>
     <link href="css/globals.css" rel="stylesheet">
     <link href="css/index.css" rel="stylesheet">
     <link href="css/header.css" rel="stylesheet">
