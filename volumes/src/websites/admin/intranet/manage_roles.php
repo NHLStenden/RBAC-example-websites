@@ -46,6 +46,7 @@ $roles = $stmt->fetchAll();
                 ?>
                   <tr>
                       <td><?= $role['title'] ?></td>
+                      <td><?= $role['title'] ?></td>
                       <td>
                           <button><a href="edit-role.php?id=<?= $role['idRole'] ?>">Edit</a></button>
                       </td>
