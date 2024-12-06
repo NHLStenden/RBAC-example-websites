@@ -12,6 +12,15 @@ if (!$rbac->has(Permission_Grades_Create_Gradelists)) {
   die();
 }
 
+include "./lib/subjects.php";
+
+$selectOptionsHTML = implode('', array_map(function ($x) {
+  $vakcode = $x['code'];
+  $name    = $x['name'];
+
+  return "<option>$vakcode - $name</option> ";
+}, $vakkenMetCodes));
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -28,8 +37,28 @@ if (!$rbac->has(Permission_Grades_Create_Gradelists)) {
 </head>
 <body>
 <article>
-  <?php echo showheader(Websites::WEBSITE_GRADES,'new-list.php', $rbac) ?>
+  <?php echo showheader(Websites::WEBSITE_GRADES, basename(__FILE__), $rbac) ?>
 
+    <section class="new-list">
+        <form>
+            <label for="name">Naam van de lijst</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="date">Datum van de toets</label>
+            <input type="date" id="date" name="date" required>
+
+            <label for="description">Beschrijving</label>
+            <textarea id="description" name="description" rows="4" required></textarea>
+
+            <label for="vakken">Vakcode</label>
+            <select id="vakken" name="vakcode" required>
+                <?= $selectOptionsHTML ?>
+            </select>
+
+            <button type="submit">Verzenden</button>
+        </form>
+
+    </section>
 </article>
 </body>
 </html>
