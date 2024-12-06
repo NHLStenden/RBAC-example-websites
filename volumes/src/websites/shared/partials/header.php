@@ -22,6 +22,8 @@ function showheader(Websites $forWebsite, string $route, RBACSupport $rbac): str
   $navigationSharePoint = [
     ['route' => 'my-data.php', 'permission' => Permission_SharePoint_All_Users, 'title' => 'Mijn gegevens'],
     ['route' => 'hrm.php', 'permission' => Permission_SharePoint_HRM, 'title' => 'Human Resource Management'],
+    ['route' => 'students.php', 'permission' => Permission_SharePoint_StudentTools, 'title' => 'Studenten Portaal'],
+    ['route' => 'teachers.php', 'permission' => Permission_SharePoint_TeacherTools, 'title' => 'Docenten Portaal'],
     ['route' => 'http://grades.docker/intranet', 'permission' => Permission_Grades_BasicAccess, 'title' => 'Cijfers'],
     ['route' => 'http://marketing.docker/intranet', 'permission' => Permission_Marketing_Read_Campaign, 'title' => 'Marketing'],
     ['route' => 'http://admin.docker/intranet', 'permission' => Permission_Admin_Panel, 'title' => 'Admin Panel'],

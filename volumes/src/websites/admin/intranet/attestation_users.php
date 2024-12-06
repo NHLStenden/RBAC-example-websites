@@ -35,7 +35,7 @@ function createAttestationTable()
 ?>
 <html lang="NL">
 <head>
-    <title>Attestation - Gebruikers</title>
+    <title>Admin Panel | Attestation - Gebruikers</title>
     <link href="css/globals.css" rel="stylesheet">
     <link href="css/index.css" rel="stylesheet">
     <link href="css/header.css" rel="stylesheet">

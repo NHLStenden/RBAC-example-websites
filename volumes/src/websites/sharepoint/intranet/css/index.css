@@ -44,9 +44,13 @@ section.news {
                 font-size:1.2rem;
             }
 
-            & p.datetime {
+            & .datetime {
                 margin:0;
                 font-style: italic;
+            }
+            & .audience {
+                font-weight: bold;
+                color:darkgray;
             }
 
         }

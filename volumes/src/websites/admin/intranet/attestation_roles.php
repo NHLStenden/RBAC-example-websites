@@ -41,7 +41,7 @@ function createAttestationTable()
 ?>
 <html lang="NL">
 <head>
-    <title>Attestation - Rollen</title>
+    <title>Admin Panel | Attestation - Rollen</title>
     <link href="css/globals.css" rel="stylesheet">
     <link href="css/index.css" rel="stylesheet">
     <link href="css/header.css" rel="stylesheet">

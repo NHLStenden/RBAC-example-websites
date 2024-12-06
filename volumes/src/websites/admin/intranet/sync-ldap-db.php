@@ -83,7 +83,7 @@ function DoSync()
     <link href="css/header.css" rel="stylesheet">
     <link rel="icon" type="image/png" href="../favicon.png">
 
-    <title>Synchroniseer rollen</title>
+    <title>Admin Panel | Synchroniseer rollen</title>
 </head>
 <body>
 

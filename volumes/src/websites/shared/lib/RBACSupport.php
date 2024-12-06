@@ -3,14 +3,13 @@
 include_once 'ldap_constants.inc.php';
 include_once 'ldap_support.inc.php';
 
-
-const Permission_intranet_base = 'intranet_base';
 const Permission_Use_Mail = 'Use_Mail';
 const Permission_Admin_Panel = 'AdminPanel';
 const Permission_SharePoint_News = 'SharePoint_News';
 const Permission_SharePoint_All_Users = 'SharePoint_Basic_Access';
 const Permission_SharePoint_HRM = 'SharePoint_HRM';
 const Permission_SharePoint_StudentTools = 'SharePoint_StudentTools';
+const Permission_SharePoint_TeacherTools = 'SharePoint_TeacherTools';
 const Permission_Grades_BasicAccess = 'Grades_Basic_Access';
 const Permission_Grades_Create_Gradelists = 'Grades_Create_Gradelists';
 const Permission_Grades_Approve_Gradeslist = 'Grades_Approve_Gradeslist';

@@ -21,9 +21,15 @@ usort($newsItems, function ($a, $b) {
 
 // Selecteer willekeurig 6 unieke nieuwsartikelen
 $randomKeys = array_rand($newsItems, 6);
-$randomNews = array_map(function ($key) use ($newsItems) {
-  return $newsItems[$key];
-}, $randomKeys);
+
+$randomNews = [];
+if ($rbac->has(Permission_SharePoint_News)) {
+  $randomNews = array_map(function ($key) use ($newsItems) {
+    return $newsItems[$key];
+  }, $randomKeys);
+
+}
+
 
 ?>
 <html lang="NL">
@@ -54,7 +60,7 @@ $randomNews = array_map(function ($key) use ($newsItems) {
               <?php foreach ($randomNews as $news): ?>
                   <div class="card">
                       <h2><?php echo htmlspecialchars($news['title']); ?></h2>
-                      <p class="datetime"><?php echo htmlspecialchars($news['date']); ?></p>
+                      <p><span  class="datetime"><?php echo htmlspecialchars($news['date']); ?> </span>| <span class="audience"><?php echo htmlspecialchars($news['audience']); ?></span></p>
                       <div class="story-container">
                           <p class="story"><?php echo htmlspecialchars($news['content']); ?></p>
                           <?php if ($news['img'] !== '') {

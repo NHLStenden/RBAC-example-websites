@@ -15,7 +15,7 @@ if (!$rbac->has(Permission_Admin_Panel)) {
 ?>
 <html lang="NL">
 <head>
-    <title>Admin</title>
+    <title>Admin Panel</title>
   <link href="css/globals.css" rel="stylesheet">
   <link href="css/index.css" rel="stylesheet">
   <link href="css/header.css" rel="stylesheet">
