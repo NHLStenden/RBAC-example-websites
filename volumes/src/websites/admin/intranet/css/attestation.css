@@ -29,13 +29,6 @@ section.report {
         white-space: nowrap;
     }
 
-    /**
-    Make the data columns center the 'X' indicators
-     */
-    & tr td:not(:nth-child(-n + 4)) {
-        text-align: center;
-    }
-
 
 
     & .error {
@@ -43,4 +36,22 @@ section.report {
         font-style: italic;
     }
 
+}
+
+section.roles {
+    & table {
+        /** Make the data columns center the 'X' indicators  */
+        & tr td:not(:nth-child(-n + 2)) {
+            text-align: center;
+        }
+    }
+}
+
+section.users {
+    & table {
+        /** Make the data columns center the 'X' indicators  */
+        & tr td:not(:nth-child(-n + 4)) {
+            text-align: center;
+        }
+    }
 }

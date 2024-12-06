@@ -60,7 +60,7 @@ function createAttestationTable()
             </p>
 
         </section>
-        <section class="report">
+        <section class="report roles">
             <button><a href="download_attestation_roles.php">Download</a></button>
           <?php createAttestationTable(); ?>
         </section>

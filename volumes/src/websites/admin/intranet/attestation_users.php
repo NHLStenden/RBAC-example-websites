@@ -54,7 +54,7 @@ function createAttestationTable()
             </p>
 
         </section>
-        <section class="report">
+        <section class="report users">
             <button><a href="download_attestation_user.php">Download</a></button>
           <?php createAttestationTable(); ?>
         </section>
