@@ -13,6 +13,9 @@ section.permissions {
         padding: 10px;
         text-align: left;
     }
+    & td:last-child {
+        text-align: center;
+    }
 
     & th {
         background-color: #f4f4f9;
