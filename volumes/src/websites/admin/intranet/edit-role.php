@@ -40,24 +40,55 @@ if (count($role) != 1) {
   $permissionsHTML = implode("\n", array_map(function ($p) {
     $idRolePermission = $p['idRolePermission'];
     $permissionName   = $p['permission'];
+    $application      = $p['application'];
 
-    return "<tr><td>$permissionName</td>
+    return "<tr><td>$application</td>
+                <td>$permissionName</td>
                 <td><button><a href='delete_role.php?id=$idRolePermission'>Delete</button></td>
             </tr>";
   }, $permissions));
 }
-
-$sql  = "SELECT * FROM `permissions`  WHERE idPermission NOT IN (SELECT fk_idPermission FROM role_permissions WHERE fk_idRole = :idRole) ORDER BY title";
+$sql  = "SELECT p.title as title,
+                p.idPermission as idPermission,
+                p.code as code,
+                a.title as application
+           FROM permissions p
+                JOIN application a ON a.idApplication = p.fk_idApplication
+          WHERE idPermission NOT IN (SELECT fk_idPermission FROM role_permissions WHERE fk_idRole = :idRole)
+          ORDER BY a.title
+         ";
 $stmt = $pdo->prepare($sql);
 $stmt->bindValue(':idRole', $idRole, PDO::PARAM_INT);
 $stmt->execute();
 $allExistingPermissions = $stmt->fetchAll();
 
+/*
 $optionsListForSelectPermissions = implode("\n", array_map(
         function ($p) {
     return "<option value='{$p['idPermission']}'>{$p['title']}</option>";
 }, $allExistingPermissions));
+*/
 
+// Groepeer permissies per applicatie
+$groupedPermissions = [];
+foreach ($allExistingPermissions as $permission) {
+  $appName                        = $permission['application'];
+  $groupedPermissions[$appName][] = $permission;
+}
+
+// Bouw de <select> opties met <optgroup>
+$optionsListForSelectPermissions = '';
+foreach ($groupedPermissions as $appName => $permissions) {
+  $optionsListForSelectPermissions .= "<optgroup label='" . htmlspecialchars($appName, ENT_QUOTES) . "'>";
+  foreach ($permissions as $permission) {
+    $optionsListForSelectPermissions .= "<option value='"
+      . htmlspecialchars($permission['idPermission'], ENT_QUOTES)
+      . "'>"
+      . htmlspecialchars($permission['title'], ENT_QUOTES)
+      . "</option>";
+  }
+  $optionsListForSelectPermissions .= "</optgroup>";
+}
 
 // set expires header
 header('Expires: Thu, 1 Jan 1970 00:00:00 GMT');
@@ -89,6 +120,13 @@ header('Pragma: no-cache');
           <?php if ($nrOfPermissions != 0) { ?>
               <table>
                   <caption>Permissies</caption>
+                  <thead>
+                  <tr>
+                      <th>Applicatie</th>
+                      <th>Permissie</th>
+                      <th>Actie</th>
+                  </tr>
+                  </thead>
                 <?= $permissionsHTML ?>
               </table>
           <?php } else {
