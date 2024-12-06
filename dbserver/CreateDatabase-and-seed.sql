@@ -17,12 +17,23 @@ CREATE TABLE roles
 
 CREATE UNIQUE INDEX UniqueRoleTitle ON roles (title);
 
+
+CREATE TABLE application (
+    idApplication INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    title VARCHAR(30) NOT NULL COMMENT 'Unique name for application',
+    description VARCHAR(200) NOT NULL
+) COMMENT 'Container for permissions';
+
+CREATE UNIQUE INDEX UniqueApplicationTitle ON application (title);
+
 CREATE TABLE permissions
 (
     idPermission INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
     code         VARCHAR(80)  NOT NULL COMMENT 'Unique code to be used in source code',
     title        VARCHAR(50)  NOT NULL COMMENT 'More descriptive role for management',
-    description  VARCHAR(200) NOT NULL COMMENT 'Description like goal etc'
+    description  VARCHAR(200) NOT NULL COMMENT 'Description like goal etc',
+    fk_idApplication INT UNSIGNED NOT NULL,
+    CONSTRAINT FOREIGN KEY idPermissionApplication (fk_idApplication) REFERENCES application (idApplication) ON DELETE CASCADE ON UPDATE RESTRICT
 ) COMMENT 'Possible permissions to protect transactions';
 
 CREATE UNIQUE INDEX UniquePermissionCode ON permissions (code);
@@ -38,6 +49,7 @@ CREATE TABLE role_permissions
 ) COMMENT 'Roles related to permissions';
 
 CREATE UNIQUE INDEX UniqueRolePermission ON role_permissions (fk_idPermission, fk_idRole);
+
 
 DELIMITER $$
 
@@ -102,32 +114,47 @@ CREATE OR REPLACE PROCEDURE InitAllRolesAndPermissions ()
     ;*/
 
 
+    INSERT INTO application (title, description)
+    VALUES ('Admin Panel',''),
+           ('SharePoint','' ),
+           ('Marketing','' ),
+           ('Grades','' ),
+           ('Mail','' )
+    ;
+
+    SELECT idApplication INTO @var_App_AdminPanel FROM application WHERE title = 'Admin Panel';
+    SELECT idApplication INTO @var_App_SharePoint FROM application WHERE title = 'SharePoint';
+    SELECT idApplication INTO @var_App_Marketing  FROM application WHERE title = 'Marketing';
+    SELECT idApplication INTO @var_App_Grades     FROM application WHERE title = 'Grades';
+    SELECT idApplication INTO @var_App_Mail       FROM application WHERE title = 'Mail';
 
 
-    INSERT INTO permissions (code, title, description)
+    SELECT @var_App_AdminPanel,
+           @var_App_SharePoint,
+           @var_App_Marketing,
+           @var_App_Grades,
+           @var_App_Mail;
+
+    INSERT INTO permissions (code, title, description,fk_idApplication)
     VALUES
-           ('SharePoint_Basic_Access', 'Basic Access to SharePoint', ''),
-           ('Grades_Basic_Access', 'Basic Access to Grades app', ''),
-           ('Marketing_Basic_Access', 'Basic Access to Marketing app', ''),
-
-           ('Use_Mail', 'Use college e-mail', ''),
-           ('AdminPanel', 'Use Admin Panel', ''),
-
-           ('SharePoint_News', 'Read news on SharePoint/Intranet', ''),
-           ('SharePoint_HRM', 'Go to Human Resource Management', ''),
-           ('SharePoint_StudentTools', 'Open student tools', ''),
-
-           ('Grades_Create_Gradelists', 'Create a new list of grades', ''),
-           ('Grades_Approve_Gradeslist', 'Approve a list of grades', ''),
-           ('Grades_Read_Own_Grades', 'Student can read own grades', ''),
-           ('Grades_Read_StudentDetails', 'Get information on all students', ''),
-           ('Grades_Show_Self', 'Show students own information', ''),
-
-           ('Marketing_Create_Campaign', 'Create a new marketing campaign', ''),
-           ('Marketing_Read_Campaign', 'Read a marketing campaign', ''),
-           ('Marketing_Delete_Campaign', 'Delete a marketing campaign', ''),
-           ('Marketing_Update_Campaign', 'Update a marketing campaign', ''),
-           ('Marketing_Approve_Campaign', 'Approve a marketing campaign', '')
+           ('SharePoint_Basic_Access', 'Basic Access to SharePoint', '',@var_App_SharePoint),
+           ('Grades_Basic_Access', 'Basic Access to Grades app', '',@var_App_Grades),
+           ('Marketing_Basic_Access', 'Basic Access to Marketing app', '',@var_App_Marketing),
+           ('Use_Mail', 'Use college e-mail', '',@var_App_Mail),
+           ('AdminPanel', 'Use Admin Panel', '',@var_App_AdminPanel),
+           ('SharePoint_News', 'Read news on SharePoint/Intranet', '',@var_App_SharePoint  ),
+           ('SharePoint_HRM', 'Go to Human Resource Management', '',@var_App_SharePoint),
+           ('SharePoint_StudentTools', 'Open student tools', '',@var_App_SharePoint),
+           ('Grades_Create_Gradelists', 'Create a new list of grades', '',@var_App_Grades),
+           ('Grades_Approve_Gradeslist', 'Approve a list of grades', '',@var_App_Grades),
+           ('Grades_Read_Own_Grades', 'Student can read own grades', '',@var_App_Grades),
+           ('Grades_Read_StudentDetails', 'Get information on all students', '',@var_App_Grades),
+           ('Grades_Show_Self', 'Show students own information', '',@var_App_Grades),
+           ('Marketing_Create_Campaign', 'Create a new marketing campaign', '',@var_App_Marketing),
+           ('Marketing_Read_Campaign', 'Read a marketing campaign', '',@var_App_Marketing),
+           ('Marketing_Delete_Campaign', 'Delete a marketing campaign', '',@var_App_Marketing),
+           ('Marketing_Update_Campaign', 'Update a marketing campaign', '',@var_App_Marketing),
+           ('Marketing_Approve_Campaign', 'Approve a marketing campaign', '',@var_App_Marketing)
     ;
 
     SELECT permissions.idPermission INTO @var_permission_Use_Mail FROM permissions WHERE code = 'Use_Mail';
@@ -244,17 +271,19 @@ BEGIN
         ) INTO @sql
     FROM roles r;
 
-    SET sql_query = CONCAT('SELECT p.title AS Permission, ', @sql, '
+    SET sql_query = CONCAT('SELECT a.title as Application, p.title AS Permission, ', @sql, '
                            FROM permissions p
                            LEFT JOIN role_permissions rp ON p.idPermission = rp.fk_idPermission
                            LEFT JOIN roles r ON rp.fk_idRole = r.idRole
-                           GROUP BY p.title');
+                           LEFT JOIN application a ON p.fk_idApplication = a.idApplication
+                           GROUP BY a.title, p.title');
 
     RETURN sql_query;
-END$$
+END $$
 
 CREATE OR REPLACE PROCEDURE ClearAllRolesAndPermissions()
 BEGIN
+    DELETE FROM application;
     DELETE FROM role_permissions;
     DELETE FROM permissions;
     DELETE FROM roles;
