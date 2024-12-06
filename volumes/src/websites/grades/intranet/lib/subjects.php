@@ -9,3 +9,9 @@ $vakken = [
   "Programmeren C++", "Software Ontwerp", "Database Management", "Algoritmen en Datastructuren", "Web Development",
   "Mobiele Applicatieontwikkeling", "Software Testing", "Agile Methodologieën", "DevOps", "Project Management"
 ];
+$vakkenMetCodes = [];
+foreach ($vakken as $index => $vak) {
+  // Genereer vakcode: eerste drie letters (zonder spaties) + oplopend nummer
+  $code = strtoupper(substr(str_replace(' ', '', $vak), 0, 3)) . str_pad($index + 1, 2, "0", STR_PAD_LEFT);
+  $vakkenMetCodes[] = ['code' => $code, 'name' => $vak];
+}
