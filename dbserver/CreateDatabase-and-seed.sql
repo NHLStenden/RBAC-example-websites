@@ -234,6 +234,7 @@ CALL InitAllRolesAndPermissions();
 CREATE OR REPLACE VIEW vw_Role_Permissions AS
 SELECT idRolePermission,
        idRole,
+       a.title as application,
        roles.title as role,
        roles.distinghuishedName as dn,
        idPermission,
@@ -241,6 +242,7 @@ SELECT idRolePermission,
        p.code as permission_code
 FROM roles JOIN role_permissions rp on roles.idRole = rp.fk_idRole
            JOIN permissions p on rp.fk_idPermission = p.idPermission
+           JOIN application a on a.idApplication = p.fk_idApplication
 ;
 
 
