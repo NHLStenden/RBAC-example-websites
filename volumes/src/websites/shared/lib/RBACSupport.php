@@ -138,7 +138,7 @@ class RBACSupport
       $stmt->execute();
       $this->permissions = [];
       foreach ($stmt as $row) {
-        $this->permissions[$row["permission_code"]] = $row["permission"];
+        $this->permissions[$row["permission_code"]] = $row;
       }
     } catch (PDOException $ex) {
       echo $ex->getMessage();

@@ -1,4 +1,7 @@
 <?php
+
+use Couchbase\Role;
+
 include_once '../../shared/lib/RBACSupport.php';
 include_once '../../shared/partials/header.php';
 
@@ -20,6 +23,16 @@ $selectOptionsHTML = implode('', array_map(function ($x) {
 
   return "<option>$vakcode - $name</option> ";
 }, $vakkenMetCodes));
+
+$opleidingen = array_filter($rbac->groups, function($group){
+    return str_contains($group, 'ou=opleidingen,ou=roles,dc=NHLStenden,dc=com');
+});
+
+$opleidingenHTML = implode('', array_map(function ($opleiding) {
+  $opleidingParts = explode(',', $opleiding);
+  $name =explode('=', $opleidingParts[0])[1];
+  return "<option>$name</option> ";
+}, $opleidingen));
 
 ?>
 <!doctype html>
@@ -49,6 +62,11 @@ $selectOptionsHTML = implode('', array_map(function ($x) {
 
             <label for="description">Beschrijving</label>
             <textarea id="description" name="description" rows="4" required></textarea>
+
+            <label for="opleiding">Opleiding</label>
+            <select id="opleiding" name="opleiding" required>
+              <?= $opleidingenHTML ?>
+            </select>
 
             <label for="vakken">Vakcode</label>
             <select id="vakken" name="vakcode" required>

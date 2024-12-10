@@ -54,8 +54,10 @@ SECTION_MY_LDAP_ROLES;
 
 function GenerateSectionForMyLdapPermissions(RBACSupport $rbac): string|null
 {
-  $permissions = implode("\n", array_map(function ($group) {
-    return "<li>$group</li>";
+  $permissions = implode("\n", array_map(function ($permission) {
+    $role = $permission['role'];
+    $permissionName = $permission['permission'];
+    return "<li>$role : $permissionName</li>";
   }, $rbac->permissions));
 
   return <<< SECTION_MY_LDAP_ROLES
