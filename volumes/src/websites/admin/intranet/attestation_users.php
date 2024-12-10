@@ -18,6 +18,10 @@ function createAttestationTable()
 {
   [$header, $report] = collectAllUsersAndGroupMemberships();
 
+  usort($report, function ($a, $b) {
+      return strcmp($a["CN"], $b["CN"]);
+  });
+
   $headerHTML = implode('', array_map(function($x) {return "<th>$x</th>";}, $header));
 
 // Output the report as a table
