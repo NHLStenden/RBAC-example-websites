@@ -39,10 +39,12 @@ cp role_assignment_all_students.lst role_assignment_grades-students.lst
 
 # Now process the marketing users
 grep 'dn:' Ldap-data-03-Create-Users-marketing.ldif | awk -F \: '/dn:/{print "uniqueMember:" $2}' > role_assignment_marketing.lst
+
+# Make the last 3 users member of the marketing role
 grep 'dn:' Ldap-data-03-Create-Users-marketing.ldif | tail -n 3 | awk -F \: '/dn:/{print "uniqueMember:" $2}' > role_assignment_marketing-managers.lst
 
 # Now process the ICT Support users
-grep 'dn:' Ldap-data-04-Create-Users-ict_support.ldif | tail -n 3 | awk -F \: '/dn:/{print "uniqueMember:" $2}' > role_assignment_ict-support.lst
+grep 'dn:' Ldap-data-04-Create-Users-ict_support.ldif | awk -F \: '/dn:/{print "uniqueMember:" $2}' > role_assignment_ict-support.lst
 
 
 # Copy for access to SharePoint sub-parts for teachers and students.
