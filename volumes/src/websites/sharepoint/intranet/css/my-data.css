@@ -23,3 +23,13 @@ section.my-info {
         border-radius: 30%;
     }
 }
+
+section.ldap-permissions {
+    & table {
+        border-collapse: collapse;
+        & tr td {
+            border-bottom: 1px solid black;
+            padding:4px;
+        }
+    }
+}
