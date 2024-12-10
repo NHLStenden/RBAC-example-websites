@@ -23,6 +23,8 @@ section.report {
     & th {
         background-color: #f4f4f9;
         text-align: center;
+        position: sticky;
+        top:0px;
     }
 
     & td {
