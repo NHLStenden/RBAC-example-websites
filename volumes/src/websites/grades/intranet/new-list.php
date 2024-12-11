@@ -53,7 +53,7 @@ $opleidingenHTML = implode('', array_map(function ($opleiding) {
   <?php echo showheader(Websites::WEBSITE_GRADES, basename(__FILE__), $rbac) ?>
 
     <section class="new-list">
-        <form>
+        <form action="new-list.php" method="post">
             <label for="name">Naam van de lijst</label>
             <input type="text" id="name" name="name" required>
 
