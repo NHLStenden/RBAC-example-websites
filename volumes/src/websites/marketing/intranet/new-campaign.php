@@ -32,7 +32,7 @@ if (!$rbac->has(Permission_Marketing_Create_Campaign)) {
     </section>
 
       <section class="new-campaign">
-          <form>
+          <form method="post" action="new-campaign.php">
               <label for="name">Naam van de campagne</label>
               <input type="text" id="name" name="name" required>
 
