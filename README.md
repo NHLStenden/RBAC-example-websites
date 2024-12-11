@@ -338,19 +338,24 @@ met demografische spreiding op geslacht etc.
 Deze website is gebouwd met het oog op het kunnen oefenen met IAM en RBAC principes. Daarbij zijn concessies gedaan aan
 de kwaliteit van de broncode en de algemene cyber security. Er zijn een aantal basismaatregelen getroffen zoals het
 werken met *prepared statements* en *geparametriseerde queries* in SQL-expressies, het converteren van input naar echte
-getallen als dat kan. Er zijn echter zaken ook niet geregeld.
+getallen als dat kan. Er zijn echter zaken ook niet geregeld. 
 
-* Er is voor de websites (nog) geen Content Security Policy (CSP) gedefinieerd.
-* Er is geen penetratie test uitgevoerd. Een geschikt middel is bijvoorbeeld de **Zed Attack Proxy** (ZAP).
-* Hoewel er weinig door gebruikers ingevoerde data gebruikt wordt, zou meer *Input Sanitizing* gebruikt moeten worden
-* Er worden geen headers meegestuurd die de browser instrueren om bijvoorbeeld plaatsing in een iFrame te voorkomen
+De volgende items zijn inmiddels doorgevoerd:
+
+* Er is voor elke website een Content Security Policy (CSP) gedefinieerd.
+* Er is een penetratie test uitgevoerd met de **Zed Attack Proxy** (ZAP).
+* Hoewel er weinig door gebruikers ingevoerde data gebruikt wordt, wordt *Input Sanitizing* gebruikt
+* Er worden headers meegestuurd die de browser instrueren om bijvoorbeeld plaatsing in een iFrame te voorkomen
   of Cross-Site (XSS) Scripting te voorkomen
+
+Wat nog beter kan:
+
 * Er wordt in de formulieren geen gebruik gemaakt van CSRF-tokens. Een CSRF-token (Cross-Site Request Forgery-token) is
   een unieke, geheimgehouden waarde die wordt gegenereerd door een server en toegevoegd aan formulieren om te verifiëren
   dat de verzoeken afkomstig zijn van de geauthenticeerde gebruiker. Dit voorkomt dat kwaadwillende websites
   ongeautoriseerde acties uitvoeren namens de gebruiker.
 
-Voor een goed inzicht hoe je wél veilige websites maakt, verwijs ik je naar bijvoorbeeld OWASP en het NSCS.
+Voor een goed inzicht hoe je een nog veiligere websites maakt, verwijs ik je naar bijvoorbeeld OWASP en het NSCS.
 
 # Referenties / bronnen
 
@@ -373,4 +378,4 @@ Docent bij NHL Stenden, opleidingen Bachelor HBO-ICT en Associate Degree Cyber S
 
 [martin.molema@nhlstenden.com](mailto:martin.molema@nhlstenden.com)
 
-December 2024.
+11 December 2024.
