@@ -97,11 +97,7 @@ function DoSync()
     <article>
         <?= showheader(Websites::WEBSITE_ADMIN, basename(__FILE__), $rbac) ?>
         <section class="results">
-          <pre>
-          <?php
-          DoSync();
-          ?>
-            </pre>
+          <pre><?php DoSync(); ?></pre>
         </section>
     </article>
 </main>
