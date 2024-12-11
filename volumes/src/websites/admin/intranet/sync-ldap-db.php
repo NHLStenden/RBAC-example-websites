@@ -5,68 +5,73 @@ include_once '../../shared/partials/header.php';
 
 $rbac = new RBACSupport($_SERVER["AUTHENTICATE_UID"]);
 if (!$rbac->process()) {
-  die('Could not connect to RBAC server.');
+    die('Could not connect to RBAC server.');
 }
 if (!$rbac->has(Permission_Admin_Panel)) {
-  echo "Not allowed to open the Admin panel\n";
-  die();
+    echo "Not allowed to open the Admin panel\n";
+    die();
 }
 
 function DoSync()
 {
 // LDAP server configuratie
-  $ldap_dn = "ou=roles,dc=NHLStenden,dc=com";
+    $ldap_dn = "ou=roles,dc=NHLStenden,dc=com";
 
-  try {
-    // Verbinding maken met LDAP
-    $ldap_conn = ConnectAndCheckLDAP();
+    try {
+        // Verbinding maken met LDAP
+        $ldap_conn = ConnectAndCheckLDAP();
 
-    // Verbinding maken met MySQL via PDO
-    $pdo = new PDO('mysql:host=iam-example-db-server;dbname=IAM;', "student", "test1234");
+        // Verbinding maken met MySQL via PDO
+        $pdo = new PDO('mysql:host=iam-example-db-server;dbname=IAM;', "student", "test1234");
 
-    // LDAP zoekopdracht uitvoeren
-    $search  = ldap_search($ldap_conn, $ldap_dn, "(objectClass=groupOfUniqueNames)");
-    $entries = ldap_get_entries($ldap_conn, $search);
+        // LDAP zoekopdracht uitvoeren
+        $search = ldap_search($ldap_conn, $ldap_dn, "(objectClass=groupOfUniqueNames)");
+        $entries = ldap_get_entries($ldap_conn, $search);
 
-    $nrOfNewRoles = 0;
-    foreach ($entries as $entry) {
-      if (isset($entry['dn']) && isset($entry['cn'][0])) {
-        $dn    = $entry['dn'];
-        $title = $entry['cn'][0];
+        // Haal alle rollen op
+        $stmt = $pdo->prepare("SELECT distinghuishedName FROM roles ORDER BY distinghuishedName");
+        $stmt->execute();
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        $allRoles = $stmt->fetchAll();
 
-        echo "Controleer rol: $title\n";
+        $allDistinguishedNames = array_map(function ($entry) {
+            return $entry['distinghuishedName'];
+        }, $allRoles);
 
-        // Controleer of de rol al in de database bestaat
-        $stmt = $pdo->prepare("SELECT idRole FROM roles WHERE distinghuishedName = :dn");
-        $stmt->bindValue(':dn', $dn, PDO::PARAM_STR);
-        $stmt->execute([':dn' => $dn]);
+        $nrOfNewRoles = 0;
+        foreach ($entries as $entry) {
+            if (isset($entry['dn']) && isset($entry['cn'][0])) {
+                $dn = $entry['dn'];
+                $title = $entry['cn'][0];
 
-        if ($stmt->rowCount() == 0) {
+                echo "Controleer rol: $title\n";
 
-          echo "- Nieuwe rol gedetecteerd.\n";
+                if (!in_array($dn, $allDistinguishedNames)) {
 
-          $nrOfNewRoles++;
+                    echo "- Nieuwe rol gedetecteerd : $dn\n";
 
-          // Voeg de rol toe aan de database
-          $description = "Rol voor $title";
-          $stmt_insert = $pdo->prepare("INSERT INTO roles (title, description, distinghuishedName) VALUES (:title, :description, :dn)");
-          $stmt_insert->execute([
-            ':title' => $title,
-            ':description' => $description,
-            ':dn' => $dn
-          ]);
+                    $nrOfNewRoles++;
+
+                    // Voeg de rol toe aan de database
+                    $description = "Rol voor $title";
+                    $stmt_insert = $pdo->prepare("INSERT INTO roles (title, description, distinghuishedName) VALUES (:title, :description, :dn)");
+                    $stmt_insert->execute([
+                        ':title' => $title,
+                        ':description' => $description,
+                        ':dn' => $dn
+                    ]);
+                }
+            }
         }
-      }
+
+        // Sluit de verbindingen
+        ldap_unbind($ldap_conn);
+        $pdo = null;
+
+        echo "\n\nSynchronisatie voltooid. Er zijn $nrOfNewRoles nieuwe rollen aangemaakt";
+    } catch (Exception $e) {
+        echo "Fout: " . $e->getMessage();
     }
-
-    // Sluit de verbindingen
-    ldap_unbind($ldap_conn);
-    $pdo = null;
-
-    echo "\n\nSynchronisatie voltooid. Er zijn $nrOfNewRoles nieuwe rollen aangemaakt";
-  } catch (Exception $e) {
-    echo "Fout: " . $e->getMessage();
-  }
 }
 
 ?>
@@ -90,7 +95,7 @@ function DoSync()
 <main class="container-fluid">
 
     <article>
-      <?= showheader(Websites::WEBSITE_ADMIN,basename(__FILE__), $rbac) ?>
+        <?= showheader(Websites::WEBSITE_ADMIN, basename(__FILE__), $rbac) ?>
         <section class="results">
           <pre>
           <?php
