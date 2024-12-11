@@ -12,6 +12,11 @@ if (!$rbac->has(Permission_Admin_Panel)) {
   die();
 }
 
+if (!is_numeric($_POST["idRole"]) || !is_numeric($_POST["idPermission"])) {
+    http_response_code(406);
+    die('not acceptable');
+}
+
 $idRole       = (int)$_POST["idRole"];
 $idPermission = (int)$_POST["idPermission"];
 

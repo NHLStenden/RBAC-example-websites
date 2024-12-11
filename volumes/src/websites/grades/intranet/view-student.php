@@ -15,8 +15,10 @@ if (!$rbac->has(Permission_Grades_Read_StudentDetails)) {
 $searchResults = [];
 $studentDetails = null;
 
+
 if (isset($_POST) && isset($_GET['search'])) {
-    $studentToSearch = $_POST["studentName"];
+    $studentToSearch = htmlspecialchars($_POST["studentName"], ); ;
+
     $lnk = ConnectAndCheckLDAP();
     $students = SearchStudentByName($lnk, $studentToSearch);
 
@@ -38,6 +40,10 @@ if (isset($_POST) && isset($_GET['search'])) {
     }
 } else if (isset($_GET['id'])) {
     $id = $_GET['id'];
+    if (!is_numeric($id)) {
+        http_response_code(406);
+        die();
+    }
     $lnk = ConnectAndCheckLDAP();
     $studentDetails = SearchStudentByUID($lnk, $id);
 }
