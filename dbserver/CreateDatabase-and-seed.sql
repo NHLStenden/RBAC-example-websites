@@ -68,10 +68,10 @@ CREATE OR REPLACE PROCEDURE InitAllRolesAndPermissions ()
            ('SharePoint Students', 'SharePoint Students', 'cn=SharePoint Students,ou=roles,dc=NHLStenden,dc=com'),
            ('SharePoint Teachers', 'SharePoint Teachers', 'cn=SharePoint Teachers,ou=roles,dc=NHLStenden,dc=com'),
 
-           ('Students ADCSS', '', 'cn=Students ADCSS,ou=roles,dc=NHLStenden,dc=com'),
-           ('Students HBO-ICT', '', 'cn=Students HBO-ICT,ou=roles,dc=NHLStenden,dc=com'),
-           ('Teachers ADCSS', '', 'cn=Teachers ADCSS,ou=roles,dc=NHLStenden,dc=com'),
-           ('Teachers HBO-ICT', '', 'cn=Teachers HBO-ICT,ou=roles,dc=NHLStenden,dc=com'),
+           ('Students ADCSS',   '', 'cn=Students ADCSS,ou=opleidingen,ou=roles,dc=NHLStenden,dc=com'),
+           ('Students HBO-ICT', '', 'cn=Students HBO-ICT,ou=opleidingen,ou=roles,dc=NHLStenden,dc=com'),
+           ('Teachers ADCSS',   '', 'cn=Teachers ADCSS,ou=opleidingen,ou=roles,dc=NHLStenden,dc=com'),
+           ('Teachers HBO-ICT', '', 'cn=Teachers HBO-ICT,ou=opleidingen,ou=roles,dc=NHLStenden,dc=com'),
 
            ('Marketing', '', 'cn=Marketing,ou=roles,dc=NHLStenden,dc=com'),
            ('Marketing management', '', 'cn=Marketing managers,ou=roles,dc=NHLStenden,dc=com')
