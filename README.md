@@ -63,7 +63,7 @@ In de folder van deze repository staan ook twee programma's die de bestanden kun
 * Voor onder WSL: `convert-cr-lf-wsl`
 
 Mocht het nodig zijn om deze programma's aan te passen of te hercompileren, kijk dan in de map
-`_resources/support/conver-crlf` en het daar aanwezige [`README.md`](./_resources/support/convert-crlf/README.md)
+`_resources/support/convert-crlf` en het daar aanwezige [`README.md`](./_resources/support/convert-crlf/README.md)
 bestand voor instructies.
 
 ## Bouw en start de containers
@@ -168,17 +168,19 @@ Voeg onderstaande items toe aan je `hosts` file.
 Nu de Docker Containers goed draaien is het tijd om een eerste test uit te voeren. Dit doen we door de websites te
 openen in een browser die BasicAuthentication beschikbaar heeft. Let op: in Microsoft Edge kan het zijn dat een policy
 niet langer BasicAuthentication (`basic`) toestaat.
+
+
 Zie https://answers.microsoft.com/en-us/microsoftedge/forum/all/latest-version-of-edge-no-longer-shows-basic/3601252b-e56b-46c0-a088-0f6084eabe47
 en `edge://policy/` (zoek naar AuthSchemes) en check of `basic` daar bij staat. Zo niet, gebruik dan een andere browser
 (Brave, Firefox, Chromium, Opera, Vivaldi of Google Chrome).
 
 De volgende websites zijn beschikbaar:
 
-| Beschrijving                                     | URL                       | Rol in Identity Server                                                                                           | 
-|--------------------------------------------------|---------------------------|------------------------------------------------------------------------------------------------------------------| 
-| De website voor Marketing:                       | http://marketing.docker/  | `cn=marketing,ou=roles,dc=NHLStenden,dc=com`                                                                     |
-| De Cijfer Administratie                          | http://grades.docker/     | `cn=Grades Students,ou=roles,dc=NHLStenden,dc=com` of `cn=Blackboard Teachers,ou=roles,dc=NHLStenden,dc=com`     |
-| Het Admin panel van de beheerder                 | http://admin.docker/      | `cn=admins,ou=roles,dc=NHLStenden,dc=com`                                                                        |
+| Beschrijving                                    | URL                       | Rol in Identity Server                                                                                           | 
+|-------------------------------------------------|---------------------------|------------------------------------------------------------------------------------------------------------------| 
+| De website voor Marketing:                      | http://marketing.docker/  | `cn=marketing,ou=roles,dc=NHLStenden,dc=com`                                                                     |
+| De Cijfer Administratie                         | http://grades.docker/     | `cn=Grades Students,ou=roles,dc=NHLStenden,dc=com` of `cn=Blackboard Teachers,ou=roles,dc=NHLStenden,dc=com`     |
+| Het Admin panel van de beheerder                | http://admin.docker/      | `cn=admins,ou=roles,dc=NHLStenden,dc=com`                                                                        |
 | Het SharePoint platform voor gedeelde informatie | http://sharepoint.docker/ | `cn=SharePoint Students,ou=roles,dc=NHLStenden,dc=com` of `cn=SharePoint Teachers,ou=roles,dc=NHLStenden,dc=com` |
 
 Je kunt hierbij inloggen met de volgende gebruikers. Het wachtwoord is altijd  `Test1234!`. Je kunt met Apache Directory

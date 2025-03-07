@@ -116,7 +116,7 @@ header('Pragma: no-cache');
     <article>
       <?= showheader(Websites::WEBSITE_ADMIN,basename(__FILE__), $rbac) ?>
         <section class="new-record">
-            <h3>Nieuwe Permissie aanmaken</h3>
+            <h3>Permissie toevoegen aan rol</h3>
             <form action="add-role.php" method="post">
                 <input type="hidden" name="idRole" value="<?= $idRole ?>">
                 <label for="newpermission">Permissie:</label>
