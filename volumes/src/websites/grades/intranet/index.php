@@ -11,9 +11,20 @@ if (!$rbac->has(Permission_Grades_BasicAccess)) {
   echo "Not allowed to create grades grade lists.\n";
   die();
 }
+$roles = $rbac->groups;
+$isStudent = in_array('cn=Grades Students,ou=roles,dc=NHLStenden,dc=com', $roles);
+$isTeacher = in_array('cn=Grades Teachers,ou=roles,dc=NHLStenden,dc=com', $roles);
 
-$isStudent = in_array('cn=Grades Students,ou=roles,dc=NHLStenden,dc=com', $rbac->groups);
-$isTeacher = in_array('cn=Grades Teachers,ou=roles,dc=NHLStenden,dc=com', $rbac->groups);
+$suffix = "ou=opleidingen,ou=roles,dc=NHLStenden,dc=com";
+$opleidingen = [];
+foreach ($roles as $role) {
+    if (str_ends_with($role, $suffix)) {
+        preg_match('/cn=([^,]+)/', $role, $matches);
+        if (!empty($matches[1])) {
+            $opleidingen[] = $matches[1]; // Haal de CN-waarde op
+        }
+    }
+}
 
 $role = '';
 if ($isStudent) {
@@ -45,6 +56,17 @@ if ($isTeacher) {
             <p>
                 Kijk in de navigatie balk hierboven om naar de verschillende onderdelen van de applicatie te gaan.
             </p>
+
+        </section>
+        <section>
+            <p>Je bent lid van de volgende opleidingen:</p>
+            <ul>
+                <?php
+                foreach ($opleidingen as $opleiding) {
+                    echo '<li>' . $opleiding . '</li>';
+                }
+                ?>
+            </ul>
 
         </section>
     </article>
