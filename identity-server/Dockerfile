@@ -14,11 +14,9 @@ COPY *.sh /app
 RUN chmod a+x /app/*.sh
 
 # Update repositories
-RUN apt update && apt install -y debconf-utils python3 python3-venv
-
-RUN /app/configure_ldap.sh
-
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y slapd ldap-utils
+RUN apt update && apt install -y debconf-utils python3 python3-venv \
+    && /app/configure_ldap.sh \
+    && DEBIAN_FRONTEND=noninteractive apt-get install -y slapd ldap-utils
 
 COPY ldif/Ldap-data-*.ldif /app
 COPY ldif-base/*.base /app
