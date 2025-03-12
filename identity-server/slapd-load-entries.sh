@@ -27,8 +27,11 @@ grep 'dn:' Ldap-data-02a-Create-Users-Opleiding-AD.ldif | awk -F \: '/ou=Student
 grep 'dn:' Ldap-data-02b-Create-Users-Opleiding-HBO-ICT.ldif | awk -F \: '/ou=Teachers/{print "uniqueMember:" $2}' > role_assignment_teachers-HBOICT.lst
 grep 'dn:' Ldap-data-02b-Create-Users-Opleiding-HBO-ICT.ldif | awk -F \: '/ou=Students/{print "uniqueMember:" $2}' > role_assignment_students-HBOICT.lst
 
+# Now duplicate two teachers from each course to the other course: these teachers will work at two courses
+head -n 2 role_assignment_teachers-ADCSS.lst >> role_assignment_teachers-HBOICT.lst
+
 # Collect all teachers in one list
-cat role_assignment_teachers-ADCSS.lst role_assignment_teachers-HBOICT.lst > role_assignment_all_teachers.lst
+cat role_assignment_teachers-ADCSS.lst role_assignment_teachers-HBOICT.lst | sort | uniq > role_assignment_all_teachers.lst
 
 # Collect all students in one list
 cat role_assignment_students-ADCSS.lst role_assignment_students-HBOICT.lst > role_assignment_all_students.lst
@@ -104,6 +107,15 @@ cd /app
 
 python3 /app/upload_avatars.py
 python3 /app/add-more-info.py
+
+exit 0
+
+
+########################################################################################
+########################################################################################
+############# CLEANUP               ####################################################
+########################################################################################
+########################################################################################
 
 # when all went well....
 rm avatars/*.jpeg
