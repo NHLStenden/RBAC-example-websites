@@ -79,3 +79,9 @@ section.navigation-header {
         background-color: lightblue;
     }
 }
+
+@media print {
+    section.navigation-header {
+        display: none;
+    }
+}

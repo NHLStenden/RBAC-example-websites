@@ -45,24 +45,19 @@ function createAttestationTable()
     <link href="css/header.css" rel="stylesheet">
     <link href="css/attestation.css" rel="stylesheet">
     <link rel="icon" type="image/png" href="../favicon.png">
+    <script src="js/attestation.js" type="module"></script>
 </head>
 <body>
 <main class="container-fluid">
 
     <article>
       <?= showheader(Websites::WEBSITE_ADMIN,basename(__FILE__), $rbac) ?>
-        <section class="welcome" aria-label="Welcome section">
-            <h1>Welkom bij het Admin panel van NHL Stenden.</h1>
-            <p>
-                Kijk in de navigatie balk hierboven om naar de verschillende applicaties te gaan.
-            </p>
-
-        </section>
-        <section class="report users">
+        <section class="report users header">
             <button><a href="download_attestation_user.php">Download</a></button>
-          <?php createAttestationTable(); ?>
         </section>
-
+        <section class="report users results">
+        <?php createAttestationTable(); ?>
+        </section>
     </article>
 
 </main>

@@ -38,6 +38,14 @@ section.report {
         font-style: italic;
     }
 
+
+    & tr:has(td.filtered) {
+        display: none;
+    }
+
+    & select.has-selection {
+        background-color: lightgreen;
+    }
 }
 
 section.roles {
@@ -55,5 +63,11 @@ section.users {
         & tr td:not(:nth-child(-n + 4)) {
             text-align: center;
         }
+    }
+}
+
+@media print {
+    section.report.header {
+        display: none;
     }
 }
