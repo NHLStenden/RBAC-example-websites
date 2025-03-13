@@ -37,7 +37,7 @@ $roles = $stmt->fetchAll();
 
         <section class="roles">
             <p>
-                <button><a href="restore-all-permissions.php"> Restore all roles</a></button>
+                <button><a href="restore-all-permissions.php"> Restore all permissions</a></button>
                 <button><a href="sync-ldap-db.php"> Synchroniseer Rollen</a></button>
             </p>
             <table>
