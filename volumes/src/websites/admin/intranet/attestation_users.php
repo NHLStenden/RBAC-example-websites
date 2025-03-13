@@ -6,33 +6,37 @@ include_once 'lib/attestation-functions.inc.php';
 
 $rbac = new RBACSupport($_SERVER["AUTHENTICATE_UID"]);
 if (!$rbac->process()) {
-  die('Could not connect to RBAC server.');
+    die('Could not connect to RBAC server.');
 }
 if (!$rbac->has(Permission_Admin_Panel)) {
-  echo "Not allowed to open the Admin panel\n";
-  die();
+    echo "Not allowed to open the Admin panel\n";
+    die();
 }
 // LDAP server details
 
 function createAttestationTable()
 {
-  [$header, $report] = collectAllUsersAndGroupMemberships();
+    [$header, $report] = collectAllUsersAndGroupMemberships();
 
-  usort($report, function ($a, $b) {
-      return strcmp($a["CN"], $b["CN"]);
-  });
+    usort($report, function ($a, $b) {
+        return strcmp($a["CN"], $b["CN"]);
+    });
 
-  $headerHTML = implode('', array_map(function($x) {return "<th>$x</th>";}, $header));
+    $headerHTML = implode('', array_map(function ($x) {
+        return "<th><p class='caption'>$x</P</th>";
+    }, $header));
 
 // Output the report as a table
-  echo "<table><thead><tr>$headerHTML</tr></thead>";
+    echo "<table><thead><tr>$headerHTML</tr></thead>";
 
-  foreach ($report as $user_info) {
-    echo "<tr>";
-    echo implode("", array_map(function($x) {return "<td>$x</td>";}, $user_info));
-    echo "</tr>";
-  }
-  echo "</table>";
+    foreach ($report as $user_info) {
+        echo "<tr>";
+        echo implode("", array_map(function ($x) {
+            return "<td>$x</td>";
+        }, $user_info));
+        echo "</tr>";
+    }
+    echo "</table>";
 
 }
 
@@ -51,12 +55,12 @@ function createAttestationTable()
 <main class="container-fluid">
 
     <article>
-      <?= showheader(Websites::WEBSITE_ADMIN,basename(__FILE__), $rbac) ?>
+        <?= showheader(Websites::WEBSITE_ADMIN, basename(__FILE__), $rbac) ?>
         <section class="report users header">
             <button><a href="download_attestation_user.php">Download</a></button>
         </section>
         <section class="report users results">
-        <?php createAttestationTable(); ?>
+            <?php createAttestationTable(); ?>
         </section>
     </article>
 

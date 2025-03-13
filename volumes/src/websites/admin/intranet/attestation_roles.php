@@ -23,7 +23,7 @@ function createAttestationTable()
     [$header, $report] = getRolePermissionCrossTable($pdo);
 
     $headerHTML = implode('', array_map(function ($x) {
-        return "<th>$x</th>";
+        return "<th><p class='caption'>$x</P</th>";
     }, $header));
 
 // Output the report as a table
