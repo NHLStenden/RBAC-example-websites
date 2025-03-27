@@ -1,32 +1,18 @@
-FROM debian:latest
-
-###
-# Admin:  cn=admin,dc=NHLStenden,dc=com
-# Password = test12345!
-#
-####
-
-
-RUN mkdir /app
+FROM python:3.11
 WORKDIR /app
+COPY requirements.txt .
+COPY src/* /app
 
-COPY *.sh /app
-RUN chmod a+x /app/*.sh
+RUN pip install -r requirements.txt \
+    && apt update && apt install -y cron \
+    && chmod a+x /app/*.sh \
+    && mkdir /app/logs \
+    service cron start
 
-# Update repositories
-RUN apt update && apt install -y debconf-utils python3 python3-venv \
-    && /app/configure_ldap.sh \
-    && DEBIAN_FRONTEND=noninteractive apt-get install -y slapd ldap-utils
+COPY crontab /etc/cron.d/run-sync
 
-COPY ldif/Ldap-data-*.ldif /app
-COPY ldif-base/*.base /app
-
-RUN mkdir avatars
-COPY avatars/*.jpeg avatars
-COPY *.py /app
+RUN chmod 0644 /etc/cron.d/run-sync \
+    && crontab /etc/cron.d/run-sync
 
 
-# Now start the LDAP daemon. it is not possible to execute commands after this
-# So loading the LDIF-files must be done afterwards
-#
-ENTRYPOINT slapd -d 0
+CMD ["tail", "-f", "/dev/null"]
