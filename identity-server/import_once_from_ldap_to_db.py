@@ -9,8 +9,8 @@ SEARCH_BASE = "dc=NHLStenden,dc=com"
 
 # ✅ MariaDB instellingen
 DB_CONFIG = {
-    "host": "hrmdbserver",
-    "port": 3307,
+    "host": "iam-example-hrm-server",
+    "port": 3306,
     "user": "admin",
     "password": "Test1234!",
     "database": "HRM"
