@@ -21,7 +21,7 @@ dn_naar_functie = {
     "ou=Teachers,ou=Opleidingen,dc=NHLStenden,dc=com": "docent",
     "ou=ICT Support,ou=Staff,dc=NHLStenden,dc=com": "medewerker ICT",
     "ou=Marketing,ou=Staff,dc=NHLStenden,dc=com":"medewerker marketing",
-
+    "ou=HRM,ou=Staff,dc=NHLStenden,dc=com":"medewerker HRM",
 }
 def clear_table(cursor):
     """Leegt de medewerkers-tabel."""
