@@ -68,7 +68,7 @@ function DoSync()
         ldap_unbind($ldap_conn);
         $pdo = null;
 
-        echo "\n\nSynchronisatie voltooid. Er zijn $nrOfNewRoles nieuwe rollen aangemaakt";
+        echo "\n\nSynchronisatie voltooid. Er zijn $nrOfNewRoles nieuwe rollen aangemaakt in de permissie administratie";
     } catch (Exception $e) {
         echo "Fout: " . $e->getMessage();
     }
