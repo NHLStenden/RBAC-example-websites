@@ -108,8 +108,10 @@ cd /app
 python3 /app/upload_avatars.py
 python3 /app/add-more-info.py
 
-exit 0
-
+cd /apps
+source venv/bin/activate
+python3 /app/import_once_from_ldap_to_db.py
+deactivate
 
 ########################################################################################
 ########################################################################################
@@ -123,4 +125,4 @@ rmdir avatars
 rm -rf /app/ldap-updates-venv
 rm /app/*.py
 
-apt purge -y python3 && apt -y autoremove
+# apt purge -y python3 python3-pip && apt -y autoremove
