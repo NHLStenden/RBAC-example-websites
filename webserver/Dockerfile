@@ -23,7 +23,7 @@ RUN rm /etc/apache2/sites-available/000-default.conf  \
     /etc/apache2/sites-available/default-ssl.conf
 
 # RUN a2dissite
-RUN a2ensite grades.conf sharepoint.conf admin.conf marketing.conf
+RUN a2ensite grades.conf sharepoint.conf admin.conf marketing.conf hrm.conf
 
 RUN a2enmod ldap authnz_ldap
 
@@ -32,6 +32,7 @@ RUN echo "Test1234!" > /root/website-passwords/passwd-grades
 RUN echo "Test1234!" > /root/website-passwords/passwd-sharepoint
 RUN echo "Test1234!" > /root/website-passwords/passwd-admin
 RUN echo "Test1234!" > /root/website-passwords/passwd-marketing
+RUN echo "Test1234!" > /root/website-passwords/passwd-hrm
 
 RUN chmod 600 /root/website-passwords/*
 
