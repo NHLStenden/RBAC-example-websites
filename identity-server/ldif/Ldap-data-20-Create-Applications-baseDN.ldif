@@ -55,3 +55,28 @@ uid: app_marketing
 userPassword:: e0NSWVBUfSQ1JGI5WHY4VU1QJGF0akZEMmVtTFpLZE0xQlAvYlBOVTlqcGFpO
  DQwVS9XU0swdGhTQkhYbzE=
 
+
+dn: cn=Provisioning application,ou=users,ou=Applications,dc=NHLStenden,dc=com
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+objectClass: top
+cn: Provisioning application
+sn: Provisioning application
+uid: app_Provisioning
+userPassword:: e0NSWVBUfSQ1JGI5WHY4VU1QJGF0akZEMmVtTFpLZE0xQlAvYlBOVTlqcGFpO
+ DQwVS9XU0swdGhTQkhYbzE=
+
+
+
+dn: cn=HRM application,ou=users,ou=Applications,dc=NHLStenden,dc=com
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+objectClass: top
+cn: HRM application
+sn: HRM application
+uid: app_HRM
+userPassword:: e0NSWVBUfSQ1JGI5WHY4VU1QJGF0akZEMmVtTFpLZE0xQlAvYlBOVTlqcGFpO
+ DQwVS9XU0swdGhTQkhYbzE=
+
