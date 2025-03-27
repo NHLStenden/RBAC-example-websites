@@ -25,6 +25,7 @@ TYPE_TO_DN = {
     "docent": "ou=Teachers,ou=Opleidingen,dc=NHLStenden,dc=com",
     "medewerker ICT": "ou=ICT Support,ou=Staff,dc=NHLStenden,dc=com",
     "medewerker marketing": "ou=Marketing,ou=Staff,dc=NHLStenden,dc=com",
+    "medewerker HRM": "ou=HRM,ou=Staff,dc=NHLStenden,dc=com",
 }
 
 
@@ -64,6 +65,15 @@ def get_medewerkers():
     medewerkers = cursor.fetchall()
     db.close()
     return medewerkers
+
+def get_medewerkers_employeeNumber():
+    db = connect_db()
+    cursor = db.cursor(dictionary=True)
+    cursor.execute("SELECT personeelsnummer FROM medewerkers")
+    medewerkers = {row["personeelsnummer"] for row in cursor.fetchall()}
+    db.close()
+    return medewerkers
+
 
 # Genereer de uid (eerste letter voornaam + achternaam)
 def generate_uid(voornaam, achternaam, personeelsnummer):
@@ -180,6 +190,39 @@ def sync_medewerkers():
 
     conn_ldap.unbind()
 
+# Zoek alle gebruikers in LDAP
+def get_all_ldap_users(conn):
+    search_filter = "(&(objectClass=inetOrgPerson)(!(employeeType=Student)))"
+    conn.search(LDAP_CONFIG["base_dn"], search_filter, attributes=["employeeNumber"])
+    ldap_users = {entry.entry_dn: entry.employeeNumber.value for entry in conn.entries if entry.employeeNumber}
+    return ldap_users
+
+# Wachtwoord leegmaken voor een inactieve medewerker
+def deactivate_ldap_account(conn, dn):
+    if conn.modify(dn, {"userPassword": [(MODIFY_REPLACE, [""])]}):
+        print(f"⚠️ Wachtwoord geleegd voor gedeactiveerd account: {dn}")
+    else:
+        print(f"❌ Fout bij wachtwoord legen voor {dn}: {conn.result}")
+
+# Controleer welke medewerkers niet meer in de database staan en deactiveer hun account
+def deactivate_removed_users():
+    print("------------------------------------------------------------------------------------------")
+    print("---------------------- Opruimen accounts die niet meer in medewerkerslijst staan----------")
+    print("------------------------------------------------------------------------------------------")
+    conn_ldap = connect_ldap()
+    actieve_medewerkers = get_medewerkers_employeeNumber()
+    actieve_medewerkers = {str(num) for num in actieve_medewerkers}
+
+    ldap_users = get_all_ldap_users(conn_ldap)
+
+    for dn, employee_number in ldap_users.items():
+        print(f"- testing employee {dn}")
+        if str(employee_number) not in actieve_medewerkers:
+            deactivate_ldap_account(conn_ldap, dn)
+
+    conn_ldap.unbind()
+
 # Voer de synchronisatie uit
 if __name__ == "__main__":
     sync_medewerkers()
+    deactivate_removed_users()
