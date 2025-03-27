@@ -1,8 +1,5 @@
 version: 1
 
-
-
-
 dn: cn=Sanne Visser,ou=Marketing,ou=Staff,dc=NHLStenden,dc=com
 objectClass: inetOrgPerson
 objectClass: organizationalPerson
