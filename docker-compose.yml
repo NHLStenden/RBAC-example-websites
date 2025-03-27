@@ -93,7 +93,7 @@ services:
     volumes:
       - type: bind
         source: ./volumes/src/user-provisioning
-        target: /app
+        target: /app/logs
 
 
 
