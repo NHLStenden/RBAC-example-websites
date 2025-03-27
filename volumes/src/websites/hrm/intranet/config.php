@@ -1,9 +1,9 @@
 <?php
 // config.php - Database configuratie
-$host = 'localhost';
-$dbname = 'jouw_database';
-$username = 'jouw_gebruiker';
-$password = 'jouw_wachtwoord';
+$host = 'iam-example-hrm-server';
+$dbname = 'HRM';
+$username = 'admin';
+$password = 'Test1234!';
 
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);
