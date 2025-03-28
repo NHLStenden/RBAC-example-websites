@@ -21,6 +21,7 @@ const Permission_Marketing_Read_Campaign = 'Marketing_Read_Campaign';
 const Permission_Marketing_Delete_Campaign = 'Marketing_Delete_Campaign';
 const Permission_Marketing_Update_Campaign = 'Marketing_Update_Campaign';
 const Permission_Marketing_Approve_Campaign = 'Marketing_Approve_Campaign';
+const Permission_HRM_Manage_Employees = 'HRM_Manage_Employees';
 
 class RBACSupport
 {
