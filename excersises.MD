@@ -3,7 +3,8 @@
 Als de Docker containers draaien is het tijd om een aantal opdrachten en oefeningen uit te voeren. Deze worden in
 dit document verder uitgewerkt. De oplossingen / uitwerkingen staan aan het einde van het document.
 
-Als je met onderstaande opdrachten aan de slag gaat dan kun je onderstaande tabel gebruiken voor de initiële login gegevens.
+Als je met onderstaande opdrachten aan de slag gaat dan kun je onderstaande tabel gebruiken voor de initiële login
+gegevens.
 
 | URL                       | rol       | username   |
 |---------------------------|-----------|------------|
@@ -13,10 +14,11 @@ Als je met onderstaande opdrachten aan de slag gaat dan kun je onderstaande tabe
 | http://admin.docker/      | admin     | `tvisser`  |
 | http://sharepoint.docker/ | student   | `edeboer`  |
 | http://sharepoint.docker/ | teacher   | `gwillems` |
+| http://hrm.docker/        | HRM       | `kmulder`  |
 
-Er verschijnt een popup waar je moet inloggen. Het wachtwoord is altijd `Test1234!`. 
+Er verschijnt een popup waar je moet inloggen. Het wachtwoord is altijd `Test1234!`.
 
-Later zul je ook op een andere manier gaan inloggen. De instructies daarvoor volgen in de opdrachten. 
+Later zul je ook op een andere manier gaan inloggen. De instructies daarvoor volgen in de opdrachten.
 
 ## Opdrachten
 
@@ -33,16 +35,16 @@ De volgende opdrachten en oefeningen zijn opgenomen:
 8. Aanmaken nieuwe rol
 9. Aanmaken nieuwe gebruiker
 
-
 # Opdracht 1 - In kaart brengen van beveiliging
 
-De eerste opdracht betreft het in kaart brengen van de huidige stand van zaken over toegangsbeveiliging. 
+De eerste opdracht betreft het in kaart brengen van de huidige stand van zaken over toegangsbeveiliging.
 
 ## Instructie
 
-Er zijn enkele websites gemaakt die steeds bestemd zijn voor een ander doel. Zo is er een website voor marketing campagnes,
+Er zijn enkele websites gemaakt die steeds bestemd zijn voor een ander doel. Zo is er een website voor marketing
+campagnes,
 een website voor de cijferadministratie en een soort Intranet pagina waar informatie gedeeld kan worden met medewerkers
-en studenten. 
+en studenten.
 
 ## Opdracht
 
@@ -59,8 +61,9 @@ accounts. Vul bij 'Toegang' in welke functionele mogelijkheden je ziet (bijvoorb
 | http://sharepoint.docker/ | teacher   | `gwillems` |         |
 
 ## Vragen
-1. Is het verstandig of juist onverstandig vanuit een _security perspective_ om te werken met zoveel verschillende 
- websites? Zou je niet liever zoveel mogelijk zaken combineren? Motiveer je antwoord.
+
+1. Is het verstandig of juist onverstandig vanuit een _security perspective_ om te werken met zoveel verschillende
+   websites? Zou je niet liever zoveel mogelijk zaken combineren? Motiveer je antwoord.
 
 # Opdracht 2 - Inzicht in account administratie
 
@@ -81,7 +84,8 @@ De zogenaamde **Distinguished Name** van deze locatie is
 
     ou=Teachers,ou=Opleidingen,dc=NHLStenden,dc=com
 
-Je ziet hier een aantal gebruikersaccounts. Zoek de account *'Guus Willems'* en klik hier op. Je krijgt de eigenschappen te zien.
+Je ziet hier een aantal gebruikersaccounts. Zoek de account *'Guus Willems'* en klik hier op. Je krijgt de eigenschappen
+te zien.
 
 ![opdracht 2 - 02 user details gwillems.png](images/excersises/opdracht%202%20-%2002%20user%20details%20gwillems.png)
 
@@ -117,7 +121,8 @@ Elke opleiding is opgedeeld in twee soorten gebruikers:
 * Student
 * Teacher
 
-Er zijn veel manieren om je gebruikers in te delen in deze (LDAP-) administratie. In deze situatie is gekozen om voor elke
+Er zijn veel manieren om je gebruikers in te delen in deze (LDAP-) administratie. In deze situatie is gekozen om voor
+elke
 combinatie van *opleiding* en *soort gebruiker* een **rol** aan te maken. Dat levert dus vier rollen op:
 
 * Student bij HBO-ICT
@@ -128,7 +133,7 @@ combinatie van *opleiding* en *soort gebruiker* een **rol** aan te maken. Dat le
 Deze vind je op de locatie
 
     cn=Teachers ADCSS,ou=opleidingen,ou=roles,dc=NHLStenden,dc=com
-    
+
 en
 
     cn=Teachers HBO-ICT,ou=opleidingen,ou=roles,dc=NHLStenden,dc=com    
@@ -138,15 +143,16 @@ Er zijn twee docenten die bij beide opleidingen lesgeven. Dit zijn onderstaande 
 * Isabel Dekker
 * Liam de Koning
 
-Het is dus mogelijk om meerdere rollen toe te wijzen aan één account (persoon). Dit is vaak in de echte wereld ook gebruikelijk.
+Het is dus mogelijk om meerdere rollen toe te wijzen aan één account (persoon). Dit is vaak in de echte wereld ook
+gebruikelijk.
 
 ## Opdracht
 
-1. Verwijder de rol "Teacher HBO-ICT" bij Isabel Dekker. 
-   1. Ga naar "cn=Teachers HBO-ICT,ou=opleidingen,ou=roles,dc=NHLStenden,dc=com"
-   2. Open het attribuut  "Unique Members"
-   3. Selecteer "cn=Isabel Dekker,ou=Teachers,ou=Opleidingen,dc=NHLStenden,dc=com"
-   4. verwijder deze (Rechter muisknop 'delete *value*') of de delete-knop op je toetsenbord
+1. Verwijder de rol "Teacher HBO-ICT" bij Isabel Dekker.
+    1. Ga naar "cn=Teachers HBO-ICT,ou=opleidingen,ou=roles,dc=NHLStenden,dc=com"
+    2. Open het attribuut  "Unique Members"
+    3. Selecteer "cn=Isabel Dekker,ou=Teachers,ou=Opleidingen,dc=NHLStenden,dc=com"
+    4. verwijder deze (Rechter muisknop 'delete *value*') of de delete-knop op je toetsenbord
 2. Ververs de pagina in de website. Wat is er veranderd?
 
 We hebben nu dus in de administratie van de accounts een rol handmatig ingetrokken.
@@ -167,15 +173,14 @@ We hebben nu dus in de administratie van de accounts een rol handmatig ingetrokk
 
 ## Vragen
 
-
 # Opdracht 6 - Inzicht in rollen - gebruikers
 
 ## Introductie
 
-De applicatie Apache Directory Studio helpt niet goed bij het inzichtelijk krijgen van de toegangsrechten van een 
-gebruiker. We kunnen opzoeken welke gebruikers in een groep zitten, en dan vanuit de groepen zo een beeld opbouwen. 
+De applicatie Apache Directory Studio helpt niet goed bij het inzichtelijk krijgen van de toegangsrechten van een
+gebruiker. We kunnen opzoeken welke gebruikers in een groep zitten, en dan vanuit de groepen zo een beeld opbouwen.
 
-Mocht je dus willen nazoeken welke rollen een gebruiker uiteindelijk allemaal heeft, dan is dat een flinke uitzoek klus. 
+Mocht je dus willen nazoeken welke rollen een gebruiker uiteindelijk allemaal heeft, dan is dat een flinke uitzoek klus.
 
 ## Instructie
 
@@ -198,7 +203,8 @@ We gaan eerst kijken naar welke rechten één gebruiker heeft. Dit kan op twee m
 
 ## Introductie
 
-Als een centrale oplossing zoals LDAP of Active Directory wordt gebruikt om **rollen** te administreren, dan zal een applicatie
+Als een centrale oplossing zoals LDAP of Active Directory wordt gebruikt om **rollen** te administreren, dan zal een
+applicatie
 zelf moeten bepalen welke permissies er voor die applicatie gelden. Dit _kan_ ook in een centrale oplossing maar in ons
 voorbeeld is dat geregeld in een database.
 
@@ -210,7 +216,8 @@ De admin-pagina stelt ons in staat om de permissies bij een applicatie te verand
 2. Gebruik de knop 'Rollen' om naar de administratie van de rollen te gaan. Er volgt een lijst met beschikbare rollen.
 3. Klik op de knop 'Edit' achter de rol "All Students". Je kunt nu permissies toevoegen aan deze rol.
 4. Selecteer uit de lijst achter 'Permissie' het item 'Use Admin Panel' en druk op de knop Toevoegen.
-5. Klik op de knop 'Uitloggen'  rechtsboven; je krijgt nu een popup om in te loggen. Sluit deze (Annuleren) en sluit het tabblad.
+5. Klik op de knop 'Uitloggen' rechtsboven; je krijgt nu een popup om in te loggen. Sluit deze (Annuleren) en sluit het
+   tabblad.
 6. Open een nieuw tabblad en navigeer naar http://sharepoint.docker/intranet/my-data.php
 7. Login met een student account
 8. Wat valt op? Welke functionaliteit hebben we nu onbedoeld beschikbaar gesteld?
@@ -242,7 +249,7 @@ Momenteel zijn de volgende permissies beschikbaar:
 | Marketing_Approve_Campaign | Approve a marketing campaign     |
 
 1. Welke permissies zijn er beschikbaar voor het admin panel?
-2. Welke problemen kunnen hierdoor ontstaan? Kijk naar het aantal functionaliteiten. 
+2. Welke problemen kunnen hierdoor ontstaan? Kijk naar het aantal functionaliteiten.
 3. Wat zou kunnen helpen om dit probleem op te lossen?
 
 # Opdracht 8 - Attestation
@@ -255,7 +262,7 @@ uiteen in twee onderdelen:
 1. Hoe rollen leiden tot permissies in applicaties
 2. Hoe rollen gebruikt worden door gebruikers
 
-Dat inzicht kan niet alleen nuttig maar ook noodzakelijk zijn. Zo kan een externe auditor vragen om hier inzicht in te 
+Dat inzicht kan niet alleen nuttig maar ook noodzakelijk zijn. Zo kan een externe auditor vragen om hier inzicht in te
 geven.
 
 ## Instructie
@@ -263,7 +270,7 @@ geven.
 1. Login bij het admin panel
 2. Gebruik de menu knop 'Attestation - Rollen'.
 2. Maak een PDF van dit bestand (Afdrukken en dan opslaan als PDF)
-3. Gebruik de knop 'Download' bovenaan om een export te maken; sla deze op 
+3. Gebruik de knop 'Download' bovenaan om een export te maken; sla deze op
 4. Gebruik de menu knop 'Attestation - Gebruikers'.
 5. Maak een PDF van dit bestand (Afdrukken en dan opslaan als PDF)
 6. Gebruik de knop 'Download' bovenaan om een export te maken; sla deze op
@@ -276,21 +283,18 @@ te gebruiken of de geëxporteerde lijst te importeren in Excel en daar te filter
 ## Opdracht
 
 1. Ga op zoek naar afwijkingen. Kijk bijvoorbeeld of een student geen rechten heeft die er niet thuishoren.
-2. Maak bewust afwijkingen via het scherm "Rollen": voeg bijvoorbeeld "Teacher" of "Marketing" rechten toe. 
+2. Maak bewust afwijkingen via het scherm "Rollen": voeg bijvoorbeeld "Teacher" of "Marketing" rechten toe.
 3. Ga op zoek naar de afwijkingen
 
 ## Vragen
 
-1. Stel jij bent beheerder van deze school. Je kunt deze rapportages gebruiken om de organisatie beter te beveiligen. 
-  Aan wie ga je deze rapportages sturen? 
+1. Stel jij bent beheerder van deze school. Je kunt deze rapportages gebruiken om de organisatie beter te beveiligen.
+   Aan wie ga je deze rapportages sturen?
 2. Wie zou er in actie moeten komen bij afwijkingen?
-
 
 # Reflectie
 
-
 # Opdracht 9 - Aanmaken nieuwe rol
-
 
 ## Instructie
 
@@ -299,11 +303,9 @@ te gebruiken of de geëxporteerde lijst te importeren in Excel en daar te filter
 ## Opdracht
 
 ## Vragen
-
 
 # Opdracht 10 - Aanmaken nieuwe gebruiker
 
-
 ## Instructie
 
 ## Introductie
@@ -311,7 +313,6 @@ te gebruiken of de geëxporteerde lijst te importeren in Excel en daar te filter
 ## Opdracht
 
 ## Vragen
-
 
 ----------------------------------------------------------------------------
 
@@ -325,25 +326,25 @@ te gebruiken of de geëxporteerde lijst te importeren in Excel en daar te filter
 
 ## Vragen
 
-
-
 # Reflectie
 
-We hebben de theorie behandeld en via de oefeningen inzicht gekregen in de werking van Role Based Access Control op basis
+We hebben de theorie behandeld en via de oefeningen inzicht gekregen in de werking van Role Based Access Control op
+basis
 van permissies. Ga op onderzoek uit en reflecteer op de volgende vragen en neem deze op in je portfolio.
 
-1. Is er in jouw bedrijf een centrale opslag van accounts? 
-   1. Indien  deze er is: wat is de bron van de lijst met accounts?
-   2. Is er een geautomatiseerd proces dat brongegevens synchroniseert met de centrale account administratie ("Provisioning")
-   3. welke sleutel applicaties leunen op deze gecentraliseerde administratie?
-2. Welke applicaties regelen hun eigen account-administratie? 
+1. Is er in jouw bedrijf een centrale opslag van accounts?
+    1. Indien deze er is: wat is de bron van de lijst met accounts?
+    2. Is er een geautomatiseerd proces dat brongegevens synchroniseert met de centrale account administratie ("
+       Provisioning")
+    3. welke sleutel applicaties leunen op deze gecentraliseerde administratie?
+2. Welke applicaties regelen hun eigen account-administratie?
 3. Worden managers (afdeling/projecten) periodiek op de hoogte gehouden van de stand van zaken ("Attestation")?
-4. Onderzoek hoe het proces van "Hire to Retire" impact heeft op de gebruikersadministratie. Dit kan veel werk zijn, 
+4. Onderzoek hoe het proces van "Hire to Retire" impact heeft op de gebruikersadministratie. Dit kan veel werk zijn,
    maar verdiep eens op één belangrijke applicatie in jouw bedrijf.
-   1. gaat het vanzelf? moet je lang wachten? hoe kom je aan je wachtwoord(en)?
-   2. wanneer en hoe krijgt een nieuwe medewerker accounts (let op: meervoud! Er zijn vast vele applicaties)
-   3. Krijgt een nieuwe medewerker meteen de juiste rechten ("permissies" or "rollen")? 
-5. Is er beleid geformuleerd rondom toegang, RBAC, aanmaken accounts? Is HR bijvoorbeeld betrokken? Zo niet, wat zou 
-   jouw advies zijn? 
+    1. gaat het vanzelf? moet je lang wachten? hoe kom je aan je wachtwoord(en)?
+    2. wanneer en hoe krijgt een nieuwe medewerker accounts (let op: meervoud! Er zijn vast vele applicaties)
+    3. Krijgt een nieuwe medewerker meteen de juiste rechten ("permissies" or "rollen")?
+5. Is er beleid geformuleerd rondom toegang, RBAC, aanmaken accounts? Is HR bijvoorbeeld betrokken? Zo niet, wat zou
+   jouw advies zijn?
 6. Wat is jouw advies aan de organisatie op het gebied van een centrale opslag van accounts en gebruik in applicaties?
 7.  
