@@ -75,6 +75,8 @@ CREATE OR REPLACE PROCEDURE InitAllRolesAndPermissions ()
 
            ('Marketing', '', 'cn=Marketing,ou=roles,dc=NHLStenden,dc=com'),
            ('Marketing management', '', 'cn=Marketing managers,ou=roles,dc=NHLStenden,dc=com')
+
+           ('Human Resources Management', '', 'cn=hrm,ou=roles,dc=NHLStenden,dc=com')
     ;
 
     SELECT roles.idRole INTO @var_Role_admin                FROM roles WHERE title = 'admin';
@@ -94,12 +96,14 @@ CREATE OR REPLACE PROCEDURE InitAllRolesAndPermissions ()
     SELECT roles.idRole INTO @var_Role_SharePoint_Teachers  FROM roles WHERE title = 'SharePoint Teachers';
     SELECT roles.idRole INTO @var_Role_Marketing            FROM roles WHERE title = 'Marketing';
     SELECT roles.idRole INTO @var_Role_Marketing_Management FROM roles WHERE title = 'Marketing management';
+    SELECT roles.idRole INTO @var_Role_HRM                  FROM roles WHERE title = 'human Resources Management';
 
     INSERT INTO application (title, description)
     VALUES ('Admin Panel',''),
            ('SharePoint','' ),
            ('Marketing','' ),
            ('Grades','' ),
+           ('HRM','' ),
            ('Mail','' )
     ;
 
@@ -108,6 +112,7 @@ CREATE OR REPLACE PROCEDURE InitAllRolesAndPermissions ()
     SELECT idApplication INTO @var_App_Marketing  FROM application WHERE title = 'Marketing';
     SELECT idApplication INTO @var_App_Grades     FROM application WHERE title = 'Grades';
     SELECT idApplication INTO @var_App_Mail       FROM application WHERE title = 'Mail';
+    SELECT idApplication INTO @var_App_HRM        FROM application WHERE title = 'HRM';
 
     INSERT INTO permissions (code, title, description,fk_idApplication)
     VALUES
@@ -127,11 +132,14 @@ CREATE OR REPLACE PROCEDURE InitAllRolesAndPermissions ()
            ('Grades_Read_Own_Grades', 'Student can read own grades', '',@var_App_Grades),
            ('Grades_Read_StudentDetails', 'Get information on all students', '',@var_App_Grades),
            ('Grades_Show_Self', 'Show students own information', '',@var_App_Grades),
+
            ('Marketing_Create_Campaign', 'Create a new marketing campaign', '',@var_App_Marketing),
            ('Marketing_Read_Campaign', 'Read a marketing campaign', '',@var_App_Marketing),
            ('Marketing_Delete_Campaign', 'Delete a marketing campaign', '',@var_App_Marketing),
            ('Marketing_Update_Campaign', 'Update a marketing campaign', '',@var_App_Marketing),
            ('Marketing_Approve_Campaign', 'Approve a marketing campaign', '',@var_App_Marketing)
+
+        ('HRM_Manage_Employees', 'Manage Employees', '',@var_App_HRM)
     ;
 
     SELECT permissions.idPermission INTO @var_permission_Use_Mail FROM permissions WHERE code = 'Use_Mail';
@@ -156,6 +164,8 @@ CREATE OR REPLACE PROCEDURE InitAllRolesAndPermissions ()
     SELECT permissions.idPermission INTO @var_permission_Marketing_Delete_Campaign FROM permissions WHERE code = 'Marketing_Delete_Campaign';
     SELECT permissions.idPermission INTO @var_permission_Marketing_Update_Campaign FROM permissions WHERE code = 'Marketing_Update_Campaign';
     SELECT permissions.idPermission INTO @var_permission_Marketing_Approve_Campaign FROM permissions WHERE code = 'Marketing_Approve_Campaign';
+
+    SELECT permissions.idPermission INTO @var_permission_HRM_Manage_Employees FROM permissions WHERE code = 'HRM_Manage_Employees';
 
     INSERT INTO role_permissions(fk_idRole, fk_idPermission) VALUES ( @var_Role_all_personell, @var_permission_SharePoint_Basic_Access);
     INSERT INTO role_permissions(fk_idRole, fk_idPermission) VALUES ( @var_Role_all_personell, @var_permission_Use_Mail);
@@ -191,6 +201,8 @@ CREATE OR REPLACE PROCEDURE InitAllRolesAndPermissions ()
     INSERT INTO role_permissions(fk_idRole, fk_idPermission) VALUES ( @var_Role_admin,       @var_permission_Admin_Panel);
     INSERT INTO role_permissions(fk_idRole, fk_idPermission) VALUES ( @var_Role_ICT_Support, @var_permission_SharePoint_Basic_Access);
     INSERT INTO role_permissions(fk_idRole, fk_idPermission) VALUES ( @var_Role_All_Students, @var_permission_SharePoint_Basic_Access);
+
+    INSERT INTO role_permissions(fk_idRole, fk_idPermission) VALUES ( @var_Role_HRM, @var_permission_HRM_Manage_Employees);
 
 
 END $$
