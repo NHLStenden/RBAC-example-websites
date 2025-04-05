@@ -30,6 +30,8 @@ if ($id) {
     $stmt = $pdo->prepare("SELECT * FROM medewerkers WHERE idMedewerker = ?");
     $stmt->execute([$id]);
     $medewerker = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if ($medewerker === false) { die("Onbekende gebruiker $id");}
 }
 
 // FIXME: This is not very secure; SQL-injection possible; clean user input
