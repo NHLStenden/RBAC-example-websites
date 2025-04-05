@@ -68,6 +68,7 @@ def insert_into_mariadb(medewerkers):
         medewerkerType = str(medewerker.employeeType)
         employeeNr = str(medewerker.employeeNumber)
         kamernr = str(medewerker.roomNumber)
+        team = str(medewerker.organizationName)
 
 
         sql = """
@@ -84,7 +85,7 @@ def insert_into_mariadb(medewerkers):
         VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s);
         """
 
-        cursor.execute(sql, (employeeNr,voornaam, achternaam, "NHL Stenden", functie, telefoon, kamernr, medewerkerType, postcode))
+        cursor.execute(sql, (employeeNr,voornaam, achternaam, team, functie, telefoon, kamernr, medewerkerType, postcode))
         print(f"✅ Toegevoegd: {voornaam} {achternaam} als {functie}")
 
     conn.commit()
