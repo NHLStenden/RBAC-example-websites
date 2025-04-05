@@ -105,3 +105,8 @@ Als een medewerker al voorkomt, dan zal de volgende informatie bijgewerkt worden
 * employeeType
 
 Daarnaast worden de standaard rollen hersteld. 
+
+# Gebruikers die niet meer bestaan
+
+Als een gebruiker niet langer in de HRM-database aanwezig is, dan zal het wachtwoord leeg gemaakt worden zodat de gebruiker
+niet meer kan inloggen.
