@@ -17,33 +17,7 @@ CREATE TABLE medewerkers (
     telefoonnummer VARCHAR(16) NULL,
     kamernummer VARCHAR(16) NULL,
     medewerkerType VARCHAR(15) NULL,
-    postcode VARCHAR(12) NULL
+    postcode VARCHAR(12) NULL,
+    last_sync DATETIME NULL
 ) COMMENT 'Medewerkers NHL Stenden';
 
-/*
-LOAD DATA INFILE '/docker-entrypoint-initdb.d/Marketing-staff.csv'
-
-    INTO TABLE medewerkers
-    FIELDS TERMINATED BY ','
-    OPTIONALLY ENCLOSED BY '"'
-    IGNORE 1 ROWS
-    (achternaam, personeelsnummer, medewerkerType, voornaam, @dummy1, postcode, kamernummer, telefoonnummer, @uid)
-    SET team = 'NHL Stenden', functie = 'medewerker marketing';
-
-LOAD DATA INFILE '/docker-entrypoint-initdb.d/ICT-staff.csv'
-    INTO TABLE medewerkers
-    FIELDS TERMINATED BY ','
-    OPTIONALLY ENCLOSED BY '"'
-    IGNORE 1 ROWS
-    (achternaam, personeelsnummer, medewerkerType, voornaam, @dummy1, postcode, kamernummer, telefoonnummer, @uid)
-    SET team = 'NHL Stenden', functie = 'medewerker ICT';
-
-LOAD DATA INFILE '/docker-entrypoint-initdb.d/teachers.csv'
-    INTO TABLE medewerkers
-    FIELDS TERMINATED BY ','
-    OPTIONALLY ENCLOSED BY '"'
-    IGNORE 1 ROWS
-    (achternaam, personeelsnummer, medewerkerType, voornaam, @dummy1, postcode, kamernummer, telefoonnummer, @uid)
-    SET team = 'NHL Stenden', functie = 'docent';
-
-*/
