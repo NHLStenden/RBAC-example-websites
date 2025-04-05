@@ -61,7 +61,7 @@ def connect_ldap():
 def get_medewerkers():
     db = connect_db()
     cursor = db.cursor(dictionary=True)
-    cursor.execute("SELECT personeelsnummer, functie, voornaam, achternaam, medewerkerType, telefoonnummer, kamernummer, postcode FROM medewerkers")
+    cursor.execute("SELECT * FROM medewerkers")
     medewerkers = cursor.fetchall()
     db.close()
     return medewerkers
@@ -133,6 +133,7 @@ def add_medewerker_to_ldap(conn, medewerker):
 
     if conn.add(dn, attributes=attributes):
         print(f"✅ Toegevoegd aan LDAP: {dn}")
+        updateLastSyncTimestampForUser(medewerker["idMedewerker"])
     else:
         print(f"❌ Fout bij toevoegen: {conn.result}")
     return dn
@@ -149,9 +150,17 @@ def update_medewerker_in_ldap(conn, dn, medewerker):
 
     if conn.modify(dn, changes):
         print(f"🔄 Bijgewerkt in LDAP: {dn}")
+        updateLastSyncTimestampForUser(medewerker["idMedewerker"])
     else:
         print(f"❌ Fout bij bijwerken: {conn.result}")
 
+def updateLastSyncTimestampForUser(idMedewerker):
+    db = connect_db()
+    cursor = db.cursor()
+    query = "UPDATE medewerkers SET last_sync = NOW() WHERE idMedewerker = %s"
+    cursor.execute(query, (idMedewerker,))
+    db.commit()
+    db.close()
 
 def voeg_medewerker_toe_aan_rollen(conn, functie, medewerker_dn):
     """Voegt een medewerker toe aan alle relevante LDAP-groepen op basis van functie"""
@@ -172,6 +181,7 @@ def voeg_medewerker_toe_aan_rollen(conn, functie, medewerker_dn):
         # Voeg de medewerker toe aan de groep
         conn.modify(rol_dn, {"uniqueMember": [(MODIFY_ADD, [medewerker_dn])]})
         print(f"✅ Medewerker {medewerker_dn} toegevoegd aan rol {rol_dn}")
+
 
 
 
