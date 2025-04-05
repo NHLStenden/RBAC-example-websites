@@ -361,6 +361,17 @@ Wat nog beter kan:
 
 Voor een goed inzicht hoe je een nog veiligere websites maakt, verwijs ik je naar bijvoorbeeld OWASP en het NSCS.
 
+# Cleanup
+
+Het User Provisioning proces in de container `userprovisioning` (of `iam-example-provisioning-server`) draait elke 3 minuten
+een achtergrond proces (`/app/run-sync.sh`) en deze genereert dan ook voor elke run een logfile. Deze kun je eventueel
+opschonen met onderstaande commando. Let op: deze gooit ze *allemaal*  in één keer weg. 
+
+```bash
+docker exec -it userprovisioning /bin/bash -c "rm /app/logs/*"
+```
+
+
 # Referenties / bronnen
 
 * [Apache Directory Studio](https://directory.apache.org/studio/)
@@ -374,6 +385,7 @@ Voor een goed inzicht hoe je een nog veiligere websites maakt, verwijs ik je naa
       security of software
 * [Zed Attack Proxy](https://www.zaproxy.org/)
 
+
 # Colofon
 
 Martin Molema, ing MSc
@@ -382,4 +394,4 @@ Docent bij NHL Stenden, opleidingen Bachelor HBO-ICT en Associate Degree Cyber S
 
 [martin.molema@nhlstenden.com](mailto:martin.molema@nhlstenden.com)
 
-11 December 2024.
+5 april 2025
