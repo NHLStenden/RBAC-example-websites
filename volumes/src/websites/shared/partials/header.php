@@ -94,7 +94,19 @@ function showheader(Websites $forWebsite, string $route, RBACSupport $rbac): str
         }
     }
     $fullname = $rbac->userInfoLDAP['cn'];
-    $jpegPhoto = base64_encode($rbac->userInfoLDAP['jpegphoto']);
+    $jpegPhoto = '';
+
+    if (isset($rbac->userInfoLDAP['jpegphoto'])) {
+      $jpegPhoto = base64_encode($rbac->userInfoLDAP['jpegphoto']);
+    }
+    else {
+      $path = '/var/www/shared/partials/default-user.jpg';
+
+      if (file_exists($path)) {
+        $imageData = file_get_contents($path);
+        $jpegPhoto = base64_encode($imageData);
+      }
+    }
 
     $host = $_SERVER['HTTP_HOST'];
 
@@ -109,7 +121,7 @@ function showheader(Websites $forWebsite, string $route, RBACSupport $rbac): str
         
         <p class="right">
           <span class="logout"><a href="http://log:out@$host/intranet/logout">Logout</a></span>
-          <img src="data:image/jpeg;base64,$jpegPhoto" alt="Gebruikersafbeelding">
+          <img src="data:image/jpeg;base64, $jpegPhoto" alt="Gebruikersafbeelding">
         </p>
     </header>
 EOF_HEADER;
