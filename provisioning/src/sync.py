@@ -1,5 +1,5 @@
 import mysql.connector
-from ldap3 import Server, Connection, ALL, MODIFY_REPLACE, MODIFY_ADD
+from ldap3 import Server, Connection, ALL, MODIFY_REPLACE, MODIFY_ADD, MODIFY_DELETE
 import hashlib
 import base64
 
@@ -167,7 +167,7 @@ def update_medewerker_in_ldap(conn, dn, medewerker):
         print(f"🔄 Bijgewerkt in LDAP: {dn} met type {medewerkerType}")
         updateLastSyncTimestampForUser(medewerker["idMedewerker"])
     else:
-        print(f"❌ Fout bij bijwerken: {conn.result}")
+        print(f"❌ Fout bij bijwerken: {conn.result} ({medewerkerType})")
 
 
 def updateLastSyncTimestampForUser(idMedewerker):
@@ -199,6 +199,24 @@ def voeg_medewerker_toe_aan_rollen(conn, functie, medewerker_dn):
         conn.modify(rol_dn, {"uniqueMember": [(MODIFY_ADD, [medewerker_dn])]})
         print(f"✅ Medewerker {medewerker_dn} toegevoegd aan rol {rol_dn}")
 
+def verwijder_oude_groepslidmaatschappen(conn, old_dn):
+    print(f"🧹 Verwijderen van oude groepslidmaatschappen voor {old_dn}")
+    search_filter = f"(uniqueMember={old_dn})"
+
+    # Geen "dn" als attribuut opvragen!
+    conn.search(LDAP_CONFIG["base_dn"], search_filter, attributes=["uniqueMember"])
+
+    for entry in conn.entries:
+        group_dn = entry.entry_dn
+        print(f"🗑️ Verwijderen uit groep: {group_dn}")
+        success = conn.modify(group_dn, {
+            "uniqueMember": [(MODIFY_DELETE, [old_dn])]
+        })
+
+        if success:
+            print(f"✅ Verwijderd uit groep: {group_dn}")
+        else:
+            print(f"❌ Fout bij verwijderen uit {group_dn}: {conn.result}")
 
 # Hoofdproces: synchroniseren MariaDB → LDAP
 def sync_medewerkers():
@@ -208,9 +226,28 @@ def sync_medewerkers():
     for medewerker in medewerkers:
         dn = find_medewerker_by_personeelsnummer(conn_ldap, medewerker["personeelsnummer"])
         if dn:
+            correct_dn = genereer_dn(medewerker)
+            if dn.lower() != correct_dn.lower():
+                # De gebruiker zit in de verkeerde OU → verplaatsen
+                print(f"🔁 Verplaatsen {dn} naar {correct_dn}")
+
+                old_dn = dn
+
+                new_rdn = correct_dn.split(',')[0]  # bijv: "cn=Jan Jansen"
+                new_superior = ','.join(correct_dn.split(',')[1:])  # bijv: "ou=HRM,ou=Staff,dc=NHLStenden,dc=com"
+
+                if conn_ldap.modify_dn(dn, new_rdn, new_superior=new_superior, delete_old_dn=True):
+                    print(f"✅ Verplaatst naar juiste OU: {correct_dn}")
+                    verwijder_oude_groepslidmaatschappen(conn_ldap, old_dn)
+
+                    dn = correct_dn  # Update DN zodat roltoewijzing klopt
+                else:
+                    print(f"❌ Fout bij verplaatsen: {conn_ldap.result}")
+
             update_medewerker_in_ldap(conn_ldap, dn, medewerker)
         else:
             dn = add_medewerker_to_ldap(conn_ldap, medewerker)
+
         voeg_medewerker_toe_aan_rollen(conn_ldap, medewerker["functie"], dn)
 
     conn_ldap.unbind()
