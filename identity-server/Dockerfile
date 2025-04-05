@@ -14,7 +14,12 @@ COPY *.sh /app
 RUN chmod a+x /app/*.sh
 
 # Update repositories
-RUN apt update && apt install -y debconf-utils python3 python3-venv python3-pip \
+RUN apt update && apt install -y debconf-utils python3 python3-venv python3-pip tzdata locales \
+    && ln -fs /usr/share/zoneinfo/Europe/Amsterdam /etc/localtime \
+    && dpkg-reconfigure -f noninteractive tzdata \
+    && echo "nl_NL.UTF-8 UTF-8" >> /etc/locale.gen \
+    && locale-gen \
+    && update-locale LANG=nl_NL.UTF-8 LC_ALL=nl_NL.UTF-8 \
     && /app/configure_ldap.sh \
     && DEBIAN_FRONTEND=noninteractive apt-get install -y slapd ldap-utils
 
