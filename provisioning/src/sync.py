@@ -137,7 +137,8 @@ def add_medewerker_to_ldap(conn, medewerker):
         "roomNumber": medewerker["kamernummer"] or "",
         "postalCode": medewerker["postcode"] or "",
         "userPassword": password_hash,  # Voeg gehashte versie toe,
-        "employeeType": medewerker["medewerkerType"]
+        "employeeType": medewerker["medewerkerType"],
+        "organizationName": medewerker["team"],
     }
     print(f"➡️ Toevoegen aan LDAP met DN: {dn}")
 
@@ -159,6 +160,7 @@ def update_medewerker_in_ldap(conn, dn, medewerker):
         "roomNumber": [(MODIFY_REPLACE, [medewerker["kamernummer"] or ""])],
         "postalCode": [(MODIFY_REPLACE, [medewerker["postcode"] or ""])],
         "employeeType": [(MODIFY_REPLACE, [medewerkerType or ""])],
+        "organizationName": [(MODIFY_REPLACE, [medewerker["team"] or ""])],
     }
 
     if conn.modify(dn, changes):
