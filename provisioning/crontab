@@ -1,1 +1,2 @@
-*/3 * * * * /app/run_script.sh
+*/3 * * * * /bin/bash -c /app/run-sync.sh
+*/3 * * * * /usr/bin/date >> /app/log-data.txt
