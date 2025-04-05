@@ -6,7 +6,7 @@ table.list {
     border-collapse: collapse;
     & td {
         border:1px solid darkgray;
-        padding:4px;
+        padding:6px;
     }
 }
 
