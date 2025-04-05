@@ -49,16 +49,16 @@ grep 'dn:' Ldap-data-03-Create-Users-marketing.ldif | tail -n 3 | awk -F \: '/dn
 # Now process the ICT Support users
 grep 'dn:' Ldap-data-04-Create-Users-ict_support.ldif | awk -F \: '/dn:/{print "uniqueMember:" $2}' > role_assignment_ict-support.lst
 
+# Now process the HRM users
+grep 'dn:' Ldap-data-05-Create-Users-HRM.ldif | awk -F \: '/dn:/{print "uniqueMember:" $2}' > role_assignment_hrm.lst
+
 
 # Copy for access to SharePoint sub-parts for teachers and students.
 cp role_assignment_all_teachers.lst role_assignment_sharepoint-teachers.lst
 cp role_assignment_all_students.lst role_assignment_sharepoint-students.lst
 
 # Collect all personell in one list
-cat role_assignment_grades-teachers.lst role_assignment_marketing.lst role_assignment_ict-support.lst > role_assignment_all_personell.lst
-
-# Collect all users (teachers, students, staff) into one list for the sharepoint list
-# cat role_assignment_all_personell.lst role_assignment_all_students.lst  role_assignment_all_teachers.lst > role_assignment_sharepoint-all.lst
+cat role_assignment_grades-teachers.lst role_assignment_marketing.lst role_assignment_ict-support.lst role_assignment_hrm.lst > role_assignment_all_personell.lst
 
 for LDIF_FILE in ./Ldap-data-[0-9]*.ldif ; do
  echo "Adding  file $LDIF_FILE" >&2
@@ -108,8 +108,10 @@ cd /app
 python3 /app/upload_avatars.py
 python3 /app/add-more-info.py
 
-exit 0
-
+cd /apps
+source venv/bin/activate
+python3 /app/import_once_from_ldap_to_db.py
+deactivate
 
 ########################################################################################
 ########################################################################################
@@ -123,4 +125,4 @@ rmdir avatars
 rm -rf /app/ldap-updates-venv
 rm /app/*.py
 
-apt purge -y python3 && apt -y autoremove
+# apt purge -y python3 python3-pip && apt -y autoremove

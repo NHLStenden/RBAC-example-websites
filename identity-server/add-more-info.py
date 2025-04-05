@@ -70,19 +70,21 @@ for entry in conn.entries:
     postal_code = generate_postal_code()
     room_number = generate_room_number()
 
-    # Voorbereiden van de wijzigingen
-    modifications = {
-        'employeeNumber': [(MODIFY_REPLACE, [employee_number])],
-        'telephoneNumber': [(MODIFY_REPLACE, [telephone_number])],
-        'organizationName': [(MODIFY_REPLACE, ['NHL Stenden'])],
-        'givenName': [(MODIFY_REPLACE, [givenname])],
-        'employeeType': [(MODIFY_REPLACE, [employee_type])],
-        'postalCode': [(MODIFY_REPLACE, [postal_code])],
-        'roomNumber': [(MODIFY_REPLACE, [room_number])]
-    }
+    if employee_type != "Unknown":
 
-    # Toepassen van de wijzigingen op de gebruiker
-    conn.modify(dn, modifications)
+        # Voorbereiden van de wijzigingen
+        modifications = {
+            'employeeNumber': [(MODIFY_REPLACE, [employee_number])],
+            'telephoneNumber': [(MODIFY_REPLACE, [telephone_number])],
+            'organizationName': [(MODIFY_REPLACE, ['NHL Stenden'])],
+            'givenName': [(MODIFY_REPLACE, [givenname])],
+            'employeeType': [(MODIFY_REPLACE, [employee_type])],
+            'postalCode': [(MODIFY_REPLACE, [postal_code])],
+            'roomNumber': [(MODIFY_REPLACE, [room_number])]
+        }
+
+        # Toepassen van de wijzigingen op de gebruiker
+        conn.modify(dn, modifications)
 
 # Verbinding met de LDAP server sluiten
 conn.unbind()

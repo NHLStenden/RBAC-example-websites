@@ -4,91 +4,113 @@ include_once '../../shared/lib/RBACSupport.php';
 
 enum Websites
 {
-  case WEBSITE_GRADES;
-  case WEBSITE_SHAREPOINT;
-  case WEBSITE_MARKETING;
-  case WEBSITE_ADMIN;
+    case WEBSITE_GRADES;
+    case WEBSITE_SHAREPOINT;
+    case WEBSITE_MARKETING;
+    case WEBSITE_ADMIN;
+    case WEBSITE_HRM;
+
 }
 
 function showheader(Websites $forWebsite, string $route, RBACSupport $rbac): string
 {
-  $navigationGrades     = [
-    ['route' => 'my-grades.php', 'permission' => Permission_Grades_Read_Own_Grades, 'title' => 'Cijfers'],
-    ['route' => 'my-data.php', 'permission' => Permission_Grades_Show_Self, 'title' => 'Mijn gegevens'],
-    ['route' => 'new-list.php', 'permission' => Permission_Grades_Create_Gradelists, 'title' => 'Nieuwe cijferlijst'],
-    ['route' => 'view-student.php', 'permission' => Permission_Grades_Read_StudentDetails, 'title' => 'Bekijk student'],
-    ['route' => 'approve-list.php', 'permission' => Permission_Grades_Approve_Gradeslist, 'title' => 'Lijsten goedkeuren'],
-  ];
-  $navigationSharePoint = [
-    ['route' => 'my-data.php', 'permission' => Permission_SharePoint_All_Users, 'title' => 'Mijn gegevens'],
-    ['route' => 'hrm.php', 'permission' => Permission_SharePoint_HRM, 'title' => 'Human Resource Management'],
-    ['route' => 'students.php', 'permission' => Permission_SharePoint_StudentTools, 'title' => 'Studenten Portaal'],
-    ['route' => 'teachers.php', 'permission' => Permission_SharePoint_TeacherTools, 'title' => 'Docenten Portaal'],
-    ['route' => 'http://grades.docker/intranet', 'permission' => Permission_Grades_BasicAccess, 'title' => 'Cijfers'],
-    ['route' => 'http://marketing.docker/intranet', 'permission' => Permission_Marketing_Read_Campaign, 'title' => 'Marketing'],
-    ['route' => 'http://admin.docker/intranet', 'permission' => Permission_Admin_Panel, 'title' => 'Admin Panel'],
-  ];
+    $navigationGrades = [
+        ['route' => 'my-grades.php', 'permission' => Permission_Grades_Read_Own_Grades, 'title' => 'Cijfers'],
+        ['route' => 'my-data.php', 'permission' => Permission_Grades_Show_Self, 'title' => 'Mijn gegevens'],
+        ['route' => 'new-list.php', 'permission' => Permission_Grades_Create_Gradelists, 'title' => 'Nieuwe cijferlijst'],
+        ['route' => 'view-student.php', 'permission' => Permission_Grades_Read_StudentDetails, 'title' => 'Bekijk student'],
+        ['route' => 'approve-list.php', 'permission' => Permission_Grades_Approve_Gradeslist, 'title' => 'Lijsten goedkeuren'],
+    ];
+    $navigationSharePoint = [
+        ['route' => 'my-data.php', 'permission' => Permission_SharePoint_All_Users, 'title' => 'Mijn gegevens'],
+        ['route' => 'hrm.php', 'permission' => Permission_SharePoint_HRM, 'title' => 'Human Resource Management'],
+        ['route' => 'students.php', 'permission' => Permission_SharePoint_StudentTools, 'title' => 'Studenten Portaal'],
+        ['route' => 'teachers.php', 'permission' => Permission_SharePoint_TeacherTools, 'title' => 'Docenten Portaal'],
+        ['route' => 'http://grades.docker/intranet', 'permission' => Permission_Grades_BasicAccess, 'title' => 'Cijfers'],
+        ['route' => 'http://marketing.docker/intranet', 'permission' => Permission_Marketing_Read_Campaign, 'title' => 'Marketing'],
+        ['route' => 'http://admin.docker/intranet', 'permission' => Permission_Admin_Panel, 'title' => 'Admin Panel'],
+        ['route' => 'http://hrm.docker/intranet', 'permission' => Permission_HRM_Manage_Employees, 'title' => 'Beheer medewerkers'],
+    ];
 
-  $navigationAdmin     = [
-    ['route' => 'logging.php', 'permission' => Permission_Admin_Panel, 'title' => 'Apache Logfiles'],
-    ['route' => 'attestation_users.php', 'permission' => Permission_Admin_Panel, 'title' => 'Attestation - Gebruikers'],
-    ['route' => 'attestation_roles.php', 'permission' => Permission_Admin_Panel, 'title' => 'Attestation - Rollen'],
-    ['route' => 'manage_roles.php', 'permission' => Permission_Admin_Panel, 'title' => 'Rollen'],
-    ['route' => 'view-user.php', 'permission' => Permission_Admin_Panel, 'title' => 'Zoeken...'],
-  ];
-  $navigationMarketing = [
-    ['route' => 'new-campaign.php', 'permission' => Permission_Marketing_Create_Campaign, 'title' => 'Nieuwe campagne'],
-    ['route' => 'read-campaign.php', 'permission' => Permission_Marketing_Read_Campaign, 'title' => 'Bekijk campagne'],
-    ['route' => 'approve-campaign.php', 'permission' => Permission_Marketing_Approve_Campaign, 'title' => 'Campagne goedkeuren'],
-    ['route' => 'delete-campaign.php', 'permission' => Permission_Marketing_Delete_Campaign, 'title' => 'Verwijder campagne'],
-  ];
+    $navigationAdmin = [
+        ['route' => 'logging.php', 'permission' => Permission_Admin_Panel, 'title' => 'Apache Logfiles'],
+        ['route' => 'attestation_users.php', 'permission' => Permission_Admin_Panel, 'title' => 'Attestation - Gebruikers'],
+        ['route' => 'attestation_roles.php', 'permission' => Permission_Admin_Panel, 'title' => 'Attestation - Rollen'],
+        ['route' => 'manage_roles.php', 'permission' => Permission_Admin_Panel, 'title' => 'Rollen'],
+        ['route' => 'view-user.php', 'permission' => Permission_Admin_Panel, 'title' => 'Zoeken...'],
+    ];
+    $navigationMarketing = [
+        ['route' => 'new-campaign.php', 'permission' => Permission_Marketing_Create_Campaign, 'title' => 'Nieuwe campagne'],
+        ['route' => 'read-campaign.php', 'permission' => Permission_Marketing_Read_Campaign, 'title' => 'Bekijk campagne'],
+        ['route' => 'approve-campaign.php', 'permission' => Permission_Marketing_Approve_Campaign, 'title' => 'Campagne goedkeuren'],
+        ['route' => 'delete-campaign.php', 'permission' => Permission_Marketing_Delete_Campaign, 'title' => 'Verwijder campagne'],
+    ];
 
-  $navHTML = '';
+    $navigationHRM = [
+    ];
 
-  $useNavigationTable = [];
-  $sitename           = '';
+    $navHTML = '';
 
-  switch ($forWebsite) {
-    case Websites::WEBSITE_ADMIN:
-      $useNavigationTable = $navigationAdmin;
-      $sitename           = 'Admin Panel';
-      break;
-    case Websites::WEBSITE_SHAREPOINT:
-      $useNavigationTable = $navigationSharePoint;
-      $sitename           = 'Sharepoint | Intranet';
-      break;
-    case Websites::WEBSITE_GRADES:
-      $useNavigationTable = $navigationGrades;
-      $sitename           = 'Cijferadministratie';
-      break;
-    case Websites::WEBSITE_MARKETING:
-      $useNavigationTable = $navigationMarketing;
-      $sitename           = 'Marketing';
-      break;
-  }
+    $useNavigationTable = [];
+    $sitename = '';
 
-  $hasPermissions = false;
-
-  foreach ($useNavigationTable as $nav) {
-    if ($rbac->has($nav['permission'])) {
-      $hasPermissions = true;
-      $isActiveRoute  = $nav['route'] == $route;
-
-      $html = '<a href="' . $nav['route'] . '" ';
-      $html .= $isActiveRoute ? 'class="active" ' : '';
-      $html .= '>';
-      $html .= $nav['title'];
-      $html .= '</a>';
-
-      $navHTML .= $html;
+    switch ($forWebsite) {
+        case Websites::WEBSITE_ADMIN:
+            $useNavigationTable = $navigationAdmin;
+            $sitename = 'Admin Panel';
+            break;
+        case Websites::WEBSITE_SHAREPOINT:
+            $useNavigationTable = $navigationSharePoint;
+            $sitename = 'Sharepoint | Intranet';
+            break;
+        case Websites::WEBSITE_GRADES:
+            $useNavigationTable = $navigationGrades;
+            $sitename = 'Cijferadministratie';
+            break;
+        case Websites::WEBSITE_MARKETING:
+            $useNavigationTable = $navigationMarketing;
+            $sitename = 'Marketing';
+            break;
+        case Websites::WEBSITE_HRM:
+            $useNavigationTable = $navigationHRM;
+            $sitename = 'Human Resource Management';
+            break;
     }
-  }
-  $fullname  = $rbac->userInfoLDAP['cn'];
-  $jpegPhoto = base64_encode($rbac->userInfoLDAP['jpegphoto']);
 
-  $host = $_SERVER['HTTP_HOST'];
+    $hasPermissions = false;
 
-  $result = <<< EOF_HEADER
+    foreach ($useNavigationTable as $nav) {
+        if ($rbac->has($nav['permission'])) {
+            $hasPermissions = true;
+            $isActiveRoute = $nav['route'] == $route;
+
+            $html = '<a href="' . $nav['route'] . '" ';
+            $html .= $isActiveRoute ? 'class="active" ' : '';
+            $html .= '>';
+            $html .= $nav['title'];
+            $html .= '</a>';
+
+            $navHTML .= $html;
+        }
+    }
+    $fullname = $rbac->userInfoLDAP['cn'];
+    $jpegPhoto = '';
+
+    if (isset($rbac->userInfoLDAP['jpegphoto'])) {
+      $jpegPhoto = base64_encode($rbac->userInfoLDAP['jpegphoto']);
+    }
+    else {
+      $path = '/var/www/shared/partials/default-user.jpg';
+
+      if (file_exists($path)) {
+        $imageData = file_get_contents($path);
+        $jpegPhoto = base64_encode($imageData);
+      }
+    }
+
+    $host = $_SERVER['HTTP_HOST'];
+
+    $result = <<< EOF_HEADER
 <section class="navigation-header">
     <header>
         <h1>
@@ -99,20 +121,20 @@ function showheader(Websites $forWebsite, string $route, RBACSupport $rbac): str
         
         <p class="right">
           <span class="logout"><a href="http://log:out@$host/intranet/logout">Logout</a></span>
-          <img src="data:image/jpeg;base64,$jpegPhoto" alt="Gebruikersafbeelding">
+          <img src="data:image/jpeg;base64, $jpegPhoto" alt="Gebruikersafbeelding">
         </p>
     </header>
 EOF_HEADER;
 
-  if ($hasPermissions) {
-    $result .= <<< EOF_NAVIGATION
+    if ($hasPermissions) {
+        $result .= <<< EOF_NAVIGATION
     <nav> $navHTML  </nav>
 EOF_NAVIGATION;
-  }
-  $result .= <<< EOF_CLOSEHTML
+    }
+    $result .= <<< EOF_CLOSEHTML
     </section>
 EOF_CLOSEHTML;
-  return $result;
+    return $result;
 }
 
 ?>

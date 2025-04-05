@@ -15,3 +15,9 @@ objectClass: organizationalUnit
 objectClass: top
 ou: Marketing
 
+
+dn: ou=HRM,ou=Staff,dc=NHLStenden,dc=com
+objectClass: organizationalUnit
+objectClass: top
+ou: Marketing
+
