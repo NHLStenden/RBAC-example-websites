@@ -44,6 +44,10 @@ functie_naar_rollen = {
         "cn=All Personell,ou=roles,dc=NHLStenden,dc=com",
         "cn=Marketing,ou=roles,dc=NHLStenden,dc=com"
     ],
+        "medewerker HRM": [
+        "cn=All Personell,ou=roles,dc=NHLStenden,dc=com",
+    ],
+
 }
 
 
