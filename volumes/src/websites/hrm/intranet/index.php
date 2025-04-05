@@ -6,6 +6,7 @@ $rbac = new RBACSupport($_SERVER["AUTHENTICATE_UID"]);
 if (!$rbac->process()) {
     die('Could not connect to RBAC server.');
 }
+
 if (!$rbac->has(Permission_HRM_Manage_Employees)) {
     echo "Not allowed to open the manage employees\n";
     die();
@@ -46,6 +47,7 @@ $medewerkers = $pdo->query("SELECT * FROM medewerkers ORDER BY achternaam, voorn
                 <th>Team</th>
                 <th>Functie</th>
                 <th>Acties</th>
+                <th>Laatst bijgewerkt</th>
             </tr>
             </thead>
             <tbody>
@@ -58,6 +60,7 @@ $medewerkers = $pdo->query("SELECT * FROM medewerkers ORDER BY achternaam, voorn
                     <td><?= htmlspecialchars($medewerker['kamernummer']) ?></td>
                     <td><?= htmlspecialchars($medewerker['postcode']) ?></td>
                     <td><?= htmlspecialchars($medewerker['functie']) ?></td>
+                    <td><?= htmlspecialchars($medewerker['last_sync']) ?></td>
                     <td>
                         <a class="button" href="form.php?id=<?= $medewerker['idMedewerker'] ?>">Bewerken</a>
                         <a class="button" href="delete.php?id=<?= $medewerker['idMedewerker'] ?>"
