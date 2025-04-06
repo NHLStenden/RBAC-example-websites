@@ -14,6 +14,7 @@ enum Websites
 
 function showheader(Websites $forWebsite, string $route, RBACSupport $rbac): string
 {
+    // $rbac->echoPermissions();
     $navigationGrades = [
         ['route' => 'my-grades.php', 'permission' => Permission_Grades_Read_Own_Grades, 'title' => 'Cijfers'],
         ['route' => 'my-data.php', 'permission' => Permission_Grades_Show_Self, 'title' => 'Mijn gegevens'],
@@ -23,7 +24,7 @@ function showheader(Websites $forWebsite, string $route, RBACSupport $rbac): str
     ];
     $navigationSharePoint = [
         ['route' => 'my-data.php', 'permission' => Permission_SharePoint_All_Users, 'title' => 'Mijn gegevens'],
-        ['route' => 'hrm.php', 'permission' => Permission_SharePoint_HRM, 'title' => 'Human Resource Management'],
+        ['route' => 'hrm.php', 'permission' => Permission_SharePoint_HRM, 'title' => 'Medewerkersportaal'],
         ['route' => 'students.php', 'permission' => Permission_SharePoint_StudentTools, 'title' => 'Studenten Portaal'],
         ['route' => 'teachers.php', 'permission' => Permission_SharePoint_TeacherTools, 'title' => 'Docenten Portaal'],
         ['route' => 'http://grades.docker/intranet', 'permission' => Permission_Grades_BasicAccess, 'title' => 'Cijfers'],
@@ -38,6 +39,7 @@ function showheader(Websites $forWebsite, string $route, RBACSupport $rbac): str
         ['route' => 'attestation_roles.php', 'permission' => Permission_Admin_Panel, 'title' => 'Attestation - Rollen'],
         ['route' => 'manage_roles.php', 'permission' => Permission_Admin_Panel, 'title' => 'Rollen'],
         ['route' => 'view-user.php', 'permission' => Permission_Admin_Panel, 'title' => 'Zoeken...'],
+        ['route' => 'AssignUserToRoleForm.php', 'permission' => Permission_Admin_Panel, 'title' => 'Autorisatie aanvraag'],
     ];
     $navigationMarketing = [
         ['route' => 'new-campaign.php', 'permission' => Permission_Marketing_Create_Campaign, 'title' => 'Nieuwe campagne'],
