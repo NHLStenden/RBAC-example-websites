@@ -35,13 +35,14 @@ function DoSync()
         $allRoles = $stmt->fetchAll();
 
         $allDistinguishedNames = array_map(function ($entry) {
-            return $entry['distinghuishedName'];
+            return strtolower($entry['distinghuishedName']);
         }, $allRoles);
 
         $nrOfNewRoles = 0;
         foreach ($entries as $entry) {
             if (isset($entry['dn']) && isset($entry['cn'][0])) {
-                $dn = $entry['dn'];
+                $dn = strtolower($entry['dn']);
+
                 $title = $entry['cn'][0];
 
                 echo "Controleer rol: $title\n";
