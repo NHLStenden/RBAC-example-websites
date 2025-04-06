@@ -2,6 +2,7 @@
 
 include_once '../../shared/lib/RBACSupport.php';
 include_once '../../shared/partials/header.php';
+include_once './partials/fake-campaign-list.php';
 
 $rbac = new RBACSupport($_SERVER["AUTHENTICATE_UID"]);
 if (!$rbac->process()) {
@@ -26,11 +27,14 @@ $campaignListButtonCaption = 'Openen';
 <main class="container-fluid">
 
     <article>
-      <?= showheader(Websites::WEBSITE_MARKETING,basename(__FILE__), $rbac) ?>
+      <?= showheader(Websites::WEBSITE_MARKETING, basename(__FILE__), $rbac) ?>
         <section class="welcome" aria-label="Welcome section">
             <h1>Campagne bekijken</h1>
         </section>
-        <?php include_once './partials/fake-campaign-list.php'; ?>
+      <?php
+      displayCampaigns("Details", $rbac, Permission_Marketing_Read_Campaign);
+      ?>
+
     </article>
 
 </main>

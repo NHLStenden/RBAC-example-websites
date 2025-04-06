@@ -1,9 +1,8 @@
 <?php
 
-
-
 include_once '../../shared/lib/RBACSupport.php';
 include_once '../../shared/partials/header.php';
+include_once './partials/fake-campaign-list.php';
 
 $rbac = new RBACSupport($_SERVER["AUTHENTICATE_UID"]);
 if (!$rbac->process()) {
@@ -34,7 +33,9 @@ $campaignListButtonCaption = 'Approve';
         <section class="welcome" aria-label="Welcome section">
             <h1>Campagne goedkeuren</h1>
         </section>
-      <?php include_once './partials/fake-campaign-list.php'; ?>
+      <?php
+      displayCampaigns("Goedkeuren", $rbac, Permission_Marketing_Approve_Campaign);
+      ?>
     </article>
 
 </main>

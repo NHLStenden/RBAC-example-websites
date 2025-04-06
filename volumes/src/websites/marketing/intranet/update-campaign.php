@@ -2,6 +2,7 @@
 
 include_once '../../shared/lib/RBACSupport.php';
 include_once '../../shared/partials/header.php';
+include_once './partials/fake-campaign-list.php';
 
 $rbac = new RBACSupport($_SERVER["AUTHENTICATE_UID"]);
 if (!$rbac->process()) {
@@ -30,7 +31,10 @@ $campaignListButtonCaption = 'Bewerken';
         <section class="welcome" aria-label="Welcome section">
             <h1>Campagne Bewerken</h1>
         </section>
-      <?php include_once './partials/fake-campaign-list.php'; ?>
+      <?php
+      displayCampaigns("Details", $rbac, Permission_Marketing_Read_Campaign);
+      ?>
+
     </article>
 
 </main>

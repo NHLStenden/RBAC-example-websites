@@ -1,86 +1,61 @@
+<?php
+$campagnes = [
+  ["id" => 1, "titel" => "Beleef de Campus Dag", "beschrijving" => "Kom langs en ervaar hoe een dag op onze campus eruitziet.", "datum" => "15 januari 2024"],
+  ["id" => 2, "titel" => "Virtual Reality Studiekeuze Tour", "beschrijving" => "Ontdek je toekomstige opleiding vanuit je eigen woonkamer!", "datum" => "22 januari 2024"],
+  ["id" => 3, "titel" => "Open Avond voor Werkende Professionals", "beschrijving" => "Speciaal voor werkenden die willen omscholen of bijscholen.", "datum" => "30 januari 2024"],
+  ["id" => 4, "titel" => "Ouder- en Studentendag", "beschrijving" => "Leer samen met je ouders alles over jouw studiekeuze.", "datum" => "10 februari 2024"],
+  ["id" => 5, "titel" => "Masterclass Toekomstgericht Onderwijs", "beschrijving" => "Vooruitstrevende workshops voor toekomstige studenten.", "datum" => "18 februari 2024"],
+  ["id" => 6, "titel" => "Techniek Festival", "beschrijving" => "Ontdek de nieuwste snufjes en opleidingen in techniek.", "datum" => "25 februari 2024"],
+  ["id" => 7, "titel" => "Proefstudeer Dagen", "beschrijving" => "Ervaar een dag als student in een opleiding naar keuze.", "datum" => "1 maart 2024"],
+  ["id" => 8, "titel" => "Internationale Studenten Informatieavond", "beschrijving" => "Voor studenten uit het buitenland die hier willen studeren.", "datum" => "15 maart 2024"],
+  ["id" => 9, "titel" => "Duurzaamheid en Onderwijs Expo", "beschrijving" => "Inspirerende sessies over duurzame keuzes in onderwijs.", "datum" => "22 maart 2024"],
+  ["id" => 10, "titel" => "Docent voor een Dag", "beschrijving" => "Ervaar hoe het is om leraar te worden tijdens deze unieke dag.", "datum" => "30 maart 2024"]
+];
+
+// Functie om de campagnes weer te geven
+function displayCampaigns(string $campaignListButtonCaption, RBACSupport $rbac, string $needsPermission): string
+{
+  global $campagnes;
+  $output = <<<HTML
 <section class="campaigns">
     <table>
         <caption>Onderwijs Marketing Campagnes</caption>
         <thead>
-        <tr>
-            <th>#</th>
-            <th>Titel</th>
-            <th>Beschrijving</th>
-            <th>Datum</th>
-        </tr>
+            <tr>
+                <th>#</th>
+                <th>Titel</th>
+                <th>Beschrijving</th>
+                <th>Datum</th>
+            </tr>
         </thead>
         <tbody>
+HTML;
+
+  // Loop door de array van campagnes en genereer de tabelrijen
+  foreach ($campagnes as $campagne) {
+    $buttonHTML = '';
+    if ($rbac->has($needsPermission)) {
+      $buttonHTML .= "<button>{$campaignListButtonCaption}</button>";
+    }
+    $output .= <<<HTML
         <tr>
-            <td>1</td>
-            <td>Beleef de Campus Dag</td>
-            <td>Kom langs en ervaar hoe een dag op onze campus eruitziet.</td>
-            <td>15 januari 2024</td>
-            <td><button><?= $campaignListButtonCaption ?></button></td>
+            <td>{$campagne['id']}</td>
+            <td>{$campagne['titel']}</td>
+            <td>{$campagne['beschrijving']}</td>
+            <td>{$campagne['datum']}</td>
+            <td>{$buttonHTML}</td>
         </tr>
-        <tr>
-            <td>2</td>
-            <td>Virtual Reality Studiekeuze Tour</td>
-            <td>Ontdek je toekomstige opleiding vanuit je eigen woonkamer!</td>
-            <td>22 januari 2024</td>
-            <td><button><?= $campaignListButtonCaption ?></button></td>
-        </tr>
-        <tr>
-            <td>3</td>
-            <td>Open Avond voor Werkende Professionals</td>
-            <td>Speciaal voor werkenden die willen omscholen of bijscholen.</td>
-            <td>30 januari 2024</td>
-            <td><button><?= $campaignListButtonCaption ?></button></td>
-        </tr>
-        <tr>
-            <td>4</td>
-            <td>Ouder- en Studentendag</td>
-            <td>Leer samen met je ouders alles over jouw studiekeuze.</td>
-            <td>10 februari 2024</td>
-            <td><button><?= $campaignListButtonCaption ?></button></td>
-        </tr>
-        <tr>
-            <td>5</td>
-            <td>Masterclass Toekomstgericht Onderwijs</td>
-            <td>Vooruitstrevende workshops voor toekomstige studenten.</td>
-            <td>18 februari 2024</td>
-            <td><button><?= $campaignListButtonCaption ?></button></td>
-        </tr>
-        <tr>
-            <td>6</td>
-            <td>Techniek Festival</td>
-            <td>Ontdek de nieuwste snufjes en opleidingen in techniek.</td>
-            <td>25 februari 2024</td>
-            <td><button><?= $campaignListButtonCaption ?></button></td>
-        </tr>
-        <tr>
-            <td>7</td>
-            <td>Proefstudeer Dagen</td>
-            <td>Ervaar een dag als student in een opleiding naar keuze.</td>
-            <td>1 maart 2024</td>
-            <td><button><?= $campaignListButtonCaption ?></button></td>
-        </tr>
-        <tr>
-            <td>8</td>
-            <td>Internationale Studenten Informatieavond</td>
-            <td>Voor studenten uit het buitenland die hier willen studeren.</td>
-            <td>15 maart 2024</td>
-            <td><button><?= $campaignListButtonCaption ?></button></td>
-        </tr>
-        <tr>
-            <td>9</td>
-            <td>Duurzaamheid en Onderwijs Expo</td>
-            <td>Inspirerende sessies over duurzame keuzes in onderwijs.</td>
-            <td>22 maart 2024</td>
-            <td><button><?= $campaignListButtonCaption ?></button></td>
-        </tr>
-        <tr>
-            <td>10</td>
-            <td>Docent voor een Dag</td>
-            <td>Ervaar hoe het is om leraar te worden tijdens deze unieke dag.</td>
-            <td>30 maart 2024</td>
-            <td><button><?= $campaignListButtonCaption ?></button></td>
-        </tr>
+HTML;
+  }
+
+  $output .= <<<HTML
         </tbody>
     </table>
-    </body>
 </section>
+HTML;
+
+  echo $output;
+  return true;
+}
+
+?>
