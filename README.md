@@ -274,11 +274,23 @@ Als we bijvoorbeeld navigeren naar gebruiker naar Isabel Vos, dan krijgen we ond
 - **Gebruik van de website**: Studenten kunnen via een website permissies aan rollen koppelen. Dit stelt hen in staat om
   de toegangsrechten te beheren zonder nieuwe permissies te hoeven aanmaken.
 
+## Plaats van accounts
+
+Accounts worden op een specifieke plaats opgeslagen in de LDAP-store. Hieronder volgt een overzicht.
+
+| Type account          | Distinguished Name LDAP                         | 
+|-----------------------|-------------------------------------------------|
+| Docenten              | ou=Teachers,ou=Opleidingen,dc=NHLStenden,dc=com |
+| Studenten             | ou=Students,ou=Opleidingen,dc=NHLStenden,dc=com |
+| Medewerkers ICT       | ou=ICT Support,ou=Staff,dc=NHLStenden,dc=com    |
+| Medewerkers Marketing | ou=Marketing,ou=Staff,dc=NHLStenden,dc=com      |
+| Medewerkers HRM       | ou=HRM,ou=Staff,dc=NHLStenden,dc=com            |
+
 # Menu structuur van de websites
 
 Deze menubalk wordt gebruikt om navigatie te bieden voor vier verschillende websites: **Cijferadministratie**, *
-*Sharepoint | Intranet**, **Marketing**, en **Admin Panel**. Afhankelijk van de website waarvoor de menubalk wordt
-weergegeven, worden verschillende navigatieopties getoond.
+*Sharepoint | Intranet**, **Marketing**, **HRM** en het **Admin Panel**. Afhankelijk van de website waarvoor de menubalk
+wordt weergegeven, worden verschillende navigatieopties getoond.
 
 ## Websites
 
@@ -311,6 +323,12 @@ weergegeven, worden verschillende navigatieopties getoond.
 - **Attestation - Gebruikers**: Inzage in gebruikers en hun gekoppelde rollen.
 - **Attestation - Rollen**: Inzage in rollen en permissies.
 - **Rollen**: Beheert rollen.
+
+5. Human Resources Management (HRM)
+
+- **Inzage in medewerkers**: op basis van een lijst kan een gebruiker bekeken worden
+- **Aanpassen van gegevens van medewerkers**: een gebruiker kan gewijzigd worden zodat persoonsgegevens, maar ook
+  functie aangepast kan worden
 
 ## Navigatie
 
@@ -363,14 +381,13 @@ Voor een goed inzicht hoe je een nog veiligere websites maakt, verwijs ik je naa
 
 # Cleanup
 
-Het User Provisioning proces in de container `userprovisioning` (of `iam-example-provisioning-server`) draait elke 3 minuten
-een achtergrond proces (`/app/run-sync.sh`) en deze genereert dan ook voor elke run een logfile. Deze kun je eventueel
-opschonen met onderstaande commando. Let op: deze gooit ze *allemaal*  in één keer weg. 
+Het User Provisioning proces in de container `userprovisioning` (of `iam-example-provisioning-server`) draait elke 3
+minuten een achtergrond proces (`/app/run-sync.sh`) en deze genereert dan ook voor elke run een logfile. Deze kun je 
+eventueel opschonen met onderstaande commando. Let op: deze gooit ze *allemaal*  in één keer weg.
 
 ```bash
 docker exec -it userprovisioning /bin/bash -c "rm /app/logs/*"
 ```
-
 
 # Referenties / bronnen
 
@@ -384,7 +401,6 @@ docker exec -it userprovisioning /bin/bash -c "rm /app/logs/*"
     * The Open Worldwide Application Security Project (**OWASP**) is a nonprofit foundation that works to improve the
       security of software
 * [Zed Attack Proxy](https://www.zaproxy.org/)
-
 
 # Colofon
 
