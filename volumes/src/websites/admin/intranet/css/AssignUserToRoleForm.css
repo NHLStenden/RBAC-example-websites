@@ -1,0 +1,17 @@
+fieldset {
+    margin:10px;
+    border-radius: 10px;
+}
+
+form label {
+    width: 9em;
+    display: inline-block;
+}
+
+form select {
+    margin-top:10px;
+}
+
+form button[type=submit] {
+    margin-top:10px;
+}
