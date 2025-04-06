@@ -33,7 +33,7 @@ De volgende opdrachten en oefeningen zijn opgenomen:
 7. Inzicht in rollen - permissies
 8. Attestation
 8. Aanmaken nieuwe rol
-9. Aanmaken nieuwe gebruiker
+9. Aanmaken nieuwe gebruiker in LDAP
 10. Automatische provisioning van gebruikers
 
 # Opdracht 1 - In kaart brengen van beveiliging
@@ -133,11 +133,11 @@ combinatie van *opleiding* en *soort gebruiker* een **rol** aan te maken. Dat le
 
 Deze vind je op de locatie
 
-    cn=Teachers ADCSS,ou=opleidingen,ou=roles,dc=NHLStenden,dc=com
+>    cn=Teachers ADCSS,ou=opleidingen,ou=roles,dc=NHLStenden,dc=com
 
 en
 
-    cn=Teachers HBO-ICT,ou=opleidingen,ou=roles,dc=NHLStenden,dc=com    
+>    cn=Teachers HBO-ICT,ou=opleidingen,ou=roles,dc=NHLStenden,dc=com    
 
 Er zijn twee docenten die bij beide opleidingen lesgeven. Dit zijn onderstaande docenten.
 
@@ -298,27 +298,67 @@ te gebruiken of de geëxporteerde lijst te importeren in Excel en daar te filter
 
 # Opdracht 9 - Aanmaken nieuwe rol
 
-## Instructie
+Hier gaan we onderzoeken hoe we een nieuwe rol kunnen maken om deze in te zetten voor ons personeel.
 
 ## Introductie
+
+Stel er is een nieuw team opgezet dat marketing campagnes moet monitoren op voortgang. We noemen dit team de 
+"Campagne Monitors".  
+
+## Opdracht
+
+1. Maak via LDAP een nieuwe "GroupOfUniqueNames" aan in de DN `ou=roles,dc=NHLStenden,dc=com`. 
+2. Gebruik de naam "Campagne Monitors" voor de CN. 
+3. Login bij het Admin Panel
+4. Ga naar 'Rollen' en start de synchronisatie.
+   1. Als het goed is wordt de nieuwe rol uit LDAP overgenomen in de database
+5. Ga terug naar de rollen
+6. Zoek de regel in de tabel met 'Campagne Monitors' op en druk op de `Edit` knop om deze te wijzigen
+7. Voeg de permissie 'Read a Marketing Campaign' toe
+
+Nu gaan we een gebruiker autoriseren voor deze rol
+1. Login bij het Admin Panel
+2. Ga naar 'Autorisatie Aanvraag'
+3. Kies de nieuwe rol 'Campagne Monitors' bij de rol
+4. Kies een stafmedewerker (niet een medewerker die al bij de afdeling Marketing zit!) bijv. Sophie Bakker van HRM
+5. Druk op Autoriseer
+
+We gaan nu kijken of de nieuwe medewerker ook daadwerkelijk naar de Marketing Website mag
+1. Ga naar de SharePoint website
+2. Login als de gebruiker die je net geautoriseerd hebt
+3. Zie dat er in de menu balk nu een button staat voor Marketing
+4. Druk op de button Marketing
+5. Login in bij de website voor Marketing (let op: als je al ingelogd was eerder moet je mogelijk daar eerst uitloggen).
+
+Het blijkt dat we mogelijk nog niet de juiste autorisaties hebben.
+1. Waarom lukt het maar niet om in te loggen op de marketing website? Welke autorisatie mist er (zie de tabel bij opdracht 7)
+2. Ken de missende autorisaties toe aan de rol 'Campagne Monitors'
+3. Probeer opnieuw in te loggen.
+
+Nog steeds zal het niet lukken om in te loggen op de website van Marketing. Dit heeft te maken met de beveiliging op applicatie
+niveau. Om gebruik te maken van de website moet je de rol 'Marketing' hebben. Het is dus niet genoeg om allerlei Marketing-*permissies*
+te hebben. Je moet ook de rol "Marketing" hebben. 
+
+Echter aan de rol van Marketing zitten de nodige permissies waardoor je meteen ook bijna alles mag. Deze rol is dus eigenlijk veel
+te ruim opgezet: als je de rol Marketing heb mag je meteen teveel. We kunnen minder autorisaties in die rol opnemen en een nieuwe
+rol maken voor de standaard permissies van een echte Marketing medewerker. Echter, dan moeten we wel meteen alle gebruikers
+toewijzen aan die nieuwe rol.
+
+
+# Opdracht 10 - Gebruiker aanmaken in LDAP
+
+## Introductie
+
+## Instructie
 
 ## Opdracht
 
 ## Vragen
 
-# Opdracht 10 - Aanmaken nieuwe gebruiker
-
-## Instructie
-
-## Introductie
-
-## Opdracht
-
-## Vragen
 
 ----------------------------------------------------------------------------
 
-# Opdracht 10 - Automatische provisioning van gebruikers
+# Opdracht 11 - Automatische provisioning van gebruikers
 
 ## Instructie
 
@@ -355,32 +395,47 @@ De rollen zijn ondergebracht op de volgende locatie: `ou=roles,dc=NHLStenden,dc=
 | Toegang tot sharepoint voor docenten            | cn=SharePoint Teachers,ou=roles,dc=NHLStenden,dc=com | 
 
 1. Login op de HRM website
-2. Kijk welke medewerkers er zijn. Wijzig de functie van een medewerker. Onthoudt even de gebruikersnaam. 
+2. Kijk welke medewerkers er zijn. Wijzig de functie van een medewerker. Onthoudt even de gebruikersnaam.
 3. Wacht op de synchronisatie. Je kunt dit volgen via een logfile in de map `{ROOT}/volumes/src/user-provisioning`.
 4. Kijk in de LDAP-store naar de medewerker.
     1. staat de gebruiker nog op de juiste plek?
     2. heeft de gebruiker de juiste rechten (groepslidmaatschappen, zie tabel hier boven) ?
 5. Kijk via het Admin-panel naar de eigenschappen van de gebruiker (via de button `Zoeken`).
 
-# Reflectie
+# Verwerking van kennis in de eigen werkomgeving
 
 We hebben de theorie behandeld en via de oefeningen inzicht gekregen in de werking van Role Based Access Control op
-basis
-van permissies. Ga op onderzoek uit en reflecteer op de volgende vragen en neem deze op in je portfolio.
+basis van permissies. Ga op onderzoek uit en reflecteer op de volgende vragen en neem deze op in je portfolio.
 
-1. Is er in jouw bedrijf een centrale opslag van accounts?
-    1. Indien deze er is: wat is de bron van de lijst met accounts?
-    2. Is er een geautomatiseerd proces dat brongegevens synchroniseert met de centrale account administratie ("
-       Provisioning")
-    3. welke sleutel applicaties leunen op deze gecentraliseerde administratie?
-2. Welke applicaties regelen hun eigen account-administratie?
-3. Worden managers (afdeling/projecten) periodiek op de hoogte gehouden van de stand van zaken ("Attestation")?
-4. Onderzoek hoe het proces van "Hire to Retire" impact heeft op de gebruikersadministratie. Dit kan veel werk zijn,
+## Betreffende User Provisioning
+
+1. Onderzoek hoe het proces van "Hire to Retire" impact heeft op de gebruikersadministratie. Dit kan veel werk zijn,
    maar verdiep eens op één belangrijke applicatie in jouw bedrijf.
-    1. gaat het vanzelf? moet je lang wachten? hoe kom je aan je wachtwoord(en)?
-    2. wanneer en hoe krijgt een nieuwe medewerker accounts (let op: meervoud! Er zijn vast vele applicaties)
-    3. Krijgt een nieuwe medewerker meteen de juiste rechten ("permissies" or "rollen")?
-5. Is er beleid geformuleerd rondom toegang, RBAC, aanmaken accounts? Is HR bijvoorbeeld betrokken? Zo niet, wat zou
+   1. gaat het vanzelf? moet je lang wachten? hoe kom je aan je wachtwoord(en)?
+   2. wanneer en hoe krijgt een nieuwe medewerker accounts (let op: meervoud! Er zijn vast vele applicaties)
+   3. Krijgt een nieuwe medewerker meteen de juiste rechten ("permissies" of "rollen")?
+2. Is er beleid geformuleerd rondom toegang, RBAC, aanmaken accounts? Is HR bijvoorbeeld betrokken? Zo niet, wat zou
    jouw advies zijn?
-6. Wat is jouw advies aan de organisatie op het gebied van een centrale opslag van accounts en gebruik in applicaties?
-7.  
+3. Is er een User Provisioning proces?
+    1. Is dat proces (in enige mate) geautomatiseerd?
+    2. Zijn er bron- en doelsystemen gedefinieerd?
+    3. Wat zijn de regels om informatie uit bronsystemen naar doelsystemen te transformeren? Gebruik bijvoorbeeld
+       één bron- en doelsysteem
+4. Welke applicaties regelen hun eigen account-administratie?
+5. Indien er geen User Provisioning proces is:
+    1. Welke mogelijke bronsystemen zouden ingezet kunnen worden?
+    2. Welke informatie in het bronsysteem is bruikbaar voor RBAC?
+    3. Welke doelsystemen zouden aangemerkt kunnen worden voor User Provisioning?
+    4. Welke regels stel je voor als je kijkt naar de transformatie van bron- naar doelsystemen.
+
+## Governance van toegang  
+
+1. Worden managers (afdeling/projecten) periodiek op de hoogte gehouden van de stand van zaken ("Attestation")?
+2. Wat is jouw advies aan de organisatie op het gebied van een centrale opslag van accounts en gebruik in applicaties?
+
+## Over applicaties
+
+1. Kijk eens naar een applicatie waar toegang voor geregeld moet worden. 
+   1. Is er een toegangsbeheerder aangesteld die deze aanvragen regelt
+   2. In hoeverre kan de beheerder zelf nieuwe permissies (géén rollen) instellen als er bijvoorbeeld een nieuw team
+      opgericht wordt dat afwijkende autorisaties/toegang nodig heeft?
