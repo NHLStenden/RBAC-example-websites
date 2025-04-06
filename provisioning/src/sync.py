@@ -12,7 +12,7 @@ DB_CONFIG = {
     "database": "HRM",
 }
 
-# Configuratie voor LDAP
+# Configuratie voor toegang tot LDAP
 LDAP_CONFIG = {
     "server": "ldap://identityserver",
     "user": "cn=admin,dc=NHLStenden,dc=com",
@@ -21,6 +21,8 @@ LDAP_CONFIG = {
 }
 
 # Mapping van functie naar LDAP OU (Organizational Unit)
+# Dit bepaalt waar gebruikersaccounts aangemaakt moeten worden op basis van de functie van een medewerker
+#
 FUNCTIE_TO_DN = {
     "docent": "ou=Teachers,ou=Opleidingen,dc=NHLStenden,dc=com",
     "medewerker ICT": "ou=ICT Support,ou=Staff,dc=NHLStenden,dc=com",
@@ -28,6 +30,10 @@ FUNCTIE_TO_DN = {
     "medewerker HRM": "ou=HRM,ou=Staff,dc=NHLStenden,dc=com",
 }
 
+# Lijst met default rollen per type medewerker
+# Dit bepaalt bij het wijzigen en aanmaken van een account welke rollen (lidmaatschap van GroupOfUniqueNames) een
+# bepaalde functie toegekend krijgt. Deze worden bij elke synchronisatie afgedwongen!
+#
 FUNCTIE_TO_ROLES = {
     "docent": [
         "cn=All Personell,ou=roles,dc=NHLStenden,dc=com",
@@ -72,7 +78,6 @@ def get_medewerkers():
     db.close()
     return medewerkers
 
-
 def get_medewerkers_employeeNumber():
     db = connect_db()
     cursor = db.cursor(dictionary=True)
@@ -102,9 +107,8 @@ def find_medewerker_by_personeelsnummer(conn, personeelsnummer):
     return None
 
 
+# Bepaal hoe de DN van een medewerker er uit moet zien op basis van de functie en naam-gegevens
 def genereer_dn(medewerker):
-    """Genereert een DN op basis van de volledige naam"""
-
     functie = medewerker["functie"]
     ou_dn = FUNCTIE_TO_DN.get(functie, "")
     fullname = f"{medewerker['voornaam']} {medewerker['achternaam']}"
@@ -170,6 +174,8 @@ def update_medewerker_in_ldap(conn, dn, medewerker):
         print(f"❌ Fout bij bijwerken: {conn.result} ({medewerkerType})")
 
 
+# ALs een gebruiker gewijzigd is in de LDAP dan zal het moment van de laatste synchronisatie opgenomen worden in
+# de database bij het veld "last_sync"
 def updateLastSyncTimestampForUser(idMedewerker):
     db = connect_db()
     cursor = db.cursor()
@@ -179,8 +185,9 @@ def updateLastSyncTimestampForUser(idMedewerker):
     db.close()
 
 
+# Zorg dat een medewerker alle default rollen krijgt.
+# Hiervoor wordt de lijst 'FUNCTIE_TO_ROLES' gebruikt.
 def voeg_medewerker_toe_aan_rollen(conn, functie, medewerker_dn):
-    """Voegt een medewerker toe aan alle relevante LDAP-groepen op basis van functie"""
 
     # Haal de bijbehorende rollen op
     rollen = FUNCTIE_TO_ROLES.get(functie, [])
@@ -199,6 +206,9 @@ def voeg_medewerker_toe_aan_rollen(conn, functie, medewerker_dn):
         conn.modify(rol_dn, {"uniqueMember": [(MODIFY_ADD, [medewerker_dn])]})
         print(f"✅ Medewerker {medewerker_dn} toegevoegd aan rol {rol_dn}")
 
+# Als een gebruikersaccount verplaatst wordt dan kan in de LDAP een ghost-entry in de GroupOfUniqueNames lijst komen
+# bij het attribuut "UniqueMember".
+# Deze functie loopt de hele LDAP af en zoekt naar deze lidmaatschappen en ruimt deze op.
 def verwijder_oude_groepslidmaatschappen(conn, old_dn):
     print(f"🧹 Verwijderen van oude groepslidmaatschappen voor {old_dn}")
     search_filter = f"(uniqueMember={old_dn})"
