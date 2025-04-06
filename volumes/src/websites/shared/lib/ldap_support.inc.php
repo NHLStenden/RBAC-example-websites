@@ -325,3 +325,80 @@ function GetUserDataFromDN(LDAP\Connection $lnk, string $dn): array|null
     return null;
   }
 }// GetUserDNFromUID
+
+function GetAllUsersInDN(LDAP\Connection $lnk, string $dn): array | null
+{
+  $filter  = "(objectClass=InetOrgPerson)";
+  $ldapRes = ldap_search($lnk, $dn, $filter, ['cn', 'uid', 'sn', 'givenName'], 0, -1, -1, 0);
+  if ($ldapRes === false) {
+    throw new Exception("SearchStudentByUID::Cannot execute query");
+  }
+
+  $gebruikersPerDn = [];
+
+  $entries = ldap_get_entries($lnk, $ldapRes);
+  if ($entries !== false && $entries['count'] > 0) {
+    for ($i = 0; $i < $entries["count"]; $i++) {
+      $entry = $entries[$i];
+      $gebruikersPerDn[] = [
+        "cn" => $entry["cn"][0] ?? "",
+        "uid" => $entry["uid"][0] ?? "",
+        "sn" => $entry["sn"][0] ?? "",
+        "givenName" => $entry["givenname"][0] ?? "",
+        "dn" => $entry["dn"],
+      ];
+    }
+  }
+
+  usort($gebruikersPerDn, function ($a, $b) {
+    $snCompare =  strcmp(strtolower($a["sn"]), strtolower($b["sn"]));
+    if ($snCompare === 0) {
+      return strcmp(strtolower($a["givenName"]), strtolower($b["givenName"]));
+    }
+    else {
+      return $snCompare;
+    }
+  });
+  return $gebruikersPerDn;
+}
+
+function GetAllRolesInDN(LDAP\Connection $lnk, string $dn): array | null
+{
+  $filter  = "(objectClass=GroupOfUniqueNames)";
+  $ldapRes = ldap_search($lnk, $dn, $filter, ['cn'], 0, -1, -1, 0);
+  if ($ldapRes === false) {
+    throw new Exception("SearchStudentByUID::Cannot execute query");
+  }
+
+  $roles = [];
+
+  $entries = ldap_get_entries($lnk, $ldapRes);
+  if ($entries !== false && $entries['count'] > 0) {
+    for ($i = 0; $i < $entries["count"]; $i++) {
+      $entry = $entries[$i];
+      $role = $entry["cn"][0] ?? "";
+      $roles[$role] = [
+        "cn" => $entry["cn"][0] ?? "",
+        "dn" => $entry["dn"],
+      ];
+    }
+  }
+
+  usort($roles, function ($a, $b) {
+    return  strcmp(strtolower($a["cn"]), strtolower($b["cn"]));
+  });
+  return $roles;
+}
+
+function AssignUserToRole(LDAP\Connection $lnk, string $role, string $dn): bool {
+  $entry = ["uniqueMember" => [$dn]];
+  try {
+    if (ldap_mod_add($lnk, $role, $entry)) {
+      return true;
+    }
+  }
+  catch (Exception $e) {
+    error_log(ldap_error($lnk));
+  }
+  return false;
+}
