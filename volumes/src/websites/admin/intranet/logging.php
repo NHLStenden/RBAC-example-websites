@@ -21,6 +21,7 @@ $logFiles = [
     ['file' => '/var/log/apache2/error.grades.log', 'title' => 'Cijferadministratie'],
     ['file' => '/var/log/apache2/error.marketing.log', 'title' => 'Marketing'],
     ['file' => '/var/log/apache2/error.admin.log', 'title' => 'Admin'],
+    ['file' => '/var/log/apache2/error.hrm.log', 'title' => 'HRM'],
 ];
 
 // Lijst met reguliere expressies en bijbehorende kolomnummers
