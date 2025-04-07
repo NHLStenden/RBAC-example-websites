@@ -11,6 +11,15 @@ op het kunnen spelen met autorisaties op basis van een Role Based Access (RBAC) 
 
 # Verantwoording en architectuur
 
+De architectuur leunt op het concept van containerisation: het onderbrengen van functionaliteit in kleine afgebakende
+eenheden die we "containers" noemen. Het Engelse werkwoord "to contain" betekent iets binnen grenzen houden of
+omsluiten, zoals een doos die voorwerpen bevat. In de context van Docker verwijst het naar het afzonderen van een
+applicatie met al haar afhankelijkheden in een geïsoleerde omgeving.
+
+Hieronder volgt een diagram met toelichting op de gekozen indeling en taakverdeling.
+
+![Containers](./images/Documentation/Diagrammen%20-%20Websites.png)
+
 # Installatie en activeren
 
 Hier wordt uitgelegd hoe je deze repository kunt installeren en de software kunt starten om de oefeningen uit te voeren.
@@ -382,7 +391,7 @@ Voor een goed inzicht hoe je een nog veiligere websites maakt, verwijs ik je naa
 # Cleanup
 
 Het User Provisioning proces in de container `userprovisioning` (of `iam-example-provisioning-server`) draait elke 3
-minuten een achtergrond proces (`/app/run-sync.sh`) en deze genereert dan ook voor elke run een logfile. Deze kun je 
+minuten een achtergrond proces (`/app/run-sync.sh`) en deze genereert dan ook voor elke run een logfile. Deze kun je
 eventueel opschonen met onderstaande commando. Let op: deze gooit ze *allemaal*  in één keer weg.
 
 ```bash
