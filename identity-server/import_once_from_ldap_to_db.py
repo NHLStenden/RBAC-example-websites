@@ -1,3 +1,8 @@
+# Python script to import the staff/teacher accounts to the HRM Database
+# This is run once (manually!) after installation when all docker containers are running.
+# Started from the script "slapd-load-entries.sh"
+#
+
 import mysql.connector
 from ldap3 import Server, Connection, SUBTREE
 
