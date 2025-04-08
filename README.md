@@ -401,7 +401,7 @@ is ook een link om uit te loggen.
 
 # Oefeningen
 
-Deze zijn opgenomen in een aparte [map](./excersises/README.md).
+Deze zijn opgenomen in een apart [bestand](./excersises.MD).
 
 # Verantwoording testgegevens
 
