@@ -1,12 +1,23 @@
+--
+-- Create and seed the IAM database
+-- This database will hold the mapping between LDAP roles and application dependant permissions
+--
+
+-- First drop existing database if it exists, the create a new one
 DROP DATABASE IF EXISTS IAM;
 CREATE DATABASE IAM;
+
+-- Start working in the new database
 USE IAM;
 
+-- Create new user 'student'; this should not exist... but let's delete it anyway
 DROP USER IF EXISTS 'student'@'%';
 CREATE USER 'student'@'%' IDENTIFIED WITH mysql_native_password AS PASSWORD('test1234');
 
+-- Grant all permissions for the newly created student user.
 GRANT ALL ON IAM.* TO 'student'@'%';
 
+-- Create a table to hold the roles. The 'distinguishedName' should match an existing LDAP-role
 CREATE TABLE roles
 (
     idRole             INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
@@ -15,9 +26,10 @@ CREATE TABLE roles
     distinghuishedName VARCHAR(255) NOT NULL COMMENT 'Reference to existing group in LDAP tree'
 ) COMMENT 'Roles assignable to users';
 
+-- make sure the title of roles is unique
 CREATE UNIQUE INDEX UniqueRoleTitle ON roles (title);
 
-
+-- Create a table to hold applications
 CREATE TABLE application
 (
     idApplication INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
@@ -27,6 +39,7 @@ CREATE TABLE application
 
 CREATE UNIQUE INDEX UniqueApplicationTitle ON application (title);
 
+-- Create a table to hold permissions. These permissions are strongly related to functionalities of each application.
 CREATE TABLE permissions
 (
     idPermission     INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
@@ -37,9 +50,11 @@ CREATE TABLE permissions
     CONSTRAINT FOREIGN KEY idPermissionApplication (fk_idApplication) REFERENCES application (idApplication) ON DELETE CASCADE ON UPDATE RESTRICT
 ) COMMENT 'Possible permissions to protect transactions';
 
+-- create constraints
 CREATE UNIQUE INDEX UniquePermissionCode ON permissions (code);
 CREATE UNIQUE INDEX UniquePermissionTitle ON permissions (title);
 
+-- create a table to link the roles to the permissions.
 CREATE TABLE role_permissions
 (
     idRolePermission INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
@@ -51,11 +66,13 @@ CREATE TABLE role_permissions
 
 CREATE UNIQUE INDEX UniqueRolePermission ON role_permissions (fk_idPermission, fk_idRole);
 
-
+-- now create a Stored Procedure to seed the database.
+-- This is chosen so the PHP-scripts can call these scripts to easily restore the start situation in case of troubles.
 DELIMITER $$
 
 CREATE OR REPLACE PROCEDURE InitAllRolesAndPermissions()
 BEGIN
+    -- first insert all roles
     INSERT INTO roles (title, description, distinghuishedName)
     VALUES ('admin', 'administrators', 'cn=admins,ou=roles,dc=NHLStenden,dc=com'),
            ('ICT Support', 'ICT Support', 'cn=ICT Support,ou=roles,dc=NHLStenden,dc=com'),
@@ -79,6 +96,7 @@ BEGIN
 
            ('Human Resources Management', '', 'cn=hrm,ou=roles,dc=NHLStenden,dc=com');
 
+    -- create variables to hold all the Primary Keys of the roles for later use
     SELECT roles.idRole INTO @var_Role_admin FROM roles WHERE title = 'admin';
     SELECT roles.idRole INTO @var_Role_all_personell FROM roles WHERE title = 'All Personell';
 
@@ -98,6 +116,7 @@ BEGIN
     SELECT roles.idRole INTO @var_Role_Marketing_Management FROM roles WHERE title = 'Marketing management';
     SELECT roles.idRole INTO @var_Role_HRM FROM roles WHERE title = 'human Resources Management';
 
+    -- create applications
     INSERT INTO application (title, description)
     VALUES ('Admin Panel', ''),
            ('SharePoint', ''),
@@ -106,6 +125,7 @@ BEGIN
            ('HRM', ''),
            ('Mail', '');
 
+    -- collect all primary keys in variables for later use
     SELECT idApplication INTO @var_App_AdminPanel FROM application WHERE title = 'Admin Panel';
     SELECT idApplication INTO @var_App_SharePoint FROM application WHERE title = 'SharePoint';
     SELECT idApplication INTO @var_App_Marketing FROM application WHERE title = 'Marketing';
@@ -113,6 +133,7 @@ BEGIN
     SELECT idApplication INTO @var_App_Mail FROM application WHERE title = 'Mail';
     SELECT idApplication INTO @var_App_HRM FROM application WHERE title = 'HRM';
 
+    -- create all the permissions; link them to the application using the variables holding the PK of the application
     INSERT INTO permissions (code, title, description, fk_idApplication)
     VALUES ('SharePoint_Basic_Access', 'Basic Access to SharePoint', '', @var_App_SharePoint),
            ('Grades_Basic_Access', 'Basic Access to Grades app', '', @var_App_Grades),
@@ -139,6 +160,7 @@ BEGIN
 
            ('HRM_Manage_Employees', 'Manage Employees', '', @var_App_HRM);
 
+    -- collect all the permissions in variables for later use.
     SELECT permissions.idPermission INTO @var_permission_Use_Mail FROM permissions WHERE code = 'Use_Mail';
     SELECT permissions.idPermission INTO @var_permission_Admin_Panel FROM permissions WHERE code = 'AdminPanel';
 
@@ -215,6 +237,7 @@ BEGIN
     FROM permissions
     WHERE code = 'HRM_Manage_Employees';
 
+    -- now link the roles to the application permissions using the variables for PK of role and PK of permission.
     INSERT INTO role_permissions(fk_idRole, fk_idPermission)
     VALUES (@var_Role_all_personell, @var_permission_SharePoint_Basic_Access);
     INSERT INTO role_permissions(fk_idRole, fk_idPermission) VALUES (@var_Role_all_personell, @var_permission_Use_Mail);
@@ -282,8 +305,10 @@ BEGIN
 END $$
 DELIMITER ;
 
+-- now call the newly created stored procedure to actually seed the database.
 CALL InitAllRolesAndPermissions();
 
+-- create a convenience view to use in a DB management program for insight in the mappings.
 CREATE OR REPLACE VIEW vw_Role_Permissions AS
 SELECT idRolePermission,
        idRole,
@@ -301,7 +326,7 @@ FROM roles
 
 
 /**
-  Create a stored function to get all roles and permissions in a pivot table
+  Create a stored function to get all roles and permissions in a pivot table for use in the Admin Panel website.
   */
 
 DELIMITER $$
@@ -337,6 +362,7 @@ BEGIN
     RETURN sql_query;
 END $$
 
+-- Create a stored procedure to clear all the tables in the right order.
 CREATE OR REPLACE PROCEDURE ClearAllRolesAndPermissions()
 BEGIN
     DELETE FROM application;
@@ -345,7 +371,7 @@ BEGIN
     DELETE FROM roles;
 END $$
 
-
+-- Create a stored procedure to easily reset all the roles and permissions, using other stored procedures.
 CREATE OR REPLACE PROCEDURE ResetAllRolesAndPermissions()
 BEGIN
     CALL ClearAllRolesAndPermissions();
