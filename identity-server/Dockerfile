@@ -1,3 +1,8 @@
+####################################################################################################################
+# Docker file for the LDAP Identity server Database
+####################################################################################################################
+
+# Use the latest Linux/Debian distro
 FROM debian:latest
 
 ###
@@ -6,14 +11,18 @@ FROM debian:latest
 #
 ####
 
-
+# Create working directory
 RUN mkdir /app
 WORKDIR /app
 
+# Copy all shell scripts
 COPY *.sh /app
 RUN chmod a+x /app/*.sh
 
-# Update repositories
+# Update repositories and install dependencies:
+# - Locales
+# - Timezones
+# - Python 3 and pip
 RUN apt update && apt install -y debconf-utils python3 python3-venv python3-pip tzdata locales \
     && ln -fs /usr/share/zoneinfo/Europe/Amsterdam /etc/localtime \
     && dpkg-reconfigure -f noninteractive tzdata \
@@ -28,12 +37,15 @@ RUN python3 -m venv /app/venv \
     && /app/venv/bin/pip install --upgrade pip \
     && /app/venv/bin/pip install mysql-connector-python ldap3
 
-
+# Copy all LDIF files to container
 COPY ldif/Ldap-data-*.ldif /app
 COPY ldif-base/*.base /app
 
+# Create avatar files to container
 RUN mkdir avatars
 COPY avatars/*.jpeg avatars
+
+# Copy all python scripts to container
 COPY *.py /app
 
 
