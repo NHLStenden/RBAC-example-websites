@@ -1,4 +1,5 @@
 #!/bin/bash
+# Run from Docker build
 
 # Stel de domeinnaam in
 echo "slapd slapd/domain string NHLStenden.com" | debconf-set-selections
