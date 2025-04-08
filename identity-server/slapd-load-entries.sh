@@ -125,4 +125,4 @@ rmdir avatars
 rm -rf /app/ldap-updates-venv
 rm /app/*.py
 
-# apt purge -y python3 python3-pip && apt -y autoremove
+apt purge -y python3 python3-pip && apt -y autoremove
