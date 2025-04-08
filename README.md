@@ -32,6 +32,9 @@ Om deze oefeningen uit te kunnen voeren heb je de volgende zaken nodig:
 * Toegang tot je `hosts`-file voor het toevoegen van hostnames.
 * De applicatie Apache Directory Studio
 
+
+Om aan de slag te gaan doorlopen we de volgende stappen. Deze worden verderop verder toegelicht.
+
 1. Gebruik een GIT-client of download deze repository als een ZIP file.
 2. Als je deze repository op je computer hebt staan ga je naar de map en open je een Command Prompt (bash, cmd,
    Powershell)
@@ -39,6 +42,18 @@ Om deze oefeningen uit te kunnen voeren heb je de volgende zaken nodig:
 4. Voeg in je hosts-file de URL's van de website toe
 
 ## Ophalen repository
+
+Je kunt eenvoudig de repository downloaden of een `git clone` uitvoeren. 
+
+**Downloaden als ZIP**
+
+Als je deze repository wilt downloaden gebruik dan de download optie van GitHub. Deze vind je op boven de lijst met 
+bestanden via de groene knop `code`. Zie de afbeelding hier onder. Door op de groene knop te drukken wordt een 
+popup geopend met onderin de optie 'Download ZIP'. Druk op deze knop en er zal een download starten. 
+
+![get-repo-zip.png](images/get-repo-zip.png)
+
+**git clone**
 
 Gebruik je favoriete GIT-client of open een Command Prompt en typ onderstaande commando. De repository wordt dan
 aangemaakt in de map waar je op dat moment staat.
@@ -60,7 +75,8 @@ moeten bevatten voor de regelovergangen.
 
 Fouten die voor kunnen komen zijn onder andere `exit code 127: file not found`.
 
-Eventueel kan GIT ingesteld worden om dit globaal te negeren door onderstaande commando uit te voeren.
+Eventueel kan GIT ingesteld worden om dit globaal te negeren door onderstaande commando uit te voeren. Als je dat commando
+hebt uitgevoerd en je gebruikte `git clone` dan moet je deze nieuwe map weggooien en opnieuw `git clone` uitvoeren. 
 
 ```text
 git config --global core.autocrlf false
@@ -72,44 +88,77 @@ In de folder van deze repository staan ook twee programma's die de bestanden kun
 * Voor onder WSL: `convert-cr-lf-wsl`
 
 Mocht het nodig zijn om deze programma's aan te passen of te hercompileren, kijk dan in de map
-`_resources/support/convert-crlf` en het daar aanwezige [`README.md`](./_resources/support/convert-crlf/README.md)
-bestand voor instructies.
+`_resources/support/convert-crlf` en het daar aanwezige [`README.md`](./_resources/support/convert-crlf/README.md) bestand voor instructies.
 
 ## Bouw en start de containers
+
+De eerste stap is het bouwen van de containers. Dat doe je met onderstaande commando:
+```cmd
+  docker compose build --no-cache
+```
 
 In de eerste stap worden de containers gebouwd. De optie `--no-cache` zorgt er voor dat je eerdere instanties/images
 van je containers niet hergebruikt, maar echt helemaal opnieuw begint.
 
-De tweede stap start daadwerkelijk de containers.
+De tweede stap start daadwerkelijk de containers. De optie `-d` bij `docker compose up` zorgt er voor dat je in deze 
+command-prompt verder kunt werken omdat de dockers nu in de achtergrond draaien.
 
 ```cmd
-  c:\> docker compose build --no-cache
-  c:\> docker compose up
+  docker compose build up -d
 ```
 
-Als de containers eenmaal draaien open je *nog* een command prompt en start je het script om alle accounts en
-gerelateerde informatie te genereren. Dit doe je door een script dat in de container zit te starten.
+Als we dit grofweg samenvatten zou het er uiteindelijk zo uit moeten zien (er zijn delen weggelaten).
 
 ```cmd
-c:\> docker exec -it iam-example-identity-server /bin/bash -c /app/slapd-load-entries.sh
+c:\mijn\project\map\RBAC-example-websites> docker compose build --no-cache
+....................
+....................
+[+] Building 5/5
+ ✔ iam-example-db-server            Built                                                                                                                                                                                                                                                                      0.0s 
+ ✔ iam-example-hrmdb-server         Built                                                                                                                                                                                                                                                                      0.0s 
+ ✔ iam-example-identity-server      Built                                                                                                                                                                                                                                                                      0.0s 
+ ✔ iam-example-provisioning-server  Built                                                                                                                                                                                                                                                                      0.0s 
+ ✔ iam-example-webserver            Built 
+
+c:\mijn\project\map\RBAC-example-websites> docker compose up -d
+[+] Running 6/6
+ ✔ Network rbac-example-websites_iam-example  Created                                                                                                                                                                                                                                                          0.1s 
+ ✔ Container iam-example-identity-server      Started                                                                                                                                                                                                                                                          0.5s 
+ ✔ Container iam-example-db-server            Started                                                                                                                                                                                                                                                          0.5s 
+ ✔ Container iam-example-hrm-server           Started                                                                                                                                                                                                                                                          0.5s 
+ ✔ Container userprovisioning                 Started                                                                                                                                                                                                                                                          0.5s 
+ ✔ Container iam-example-webserver            Started
+ 
+ c:\mijn\project\map\RBAC-example-websites>   
 ```
 
 Als de containers eenmaal zijn gebouwd, kunnen ze ook eenvoudig beheerd worden via bijvoorbeeld een plug-in in je IDE of
 via de Docker Desktop applicatie (niet beschikbaar op Linux).
 
+Start nu het script om alle accounts en gerelateerde informatie te genereren. Dit doe je door een script dat in de
+container zit te starten. We gebruiker het commando `docker exec` om commando's in een lopende container te kunnen starten.
+
+```cmd
+  docker exec -it iam-example-identity-server /bin/bash -c /app/slapd-load-entries.sh
+```
+
 ## Aanpassingen in de hosts file
 
-Voeg onderstaande items toe aan je `hosts` file.
+We willen meerdere websites kunnen gebruiken, terwijl er maar één webserver actief is. Om de webserver te vertellen welke
+website we willen benaderen moeten we steeds de goede URL gebruiken. Echter, we moeten ons Operating System (Windows,
+Linux, Mac) wel een handje helpen om te bepalen welke URL's we gebruiken en waar die naar toe moeten leiden. We gebruiken
+hiervoor de `hosts` file om het DNS-proces te ondersteunen. Voeg onderstaande items toe aan je `hosts` file. Instructies
+per OS volgen verderop. 
 
 ```text
 # Docker RBAC Example
-127.0.0.1	grades.docker sharepoint.docker admin.docker marketing.docker
+127.0.0.1	grades.docker sharepoint.docker admin.docker marketing.docker hrm.docker
 
 ```
 
 ### Windows
 
-1. **Open Notepad als administrator**:
+1. **Open Notepad als _administrator_**:
     - Zoek naar "Notepad" in het Startmenu.
     - Klik met de rechtermuisknop op Notepad en selecteer "Als administrator uitvoeren".
 
@@ -122,7 +171,7 @@ Voeg onderstaande items toe aan je `hosts` file.
 3. **Voeg de regels toe**:
     - Voeg de volgende regels aan het einde van het bestand toe:
       ```
-      127.0.0.1    grades.docker sharepoint.docker admin.docker marketing.docker
+      127.0.0.1    grades.docker sharepoint.docker admin.docker marketing.docker hrm.docker
       ```
 
 4. **Sla het bestand op**:
@@ -133,7 +182,7 @@ Voeg onderstaande items toe aan je `hosts` file.
 1. **Open Terminal**:
     - Zoek naar "Terminal" in Spotlight (Cmd + Spatie) en open het.
 
-2. **Open het hosts-bestand met nano**:
+2. **Open het hosts-bestand met `nano` of een andere terminal editor**:
     - Typ het volgende commando en druk op Enter:
       ```bash
       sudo nano /etc/hosts
@@ -143,7 +192,7 @@ Voeg onderstaande items toe aan je `hosts` file.
 3. **Voeg de regels toe**:
     - Voeg de volgende regels aan het einde van het bestand toe:
       ```
-      127.0.0.1    grades.docker sharepoint.docker admin.docker marketing.docker
+      127.0.0.1    grades.docker sharepoint.docker admin.docker marketing.docker hrm.docker
       ```
 
 4. **Sla het bestand op en sluit nano**:
@@ -165,7 +214,7 @@ Voeg onderstaande items toe aan je `hosts` file.
 3. **Voeg de regels toe**:
     - Voeg de volgende regels aan het einde van het bestand toe:
       ```
-      127.0.0.1    grades.docker sharepoint.docker admin.docker marketing.docker
+      127.0.0.1    grades.docker sharepoint.docker admin.docker marketing.docker hrm.docker
       ```
 
 4. **Sla het bestand op en sluit nano**:
@@ -175,7 +224,7 @@ Voeg onderstaande items toe aan je `hosts` file.
 # Testen van de websites
 
 Nu de Docker Containers goed draaien is het tijd om een eerste test uit te voeren. Dit doen we door de websites te
-openen in een browser die BasicAuthentication beschikbaar heeft. Let op: in Microsoft Edge kan het zijn dat een policy
+openen in een browser die **BasicAuthentication** beschikbaar heeft. Let op: in Microsoft Edge kan het zijn dat een policy
 niet langer BasicAuthentication (`basic`) toestaat.
 
 Zie https://answers.microsoft.com/en-us/microsoftedge/forum/all/latest-version-of-edge-no-longer-shows-basic/3601252b-e56b-46c0-a088-0f6084eabe47
@@ -193,8 +242,8 @@ De volgende websites zijn beschikbaar:
 | Het SharePoint platform voor gedeelde informatie | http://sharepoint.docker/ | `cn=SharePoint Students,ou=roles,dc=NHLStenden,dc=com` of `cn=SharePoint Teachers,ou=roles,dc=NHLStenden,dc=com` |
 
 Je kunt hierbij inloggen met de volgende gebruikers. Het wachtwoord is altijd  `Test1234!`. Je kunt met Apache Directory
-Studio ook kijken in de aangegeven rollen in de Identity Server. De onderstaande gebruikersaccounts zijn willekeurig
-gekozen uit die rollen.
+Studio (zie verderop) ook kijken in de aangegeven rollen in de Identity Server. De onderstaande gebruikersaccounts zijn 
+willekeurig gekozen uit die rollen.
 
 * http://marketing.docker/
     * username : `fbos`
@@ -211,7 +260,8 @@ gekozen uit die rollen.
 
 # Verbinding maken met de Identity Server (LDAP)
 
-Als je een applicatie hebt geïnstalleerd die kan werken met een LDAP-server gebruik dan onderstaande gegevens:
+Als je een applicatie hebt geïnstalleerd (zoals _Apache Directory Studio_) die kan werken met een LDAP-server gebruik 
+dan onderstaande gegevens:
 
 * Connection:
     * Hostname: `localhost`
@@ -247,8 +297,7 @@ activeren van de Docker Containers.
 ## Autorisaties bekijken
 
 Autorisaties zijn vormgegeven door gebruikers in groepen te verzamelen. Dit zijn LDAP-objecten
-genaamd `groupOfUniqueNames`.
-Een voorbeeld is hier onder weergegeven.
+genaamd `groupOfUniqueNames`. Een voorbeeld is hier onder weergegeven.
 
 ![ldap-authorisations-01.png](images/ldap-authorisations-01.png)
 
@@ -258,7 +307,7 @@ We zien hier een groep met naam `Marketing` (CN=Marketing). Het totale pad (`Dis
 Aan de rechtkant zien we de details. Daar is een veld `uniqueMember` dat opengeklapt kan worden. Daar zijn 38 leden te
 zien.
 
-Om de details van een gebruiker te zien kan een gebruiker geselecteerd worden en op de F3-toets te drukken. Het is ook
+Om de details van een gebruiker te zien kan een gebruiker geselecteerd worden en op de `F3`-toets te drukken. Het is ook
 mogelijk zelf de `DN` af te lezen en daar handmatig naar toe te navigeren.
 
 Als we bijvoorbeeld navigeren naar gebruiker naar Isabel Vos, dan krijgen we onderstaande details.
@@ -375,7 +424,7 @@ De volgende items zijn inmiddels doorgevoerd:
 
 * Er is voor elke website een Content Security Policy (CSP) gedefinieerd.
 * Er is een penetratie test uitgevoerd met de **Zed Attack Proxy** (ZAP).
-* Hoewel er weinig door gebruikers ingevoerde data gebruikt wordt, wordt *Input Sanitizing* gebruikt
+* Hoewel er weinig door gebruikers ingevoerde data gebruikt wordt, wordt er hier en daar *Input Sanitizing* gebruikt
 * Er worden headers meegestuurd die de browser instrueren om bijvoorbeeld plaatsing in een iFrame te voorkomen
   of Cross-Site (XSS) Scripting te voorkomen
 
@@ -396,6 +445,86 @@ eventueel opschonen met onderstaande commando. Let op: deze gooit ze *allemaal* 
 
 ```bash
 docker exec -it userprovisioning /bin/bash -c "rm /app/logs/*"
+```
+
+# Structuur van deze repository
+
+```text
+.
+├── convert-cr-lf-win.exe
+├── convert-cr-lf-wsl
+├── dbserver **Configuration files for the IAM database server, including Docker**
+│   ├── CreateDatabase-and-seed.sql
+│   └── Dockerfile
+├── docker-compose.yml
+├── Documentation
+│   └── **Documentation**
+├── excersises.MD
+├── hrm  **Configuration files for the HRM database server, including Docker**
+│   ├── CreateDatabase-and-seed.sql
+│   └── Dockerfile
+├── identity-server  **Configuration files for the identity server, including Docker**
+│   ├── add-more-info.py
+│   ├── avatars
+│   │   └── **Avatar afbeeldingen voor scripts **
+│   ├── configure_ldap.sh
+│   ├── Dockerfile
+│   ├── generate_unique_dn_from_users.sh
+│   ├── import_once_from_ldap_to_db.py
+│   ├── ldif
+│   │   └── **LDIF files to prepare base structures**
+│   ├── ldif-base
+│   │   └── **Base files for LDIF lists uploads**
+│   ├── slapd-load-entries.sh
+│   └── upload_avatars.py
+├── images
+│   ├── **Images for Readme, excersises**
+├── provisioning
+│   ├── crontab
+│   ├── Dockerfile
+│   ├── requirements.txt
+│   └── src
+│       ├── run-sync.sh
+│       └── sync.py
+├── README.md
+├── _resources **All kinds of resources**
+├── solutions.MD
+├── test
+├── tree.txt
+├── User Provisioning.MD
+├── Verantwoording.md
+├── volumes
+│   ├── hrm-data
+│   │   └── **Databestanden van de HRM database**
+│   ├── ldap-data
+│   ├── mariadb-data
+│   │   └── **Databestanden van de IAM database**
+│   └── src
+│       ├── dbserver
+│       ├── hrm
+│       ├── user-provisioning
+│       │   └── **Logfiles van het User Provisioning proces**
+│       └── websites
+│           ├── admin **The source files for the Admin website**
+│           ├── grades **The source files for the Grades ('Cijferadministratie') website**
+│           ├── hrm **The source files for the HRM website**
+│           ├── marketing **The source files for the Marketing website**
+│           ├── shared **Shared source files for the multiple website**
+│           └── sharepoint **The source files for the HRM website**
+└── webserver **Configuration files for the webserver, including Docker config**
+    ├── conf
+    │   ├── admin.conf
+    │   ├── grades.conf
+    │   ├── hrm.conf
+    │   ├── marketing.conf
+    │   └── sharepoint.conf
+    ├── Dockerfile
+    └── ini
+        ├── php.ini
+        └── xdebug.ini
+
+80 directories, 820 files
+
 ```
 
 # Referenties / bronnen
