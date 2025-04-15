@@ -31,4 +31,4 @@ CREATE TABLE medewerkers
     medewerkerType   VARCHAR(15)     NULL,                    -- Optioneel type medewerker (bijv. vast, tijdelijk)
     postcode         VARCHAR(12)     NULL,                    -- Optionele postcode
     last_sync        DATETIME        NULL                     -- Tijdstip van laatste synchronisatie met een extern systeem
-) COMMENT 'Medewerkers NHL Stenden'; -- Beschrijving van de tabel
+) COMMENT 'Medewerkers NHL Stenden';
