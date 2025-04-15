@@ -19,6 +19,17 @@ of andere applicaties.
 - **Naleving**: Voldoen aan wet- en regelgeving (bijvoorbeeld AVG/GDPR).
 - **Consistentie**: Toegangsrechten zijn gebaseerd op functieprofielen of rollen (role-based access control, RBAC).
 
+Het systeem van RBAC en User Provisioning zijn in hoge mate afhankelijk van de noodzaak die past bij hoe een bedrijf
+haar werk doet. Zo zal er in kleine organisaties met weinig verloop/verandering in personeel minder noodzaak zijn om 
+het User Provisioning proces te automatiseren. Het is echter zeer onverstandig om geen zicht te hebben op hoe en waarom
+gebruikers toegang krijgen tot digitale informatie(-systemen). 
+
+Zo kan er ook onderscheid gemaakt worden tussen de organisatorische kant als de technische uitvoering van maatregelen. 
+Er kan een procedure opgesteld worden samen met Personeelszaken over hoe bij instroom of doorstroom aanpassingen nodig
+zijn in de toegang tot systemen. De technische uitvoering hiervan kan verspreid zijn over meerdere ICT-afdelingen of 
+-partners. Denk daarbij aan SaaS providers (Microsoft 365, Salesforce) als ook aan functioneel beheerders van verschillende
+_On Premises_ applicaties die autorisaties kunnen beheren. 
+
 ## Belangrijke onderdelen van User Provisioning
 
 - **Onboarding**: Bij binnenkomst van een medewerker wordt automatisch een account aangemaakt met standaardrechten
