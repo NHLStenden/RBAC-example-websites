@@ -24,8 +24,8 @@ if (!$rbac->has(Permission_Admin_Panel)) {
 }
 
 if (!is_numeric($_GET["id"])) {
-    http_response_code(406);
-    die('not acceptable');
+  http_response_code(406);
+  die('not acceptable');
 }
 
 
@@ -33,27 +33,29 @@ $idRolePermission = (int)$_GET['id'];
 
 $pdo = new PDO('mysql:host=iam-example-db-server;dbname=IAM;', "student", "test1234");
 
-$sql  = "SELECT * FROM `vw_Role_Permissions` WHERE idRolePermission = :idRole";
+$sql  = "SELECT * FROM `vw_Role_Permissions` WHERE idRolePermission = :idPermission";
 $stmt = $pdo->prepare($sql);
-$stmt->bindValue(':idRole', $idRolePermission, PDO::PARAM_INT);
+$stmt->bindValue(':idPermission', $idRolePermission, PDO::PARAM_INT);
 $stmt->execute();
+$records = $stmt->fetchAll();
+var_dump($records);
 
 if ($stmt->rowCount() == 0) {
-    http_response_code(406);
-    die();
+  http_response_code(406);
+  die();
 }
 
-$role = $stmt->fetchAll()[0];
-
+$role   = $records[0];
 $idRole = $role['idRole'];
 
-$sql = "DELETE FROM role_permissions WHERE idRolePermission = :idRole";
+$sql  = "DELETE FROM role_permissions WHERE idRolePermission = :idRole";
 $stmt = $pdo->prepare($sql);
 $stmt->bindValue(':idRole', $idRolePermission, PDO::PARAM_INT);
 $stmt->execute();
-if ($stmt->rowCount() == 1) {
-    http_response_code(404);
-    die('not found');
+
+if ($stmt->rowCount() !== 1) {
+  http_response_code(404);
+  die('not found');
 }
 
 http_response_code(301);
