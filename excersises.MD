@@ -28,7 +28,7 @@ De volgende opdrachten en oefeningen zijn opgenomen:
 2. Inzicht in account administratie
 3. Accounts gebruiken om in te loggen
 4. Handmatige aanpassing van toegangsrechten
-5. Ongewenste toegangsrechten
+5. Ongewenste toegangsrechten - Functiescheiding
 6. Inzicht in rollen - gebruikers
 7. Inzicht in rollen - permissies
 8. Attestation
@@ -123,8 +123,7 @@ Elke opleiding is opgedeeld in twee soorten gebruikers:
 * Teacher
 
 Er zijn veel manieren om je gebruikers in te delen in deze (LDAP-) administratie. In deze situatie is gekozen om voor
-elke
-combinatie van *opleiding* en *soort gebruiker* een **rol** aan te maken. Dat levert dus vier rollen op:
+elke combinatie van *opleiding* en *soort gebruiker* een **rol** aan te maken. Dat levert dus vier rollen op:
 
 * Student bij HBO-ICT
 * Student bij AD CS&S
@@ -164,9 +163,30 @@ We hebben nu dus in de administratie van de accounts een rol handmatig ingetrokk
 2. Wat zou de bron moeten zijn voor deze informatie?
 3. In welke situatie zou een handmatige actie nodig kunnen zijn?
 
-# Opdracht 5 - Ongewenste toegangsrechten
+# Opdracht 5 - Ongewenste toegangsrechten - Functiescheiding
+
+In de vorige opdracht hebben we de toegangsrechten aangepast door rechten weg te halen. Het is natuurlijk ook mogelijk
+om de rechten uit te breiden.
 
 ## Introductie
+
+Er zijn twee manieren om toegangsrechten toe te wijzen:
+
+1. De permissies bij een rol aanpassen
+2. Een nieuwe rol toewijzen (want deze impliceert dat je permissies krijgt).
+
+Als we nieuwe permissies toewijzen aan een rol, dan zullen alle gebruikers onmiddellijk deze toegangsrechten kunnen 
+gebruiken. Als we een nieuwe rol toewijzen aan een gebruiker dan gelden de permissies die bij die rol horen natuurlijk
+alleen voor deze gebruiker.
+
+In beide gevallen kan er iets misgaan: je kunt onbedoeld rechten krijgen tot handelingen die elkaar horen uit te sluiten.
+Een veelgebruikt voorbeeld is dat je iets kunt bestellen, maar ook de bestelling kan goedkeuren. Dan kun je mooi een dure
+auto bestellen én je zorgt ook dat deze betaald wordt. 
+
+Het scheiden van dergelijke functies noemen we dan ook "Functiescheiding" of (in het Engels) "Segregation Of Duty". Op
+deze manier zorg je er voor dat minimaal twee mensen betrokken moeten zijn bij dergelijke handelingen.
+
+In ons voorbeeld kunnen we dit laten zien door een gebruiker een rol toe te wijzen van Marketing Manager én Marketing
 
 ## Instructie
 
@@ -293,8 +313,6 @@ te gebruiken of de geëxporteerde lijst te importeren in Excel en daar te filter
 1. Stel jij bent beheerder van deze school. Je kunt deze rapportages gebruiken om de organisatie beter te beveiligen.
    Aan wie ga je deze rapportages sturen?
 2. Wie zou er in actie moeten komen bij afwijkingen?
-
-# Reflectie
 
 # Opdracht 9 - Aanmaken nieuwe rol
 
