@@ -49,9 +49,7 @@ services:
       - iam-example
     working_dir: /app
     volumes:
-      - type: bind
-        source: ./volumes/mariadb-data
-        target: /var/lib/mysql
+      - mariadb-data:/var/lib/mysql
       - type: bind
         source: ./volumes/src/dbserver
         target: /app
@@ -71,9 +69,7 @@ services:
       - iam-example
     working_dir: /app
     volumes:
-      - type: bind
-        source: ./volumes/hrm-data
-        target: /var/lib/mysql
+      - hrm-data:/var/lib/mysql
       - type: bind
         source: ./volumes/src/hrm
         target: /app
@@ -101,3 +97,6 @@ networks:
   iam-example:
     driver: bridge
 
+volumes:
+  mariadb-data:
+  hrm-data:
