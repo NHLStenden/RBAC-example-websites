@@ -86,12 +86,51 @@ def get_medewerkers_employeeNumber():
     db.close()
     return medewerkers
 
+def verwerk_achternaam(achternaam):
+    tussenvoegsels_map = {
+        'van der': 'vd',
+        'van de': 'vd',
+        'van den': 'vd',
+        'van': 'van',
+        'de': 'de',
+        'den': 'den',
+        'der': 'der',
+        'te': 'te',
+        'ten': 'ten',
+        'ter': 'ter'
+    }
 
-# Genereer de uid (eerste letter voornaam + achternaam)
+    parts = achternaam.strip().lower().split()
+    uid_parts = []
+
+    i = 0
+    while i < len(parts):
+        # Probeer samengestelde tussenvoegsels eerst
+        if i + 1 < len(parts):
+            samengestelde = f"{parts[i]} {parts[i+1]}"
+            if samengestelde in tussenvoegsels_map:
+                uid_parts.append(tussenvoegsels_map[samengestelde])
+                i += 2
+                continue
+        if parts[i] in tussenvoegsels_map:
+            uid_parts.append(tussenvoegsels_map[parts[i]])
+        else:
+            uid_parts.append(parts[i])
+        i += 1
+
+    return ''.join(uid_parts)
+
 def generate_uid(voornaam, achternaam, personeelsnummer):
-    base_uid = f"{voornaam[0].lower()}{achternaam.lower().replace(' ', '')}"
-    return base_uid if len(base_uid) > 1 else f"{base_uid}{personeelsnummer}"
+    if '-' in achternaam:
+        hoofdnaam, meisjesnaam = [deel.strip() for deel in achternaam.split('-', 1)]
+        hoofd_uid = verwerk_achternaam(hoofdnaam)
+        meisjes_uid = verwerk_achternaam(meisjesnaam)
+        base_uid = f"{voornaam[0].lower()}{hoofd_uid}.{meisjes_uid}"
+    else:
+        achternaam_uid = verwerk_achternaam(achternaam)
+        base_uid = f"{voornaam[0].lower()}{achternaam_uid}"
 
+    return base_uid if len(base_uid) > 1 else f"{base_uid}{personeelsnummer}"
 
 # Zoek een medewerker in LDAP op basis van personeelsnummer
 def find_medewerker_by_personeelsnummer(conn, personeelsnummer):
