@@ -240,21 +240,24 @@ BEGIN
     -- now link the roles to the application permissions using the variables for PK of role and PK of permission.
     INSERT INTO role_permissions(fk_idRole, fk_idPermission)
     VALUES (@var_Role_all_personell, @var_permission_SharePoint_Basic_Access);
+
     INSERT INTO role_permissions(fk_idRole, fk_idPermission) VALUES (@var_Role_all_personell, @var_permission_Use_Mail);
+
     INSERT INTO role_permissions(fk_idRole, fk_idPermission)
     VALUES (@var_Role_all_personell, @var_permission_SharePoint_HRM);
+
     INSERT INTO role_permissions(fk_idRole, fk_idPermission)
     VALUES (@var_Role_all_personell, @var_permission_SharePoint_News);
 
-    INSERT INTO role_permissions(fk_idRole, fk_idPermission)
+/*    INSERT INTO role_permissions(fk_idRole, fk_idPermission)
     VALUES (@var_Role_Marketing_Management, @var_permission_Marketing_Create_Campaign);
-    INSERT INTO role_permissions(fk_idRole, fk_idPermission)
+*/    INSERT INTO role_permissions(fk_idRole, fk_idPermission)
     VALUES (@var_Role_Marketing_Management, @var_permission_Marketing_Read_Campaign);
     INSERT INTO role_permissions(fk_idRole, fk_idPermission)
     VALUES (@var_Role_Marketing_Management, @var_permission_Marketing_Delete_Campaign);
-    INSERT INTO role_permissions(fk_idRole, fk_idPermission)
+/*    INSERT INTO role_permissions(fk_idRole, fk_idPermission)
     VALUES (@var_Role_Marketing_Management, @var_permission_Marketing_Update_Campaign);
-    INSERT INTO role_permissions(fk_idRole, fk_idPermission)
+*/    INSERT INTO role_permissions(fk_idRole, fk_idPermission)
     VALUES (@var_Role_Marketing_Management, @var_permission_Marketing_Approve_Campaign);
 
     INSERT INTO role_permissions(fk_idRole, fk_idPermission)
