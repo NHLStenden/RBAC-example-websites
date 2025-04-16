@@ -44,7 +44,7 @@ if (count($role) != 1) {
 
     return "<tr><td>$application</td>
                 <td>$permissionName</td>
-                <td><button><a href='delete_role.php?id=$idRolePermission'>Delete</button></td>
+                <td><button><a href='delete_permission.php?id=$idRolePermission'>Delete</button></td>
             </tr>";
   }, $permissions));
 }
