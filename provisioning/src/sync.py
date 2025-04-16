@@ -157,18 +157,25 @@ def add_medewerker_to_ldap(conn, medewerker):
 # Update een bestaande medewerker in LDAP
 def update_medewerker_in_ldap(conn, dn, medewerker):
     medewerkerType = medewerker["medewerkerType"]
+
+    voornaam = medewerker["voornaam"]
+    achternaam = medewerker["achternaam"]
+
+    uid = generate_uid(voornaam, achternaam, medewerker["personeelsnummer"])
+
     changes = {
-        "givenName": [(MODIFY_REPLACE, [medewerker["voornaam"]])],
-        "sn": [(MODIFY_REPLACE, [medewerker["achternaam"]])],
+        "givenName": [(MODIFY_REPLACE, [voornaam])],
+        "sn": [(MODIFY_REPLACE, [achternaam])],
         "telephoneNumber": [(MODIFY_REPLACE, [medewerker["telefoonnummer"] or ""])],
         "roomNumber": [(MODIFY_REPLACE, [medewerker["kamernummer"] or ""])],
         "postalCode": [(MODIFY_REPLACE, [medewerker["postcode"] or ""])],
         "employeeType": [(MODIFY_REPLACE, [medewerkerType or ""])],
         "organizationName": [(MODIFY_REPLACE, [medewerker["team"] or ""])],
+        "uid": [(MODIFY_REPLACE, [uid or ""])],
     }
 
     if conn.modify(dn, changes):
-        print(f"🔄 Bijgewerkt in LDAP: {dn} met type {medewerkerType}")
+        print(f"🔄 Bijgewerkt in LDAP: {dn} met type {medewerkerType} / uid = {uid}")
         updateLastSyncTimestampForUser(medewerker["idMedewerker"])
     else:
         print(f"❌ Fout bij bijwerken: {conn.result} ({medewerkerType})")
