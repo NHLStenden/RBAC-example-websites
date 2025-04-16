@@ -1,30 +1,32 @@
 <?php
 include_once '../../shared/lib/RBACSupport.php';
 include_once '../../shared/partials/header.php';
+include_once '../../shared/lib/ldap_support.inc.php';
 
-function formatDate($date) {
-  // Zet de datum om naar een DateTime-object
-  $dateTime = new DateTime($date);
-  $now = new DateTime();
+function formatDate($date)
+{
+    // Zet de datum om naar een DateTime-object
+    $dateTime = new DateTime($date);
+    $now = new DateTime();
 
-  // Vandaag
-  if ($dateTime->format('Y-m-d') === $now->format('Y-m-d')) {
-    return $dateTime->format('H:i');  // Alleen tijd
-  }
+    // Vandaag
+    if ($dateTime->format('Y-m-d') === $now->format('Y-m-d')) {
+        return $dateTime->format('H:i');  // Alleen tijd
+    }
 
-  // Maximaal een week oud
-  $interval = $now->diff($dateTime);
-  if ($interval->days <= 7) {
-    return $dateTime->format('l H:i');  // Naam van de dag en tijd
-  }
+    // Maximaal een week oud
+    $interval = $now->diff($dateTime);
+    if ($interval->days <= 7) {
+        return $dateTime->format('l H:i');  // Naam van de dag en tijd
+    }
 
-  // Zelfde jaar
-  if ($dateTime->format('Y') === $now->format('Y')) {
-    return $dateTime->format('m-d H:i');  // Maand, dag en tijd
-  }
+    // Zelfde jaar
+    if ($dateTime->format('Y') === $now->format('Y')) {
+        return $dateTime->format('m-d H:i');  // Maand, dag en tijd
+    }
 
-  // Anders volledige datum in Nederlands formaat
-  return $dateTime->format('l j F Y H:i');  // Volledige datum met dagnaam volledig uitgeschreven
+    // Anders volledige datum in Nederlands formaat
+    return $dateTime->format('l j F Y H:i');  // Volledige datum met dagnaam volledig uitgeschreven
 }
 
 
@@ -41,6 +43,18 @@ if (!$rbac->has(Permission_HRM_Manage_Employees)) {
 // index.php - Medewerkers lijst
 require 'config.php';
 $medewerkers = $pdo->query("SELECT * FROM medewerkers ORDER BY achternaam, voornaam")->fetchAll(PDO::FETCH_ASSOC);
+$lnk = ConnectAndCheckLDAP();
+
+foreach ($medewerkers as $key => $medewerker) {
+    try {
+        $ldapInfo = SearchStaffByStaffNumber($lnk, $medewerker['personeelsnummer']);
+        $medewerkers[$key]['dn'] = preg_replace('/^cn=([^,]+),(.*?),dc=.*$/i', '$2', $ldapInfo['dn']);
+    }
+    catch (\Exception $e) {
+        echo $e->getMessage();
+    }
+}
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -72,6 +86,7 @@ $medewerkers = $pdo->query("SELECT * FROM medewerkers ORDER BY achternaam, voorn
                 <th>Kamernummer</th>
                 <th>Postcode</th>
                 <th>Functie</th>
+                <th>DN</th>
                 <th>Update</th>
                 <th>Acties</th>
             </tr>
@@ -87,6 +102,7 @@ $medewerkers = $pdo->query("SELECT * FROM medewerkers ORDER BY achternaam, voorn
                     <td><?= htmlspecialchars($medewerker['kamernummer']) ?></td>
                     <td><?= htmlspecialchars($medewerker['postcode']) ?></td>
                     <td><?= htmlspecialchars($medewerker['functie']) ?></td>
+                    <td class="align-right"><?= htmlspecialchars($medewerker['dn']) ?></td>
                     <td><?= htmlspecialchars(formatDate($medewerker['last_sync'])) ?></td>
                     <td>
                         <a class="button" href="form.php?id=<?= $medewerker['idMedewerker'] ?>">Bewerken</a>
