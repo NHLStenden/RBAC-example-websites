@@ -23,7 +23,7 @@ $roles                      = GetAllRolesInDN($lnk, "ou=roles,dc=NHLStenden,dc=c
 ?>
 <html lang="NL">
 <head>
-    <title>Admin Panel | Attestation - Rollen</title>
+    <title>Admin Panel | Autorisatie aanvraag verwerken</title>
     <link href="css/globals.css" rel="stylesheet">
     <link href="css/AssignUserToRoleForm.css" rel="stylesheet">
     <link href="css/header.css" rel="stylesheet">
@@ -40,25 +40,27 @@ $roles                      = GetAllRolesInDN($lnk, "ou=roles,dc=NHLStenden,dc=c
         <fieldset>
             <legend>Nieuwe autorisatie aanvraag verwerken</legend>
             <form method="post" action="AssignRoleToUser.php">
-                <label for="role">Rol:</label>
-                <select name="role" id="role">
-                  <option value="-">-Kies een rol-</option>
-                  <?php foreach ($roles as $role) : ?>
-                      <option value="<?= $role['dn'] ?>"><?= $role['cn'] ?></option>
-                  <?php endforeach; ?>
-                </select>
-                <br>
-                <label for="user">Gebruiker:</label>
-                <select name="user" id="user">
-                  <?php foreach ($users_staff as $key => $department): ?>
-                      <optgroup label="<?= $key ?>">
-                        <?php foreach ($department as $user) : ?>
-                            <option value="<?= $user['dn'] ?>"><?= $user['sn'] . "," . $user['givenName'] ?></option>
-                        <?php endforeach; ?>
-                      </optgroup>
-                  <?php endforeach; ?>
-                </select>
-                <br>
+                <div class="form-row">
+                    <label for="role">Rol:</label>
+                    <select name="role" id="role" size="10">
+                        <option value="-">-Kies een rol-</option>
+                      <?php foreach ($roles as $role) : ?>
+                          <option value="<?= $role['dn'] ?>"><?= $role['cn'] ?></option>
+                      <?php endforeach; ?>
+                    </select>
+                </div>
+                <div class="form-row">
+                    <label for="user">Gebruiker:</label>
+                    <select name="user" id="user" size="10">
+                      <?php foreach ($users_staff as $key => $department): ?>
+                          <optgroup label="<?= $key ?>">
+                            <?php foreach ($department as $user) : ?>
+                                <option value="<?= $user['dn'] ?>"><?= $user['sn'] . "," . $user['givenName'] ?></option>
+                            <?php endforeach; ?>
+                          </optgroup>
+                      <?php endforeach; ?>
+                    </select>
+                </div>
                 <button type="submit">Autoriseer</button>
             </form>
         </fieldset>

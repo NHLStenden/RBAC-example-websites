@@ -2,6 +2,14 @@ article.form {
     display: flex;
     flex-direction: row;
 
+    & .form-row {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 1rem;
+    }
+
     & fieldset {
         margin: 10px;
         border-radius: 10px;
