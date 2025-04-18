@@ -27,9 +27,8 @@ $roles                      = GetAllRolesInDN($lnk, "ou=roles,dc=NHLStenden,dc=c
     <link href="css/globals.css" rel="stylesheet">
     <link href="css/AssignUserToRoleForm.css" rel="stylesheet">
     <link href="css/header.css" rel="stylesheet">
-    <link href="css/attestation.css" rel="stylesheet">
     <link rel="icon" type="image/png" href="../favicon.png">
-    <script src="js/attestation.js" type="module"></script>
+    <script src="js/AssignRoleToUserForm.js" type="module"></script>
 </head>
 <body>
 <main class="container-fluid">
@@ -37,16 +36,16 @@ $roles                      = GetAllRolesInDN($lnk, "ou=roles,dc=NHLStenden,dc=c
     <article>
       <?= showheader(Websites::WEBSITE_ADMIN, basename(__FILE__), $rbac) ?>
     </article>
-    <article>
+    <article class="form">
         <fieldset>
             <legend>Nieuwe autorisatie aanvraag verwerken</legend>
             <form method="post" action="AssignRoleToUser.php">
                 <label for="role">Rol:</label>
                 <select name="role" id="role">
+                  <option value="-">-Kies een rol-</option>
                   <?php foreach ($roles as $role) : ?>
                       <option value="<?= $role['dn'] ?>"><?= $role['cn'] ?></option>
                   <?php endforeach; ?>
-
                 </select>
                 <br>
                 <label for="user">Gebruiker:</label>
@@ -63,6 +62,22 @@ $roles                      = GetAllRolesInDN($lnk, "ou=roles,dc=NHLStenden,dc=c
                 <button type="submit">Autoriseer</button>
             </form>
         </fieldset>
+        <div id="current-user-list">
+            <table>
+                <caption>Gebruikers in deze rol</caption>
+                <thead>
+                <tr>
+                    <th>Achternaam</th>
+                    <th>Voornaam</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+
+        </div>
     </article>
 
 </main>

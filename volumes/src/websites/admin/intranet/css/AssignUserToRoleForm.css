@@ -1,7 +1,19 @@
-fieldset {
-    margin:10px;
-    border-radius: 10px;
+article.form {
+    display: flex;
+    flex-direction: row;
+
+    & fieldset {
+        margin: 10px;
+        border-radius: 10px;
+        width: 50%;
+    }
+
+   #current-user-list {
+       max-height: 50vh;
+       overflow-y: auto;
+   }
 }
+
 
 form label {
     width: 9em;
@@ -9,9 +21,10 @@ form label {
 }
 
 form select {
-    margin-top:10px;
+    margin-top: 10px;
 }
 
 form button[type=submit] {
-    margin-top:10px;
+    margin-top: 10px;
 }
+
