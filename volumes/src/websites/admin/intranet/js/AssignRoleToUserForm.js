@@ -4,23 +4,27 @@ window.onload = () => {
 
 function setup() {
     const elSelectRole = document.querySelector("select[name='role']");
-    console.log(elSelectRole);
     elSelectRole.addEventListener("change", (event) => {
-        console.log(event);
-
-        const dn = encodeURIComponent(event.target.value);
-
-        const xhr = new XMLHttpRequest();
-        xhr.open("get", `/intranet/ajax/getLdapMembersForGroup.php?dn=${dn}`);
-
-        xhr.onload = (res) => {
-            if (xhr.status === 200) {
-                const data = JSON.parse(xhr.responseText);
-                processData(data);
-            }
-        }
-        xhr.send();
+        const idRole = event.target.value;
+        getSelectedDNMembers(idRole);
     });
+
+    getSelectedDNMembers(elSelectRole.value);
+}
+
+function getSelectedDNMembers(value) {
+    const dn = encodeURIComponent(value);
+
+    const xhr = new XMLHttpRequest();
+    xhr.open("get", `/intranet/ajax/getLdapMembersForGroup.php?dn=${dn}`);
+
+    xhr.onload = (res) => {
+        if (xhr.status === 200) {
+            const data = JSON.parse(xhr.responseText);
+            processData(data);
+        }
+    }
+    xhr.send();
 }
 
 function processData(data) {
@@ -38,8 +42,12 @@ function processData(data) {
         const itemAlreadyInList = data.find(u => u['dn'] === option.value);
 
         option.disabled = (itemAlreadyInList !== undefined);
-
     }
+
+    const revokeButtons = document.querySelectorAll('button.revoke');
+    revokeButtons.forEach(btn => btn.addEventListener('click', (event) => {
+        revokePermission(event)
+    }));
 }
 
 function createOneUser(user) {
@@ -60,5 +68,37 @@ function createOneUser(user) {
     td1.textContent = user['sn'];
     td2.textContent = user['givenName'];
 
+    const btnDelete = document.createElement('button');
+    btnDelete.dataset['dn'] = user['dn'];
+    btnDelete.classList.add('revoke');
+    btnDelete.textContent = "Revoke";
+    td3.appendChild(btnDelete);
+
     return item;
+}
+
+function revokePermission(event) {
+    const target = event.target;
+    const dnUser = target.dataset['dn'];
+    const listOfRoles = document.querySelector('SELECT#role');
+    const dnRole = listOfRoles.value;
+
+    const xhr = new XMLHttpRequest();
+    xhr.open("post", `/intranet/ajax/revokeUserFromRole.php`);
+
+    const body = new FormData();
+    body.set('user', dnUser);
+    body.set('role', dnRole);
+
+    xhr.onload = (res) => {
+        if (xhr.status === 200) {
+            const data = JSON.parse(xhr.responseText);
+            processData(data);
+        }
+        else {
+            alert('Fout bij verwijderen rol. ')
+        }
+    }
+    xhr.send(body);
+
 }

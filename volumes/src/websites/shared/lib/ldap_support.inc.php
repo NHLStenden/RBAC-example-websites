@@ -417,6 +417,21 @@ function GetAllRolesInDN(LDAP\Connection $lnk, string $dn): array|null
   return $roles;
 }
 
+/**
+ * @throws Exception
+ */
+function RevokeUserFromRole(LDAP\Connection $lnk, string $roleDN, string $userDN): bool
+{
+  $entry  = [
+    "uniqueMember" => $userDN
+  ];
+  $result = @ldap_mod_del($lnk, $roleDN, $entry);
+  if ($result ) {
+    return $result;
+  }
+  throw new Exception("Unable to revoke user from role. Er moet altijd één gebruiker in een rol zitten.");
+}
+
 function AssignUserToRole(LDAP\Connection $lnk, string $role, string $dn): bool
 {
   $entry = ["uniqueMember" => [$dn]];
@@ -447,8 +462,8 @@ function GetAllGroupMembersOfRole(LDAP\Connection $lnk, string $groupDN): array
 
   $result = [];
 
-  for($i = 0; $i < $members["count"]; $i++) {
-    $record = GetUserDataFromDN($lnk, $members[$i]);
+  for ($i = 0; $i < $members["count"]; $i++) {
+    $record   = GetUserDataFromDN($lnk, $members[$i]);
     $result[] = [
       "dn" => $record["dn"],
       "sn" => $record["sn"][0],

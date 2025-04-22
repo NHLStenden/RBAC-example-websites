@@ -14,13 +14,24 @@ if (!$rbac->has(Permission_Admin_Panel)) {
 }
 
 $lnk     = ConnectAndCheckLDAP();
-$user_dn = $_POST['user'];
-$role_dn = $_POST['role'];
+
+if (isset($_POST['user']) && isset($_POST['role'])) {
+
+
+  $user_dn = $_POST['user'];
+  $role_dn = $_POST['role'];
+}
+else {
+    die('Incorrect parameters.');
+}
 
 $result = AssignUserToRole($lnk, $role_dn, $user_dn);
 
 if ($result) {
-  header('location: /intranet', 301);
+
+  $id_role_dn = urldecode($role_dn);
+
+  header("location: AssignUserToRoleForm.php?idRole={$id_role_dn}", 301);
   die();
 }
 

@@ -20,6 +20,12 @@ $users_staff['ICT Support'] = GetAllUsersInDN($lnk, 'ou=ICT Support,ou=Staff,dc=
 $users_staff['Docenten']    = GetAllUsersInDN($lnk, 'ou=Teachers,ou=Opleidingen,dc=NHLStenden,dc=com');
 $roles                      = GetAllRolesInDN($lnk, "ou=roles,dc=NHLStenden,dc=com");
 
+$idRole = '';
+if (isset($_GET['idRole'])) {
+    // FIXME: sanitize!!!
+  $idRole = $_GET['idRole'];
+}
+
 ?>
 <html lang="NL">
 <head>
@@ -37,6 +43,7 @@ $roles                      = GetAllRolesInDN($lnk, "ou=roles,dc=NHLStenden,dc=c
       <?= showheader(Websites::WEBSITE_ADMIN, basename(__FILE__), $rbac) ?>
     </article>
     <article class="form">
+        <? $idRole ?>
         <fieldset>
             <legend>Nieuwe autorisatie aanvraag verwerken</legend>
             <form method="post" action="AssignRoleToUser.php">
@@ -45,7 +52,7 @@ $roles                      = GetAllRolesInDN($lnk, "ou=roles,dc=NHLStenden,dc=c
                     <select name="role" id="role" size="10">
                         <option value="-">-Kies een rol-</option>
                       <?php foreach ($roles as $role) : ?>
-                          <option value="<?= $role['dn'] ?>"><?= $role['cn'] ?></option>
+                          <option value="<?= $role['dn'] ?>" <?= ($idRole === $role['dn']) ? 'selected':'' ?>><?= $role['cn'] ?></option>
                       <?php endforeach; ?>
                     </select>
                 </div>
@@ -71,7 +78,7 @@ $roles                      = GetAllRolesInDN($lnk, "ou=roles,dc=NHLStenden,dc=c
                 <tr>
                     <th>Achternaam</th>
                     <th>Voornaam</th>
-                    <th></th>
+                    <th>Revoke</th>
                 </tr>
                 </thead>
                 <tbody>
