@@ -74,8 +74,8 @@ CREATE OR REPLACE PROCEDURE InitAllRolesAndPermissions()
 BEGIN
     -- first insert all roles
     INSERT INTO roles (title, description, distinghuishedName)
-    VALUES ('admin', 'administrators', 'cn=admins,ou=roles,dc=NHLStenden,dc=com'),
-           ('ICT Support', 'ICT Support', 'cn=ICT Support,ou=roles,dc=NHLStenden,dc=com'),
+    VALUES ('ICT Support', 'ICT Support', 'cn=ICT Support,ou=roles,dc=NHLStenden,dc=com'),
+           ('Authorisation Manager', 'Authorisation Manager', 'cn=Authorisation Manager,ou=roles,dc=NHLStenden,dc=com'),
            ('All Personell', 'All Personell (Staff, teachers)', 'cn=All Personell,ou=roles,dc=NHLStenden,dc=com'),
            ('All Students', 'All Students ', 'cn=All Students,ou=roles,dc=NHLStenden,dc=com'),
            ('All Teachers', 'All Teachers', 'cn=All Teachers,ou=roles,dc=NHLStenden,dc=com'),
@@ -104,6 +104,8 @@ BEGIN
     SELECT roles.idRole INTO @var_Role_all_teachers FROM roles WHERE title = 'All Teachers';
 
     SELECT roles.idRole INTO @var_Role_ICT_Support FROM roles WHERE title = 'ICT Support';
+    SELECT roles.idRole INTO @var_Role_Authorisation_Manager FROM roles WHERE title = 'Authorisation Manager';
+
     SELECT roles.idRole INTO @var_Role_Grades_Students FROM roles WHERE title = 'Grades Students';
     SELECT roles.idRole INTO @var_Role_Grades_Teachers FROM roles WHERE title = 'Grades Teachers';
     SELECT roles.idRole INTO @var_Role_Teachers_HBOICT FROM roles WHERE title = 'Teachers ADCSS';
@@ -139,7 +141,13 @@ BEGIN
            ('Grades_Basic_Access', 'Basic Access to Grades app', '', @var_App_Grades),
            ('Marketing_Basic_Access', 'Basic Access to Marketing app', '', @var_App_Marketing),
            ('Use_Mail', 'Use college e-mail', '', @var_App_Mail),
+
            ('AdminPanel', 'Use Admin Panel', '', @var_App_AdminPanel),
+           ('AdminPanel_Attestation_Roles', 'Attestation - Roles', '', @var_App_AdminPanel),
+           ('AdminPanel_Attestation_Users', 'Attestation - Users', '', @var_App_AdminPanel),
+           ('AdminPanel_AddUserToRole', 'Add user to role', '', @var_App_AdminPanel),
+           ('AdminPanel_RevokeUserFromRole', 'Revoke user from role', '', @var_App_AdminPanel),
+           ('AdminPanel_Manage_RolePermissions', 'Manage roles/permissions', '', @var_App_AdminPanel),
 
            ('SharePoint_News', 'Read news on SharePoint/Intranet', '', @var_App_SharePoint),
            ('SharePoint_HRM', 'Go to Human Resource Management', '', @var_App_SharePoint),
@@ -162,7 +170,13 @@ BEGIN
 
     -- collect all the permissions in variables for later use.
     SELECT permissions.idPermission INTO @var_permission_Use_Mail FROM permissions WHERE code = 'Use_Mail';
+
     SELECT permissions.idPermission INTO @var_permission_Admin_Panel FROM permissions WHERE code = 'AdminPanel';
+    SELECT permissions.idPermission INTO @var_permission_AdminPanel_Attestation_Roles FROM permissions WHERE code = 'AdminPanel_Attestation_Roles';
+    SELECT permissions.idPermission INTO @var_permission_AdminPanel_Attestation_Users FROM permissions WHERE code = 'AdminPanel_Attestation_Users';
+    SELECT permissions.idPermission INTO @var_permission_AdminPanel_AddUserToRole FROM permissions WHERE code = 'AdminPanel_AddUserToRole';
+    SELECT permissions.idPermission INTO @var_permission_AdminPanel_RevokeUserFromRole FROM permissions WHERE code = 'AdminPanel_RevokeUserFromRole';
+    SELECT permissions.idPermission INTO @var_permission_AdminPanel_Manage_RolePermissions FROM permissions WHERE code = 'AdminPanel_Manage_RolePermissions';
 
     SELECT permissions.idPermission
     INTO @var_permission_SharePoint_Basic_Access
@@ -237,7 +251,9 @@ BEGIN
     FROM permissions
     WHERE code = 'HRM_Manage_Employees';
 
+    -- ------------------------------------------------------------------------------------------------------------
     -- now link the roles to the application permissions using the variables for PK of role and PK of permission.
+    -- ------------------------------------------------------------------------------------------------------------
     INSERT INTO role_permissions(fk_idRole, fk_idPermission)
     VALUES (@var_Role_all_personell, @var_permission_SharePoint_Basic_Access);
 
@@ -293,11 +309,18 @@ BEGIN
     INSERT INTO role_permissions(fk_idRole, fk_idPermission)
     VALUES (@var_Role_Grades_Teachers, @var_permission_Grades_Read_StudentDetails);
 
-    INSERT INTO role_permissions(fk_idRole, fk_idPermission)
-    VALUES (@var_Role_admin, @var_permission_SharePoint_Basic_Access);
-    INSERT INTO role_permissions(fk_idRole, fk_idPermission) VALUES (@var_Role_admin, @var_permission_Admin_Panel);
-    INSERT INTO role_permissions(fk_idRole, fk_idPermission)
-    VALUES (@var_Role_ICT_Support, @var_permission_SharePoint_Basic_Access);
+    -- INSERT INTO role_permissions(fk_idRole, fk_idPermission) VALUES (@var_Role_admin, @var_permission_SharePoint_Basic_Access);
+
+    INSERT INTO role_permissions(fk_idRole, fk_idPermission) VALUES (@var_Role_ICT_Support, @var_permission_AdminPanel_Attestation_Roles);
+    INSERT INTO role_permissions(fk_idRole, fk_idPermission) VALUES (@var_Role_ICT_Support, @var_permission_AdminPanel_Attestation_Users);
+
+    INSERT INTO role_permissions(fk_idRole, fk_idPermission) VALUES (@var_Role_Authorisation_Manager, @var_permission_AdminPanel_AddUserToRole);
+    INSERT INTO role_permissions(fk_idRole, fk_idPermission) VALUES (@var_Role_Authorisation_Manager, @var_permission_AdminPanel_RevokeUserFromRole);
+    INSERT INTO role_permissions(fk_idRole, fk_idPermission) VALUES (@var_Role_Authorisation_Manager, @var_permission_AdminPanel_Manage_RolePermissions);
+
+    INSERT INTO role_permissions(fk_idRole, fk_idPermission) VALUES (@var_Role_ICT_Support, @var_permission_SharePoint_Basic_Access);
+    INSERT INTO role_permissions(fk_idRole, fk_idPermission) VALUES (@var_Role_ICT_Support, @var_permission_Admin_Panel);
+
     INSERT INTO role_permissions(fk_idRole, fk_idPermission)
     VALUES (@var_Role_All_Students, @var_permission_SharePoint_Basic_Access);
 
