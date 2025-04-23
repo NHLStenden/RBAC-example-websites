@@ -237,7 +237,7 @@ De volgende websites zijn beschikbaar:
 |--------------------------------------------------|---------------------------|------------------------------------------------------------------------------------------------------------------| 
 | De website voor Marketing:                       | http://marketing.docker/  | `cn=marketing,ou=roles,dc=NHLStenden,dc=com`                                                                     |
 | De Cijfer Administratie                          | http://grades.docker/     | `cn=Grades Students,ou=roles,dc=NHLStenden,dc=com` of `cn=Blackboard Teachers,ou=roles,dc=NHLStenden,dc=com`     |
-| Het Admin panel van de beheerder                 | http://admin.docker/      | `cn=admins,ou=roles,dc=NHLStenden,dc=com`                                                                        |
+| Het Admin panel van de beheerder                 | http://admin.docker/      | `cn=ICT Support,ou=roles,dc=NHLStenden,dc=com`                                                                        |
 | Het Human Resource Management systeem            | http://hrm.docker/        | `cn=hrm,ou=roles,dc=NHLStenden,dc=com`                                                                           |
 | Het SharePoint platform voor gedeelde informatie | http://sharepoint.docker/ | `cn=SharePoint Students,ou=roles,dc=NHLStenden,dc=com` of `cn=SharePoint Teachers,ou=roles,dc=NHLStenden,dc=com` |
 
