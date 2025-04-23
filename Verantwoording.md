@@ -77,7 +77,7 @@ informatie op een gestructureerde en efficiënte manier te beheren en te doorzoe
 LDAP organiseert gegevens in een hiërarchische structuur, vergelijkbaar met een boom. Deze structuur wordt een
 **Directory Information Tree (DIT)** genoemd. Elk item in deze boom wordt een **entry** genoemd en bevat een reeks
 attributen (zoals naam, e-mailadres, etc.). Deze attributen zijn sleutel-waarde paren,
-bijvoorbeeld `mail: student@example.com`.
+bijvoorbeeld `mail: student@example.com` of `sn: Molema` of `givenName: Martin`.
 
 LDAP-servers slaan deze gegevens op en bieden een manier om ze te beheren en te doorzoeken. Wanneer een gebruiker
 probeert in te loggen op een systeem dat LDAP gebruikt, wordt hun gebruikersnaam en wachtwoord gecontroleerd tegen de
