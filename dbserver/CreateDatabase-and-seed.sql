@@ -178,78 +178,25 @@ BEGIN
     SELECT permissions.idPermission INTO @var_permission_AdminPanel_RevokeUserFromRole FROM permissions WHERE code = 'AdminPanel_RevokeUserFromRole';
     SELECT permissions.idPermission INTO @var_permission_AdminPanel_Manage_RolePermissions FROM permissions WHERE code = 'AdminPanel_Manage_RolePermissions';
 
-    SELECT permissions.idPermission
-    INTO @var_permission_SharePoint_Basic_Access
-    FROM permissions
-    WHERE code = 'SharePoint_Basic_Access';
-    SELECT permissions.idPermission
-    INTO @var_permission_SharePoint_News
-    FROM permissions
-    WHERE code = 'SharePoint_News';
+    SELECT permissions.idPermission INTO @var_permission_SharePoint_Basic_Access FROM permissions WHERE code = 'SharePoint_Basic_Access';
+    SELECT permissions.idPermission INTO @var_permission_SharePoint_News FROM permissions WHERE code = 'SharePoint_News';
     SELECT permissions.idPermission INTO @var_permission_SharePoint_HRM FROM permissions WHERE code = 'SharePoint_HRM';
-    SELECT permissions.idPermission
-    INTO @var_permission_SharePoint_StudentTools
-    FROM permissions
-    WHERE code = 'SharePoint_StudentTools';
-    SELECT permissions.idPermission
-    INTO @var_permission_SharePoint_TeacherTools
-    FROM permissions
-    WHERE code = 'SharePoint_TeacherTools';
+    SELECT permissions.idPermission INTO @var_permission_SharePoint_StudentTools FROM permissions WHERE code = 'SharePoint_StudentTools';
+    SELECT permissions.idPermission INTO @var_permission_SharePoint_TeacherTools FROM permissions WHERE code = 'SharePoint_TeacherTools';
 
-    SELECT permissions.idPermission
-    INTO @var_permission_Grades_Basic_Access
-    FROM permissions
-    WHERE code = 'Grades_Basic_Access';
-    SELECT permissions.idPermission
-    INTO @var_permission_Grades_Create_Gradelists
-    FROM permissions
-    WHERE code = 'Grades_Create_Gradelists';
-    SELECT permissions.idPermission
-    INTO @var_permission_Grades_Approve_Gradeslist
-    FROM permissions
-    WHERE code = 'Grades_Approve_Gradeslist';
-    SELECT permissions.idPermission
-    INTO @var_permission_Grades_Read_Own_Grades
-    FROM permissions
-    WHERE code = 'Grades_Read_Own_Grades';
-    SELECT permissions.idPermission
-    INTO @var_permission_Grades_Read_StudentDetails
-    FROM permissions
-    WHERE code = 'Grades_Read_StudentDetails';
-    SELECT permissions.idPermission
-    INTO @var_permission_Grades_Show_Self
-    FROM permissions
-    WHERE code = 'Grades_Show_Self';
-
-    SELECT permissions.idPermission
-    INTO @var_permission_Marketing_Basic_Access
-    FROM permissions
-    WHERE code = 'Marketing_Basic_Access';
-    SELECT permissions.idPermission
-    INTO @var_permission_Marketing_Create_Campaign
-    FROM permissions
-    WHERE code = 'Marketing_Create_Campaign';
-    SELECT permissions.idPermission
-    INTO @var_permission_Marketing_Read_Campaign
-    FROM permissions
-    WHERE code = 'Marketing_Read_Campaign';
-    SELECT permissions.idPermission
-    INTO @var_permission_Marketing_Delete_Campaign
-    FROM permissions
-    WHERE code = 'Marketing_Delete_Campaign';
-    SELECT permissions.idPermission
-    INTO @var_permission_Marketing_Update_Campaign
-    FROM permissions
-    WHERE code = 'Marketing_Update_Campaign';
-    SELECT permissions.idPermission
-    INTO @var_permission_Marketing_Approve_Campaign
-    FROM permissions
-    WHERE code = 'Marketing_Approve_Campaign';
-
-    SELECT permissions.idPermission
-    INTO @var_permission_HRM_Manage_Employees
-    FROM permissions
-    WHERE code = 'HRM_Manage_Employees';
+    SELECT permissions.idPermission INTO @var_permission_Grades_Basic_Access FROM permissions WHERE code = 'Grades_Basic_Access';
+    SELECT permissions.idPermission INTO @var_permission_Grades_Create_Gradelists FROM permissions WHERE code = 'Grades_Create_Gradelists';
+    SELECT permissions.idPermission INTO @var_permission_Grades_Approve_Gradeslist FROM permissions WHERE code = 'Grades_Approve_Gradeslist';
+    SELECT permissions.idPermission INTO @var_permission_Grades_Read_Own_Grades FROM permissions WHERE code = 'Grades_Read_Own_Grades';
+    SELECT permissions.idPermission INTO @var_permission_Grades_Read_StudentDetails FROM permissions WHERE code = 'Grades_Read_StudentDetails';
+    SELECT permissions.idPermission INTO @var_permission_Grades_Show_Self FROM permissions WHERE code = 'Grades_Show_Self';
+    SELECT permissions.idPermission INTO @var_permission_Marketing_Basic_Access FROM permissions WHERE code = 'Marketing_Basic_Access';
+    SELECT permissions.idPermission INTO @var_permission_Marketing_Create_Campaign FROM permissions WHERE code = 'Marketing_Create_Campaign';
+    SELECT permissions.idPermission INTO @var_permission_Marketing_Read_Campaign FROM permissions WHERE code = 'Marketing_Read_Campaign';
+    SELECT permissions.idPermission INTO @var_permission_Marketing_Delete_Campaign FROM permissions WHERE code = 'Marketing_Delete_Campaign';
+    SELECT permissions.idPermission INTO @var_permission_Marketing_Update_Campaign FROM permissions WHERE code = 'Marketing_Update_Campaign';
+    SELECT permissions.idPermission INTO @var_permission_Marketing_Approve_Campaign FROM permissions WHERE code = 'Marketing_Approve_Campaign';
+    SELECT permissions.idPermission INTO @var_permission_HRM_Manage_Employees FROM permissions WHERE code = 'HRM_Manage_Employees';
 
     -- ------------------------------------------------------------------------------------------------------------
     -- now link the roles to the application permissions using the variables for PK of role and PK of permission.
@@ -265,15 +212,11 @@ BEGIN
     INSERT INTO role_permissions(fk_idRole, fk_idPermission)
     VALUES (@var_Role_all_personell, @var_permission_SharePoint_News);
 
-/*    INSERT INTO role_permissions(fk_idRole, fk_idPermission)
-    VALUES (@var_Role_Marketing_Management, @var_permission_Marketing_Create_Campaign);
-*/    INSERT INTO role_permissions(fk_idRole, fk_idPermission)
+    INSERT INTO role_permissions(fk_idRole, fk_idPermission)
     VALUES (@var_Role_Marketing_Management, @var_permission_Marketing_Read_Campaign);
     INSERT INTO role_permissions(fk_idRole, fk_idPermission)
     VALUES (@var_Role_Marketing_Management, @var_permission_Marketing_Delete_Campaign);
-/*    INSERT INTO role_permissions(fk_idRole, fk_idPermission)
-    VALUES (@var_Role_Marketing_Management, @var_permission_Marketing_Update_Campaign);
-*/    INSERT INTO role_permissions(fk_idRole, fk_idPermission)
+    INSERT INTO role_permissions(fk_idRole, fk_idPermission)
     VALUES (@var_Role_Marketing_Management, @var_permission_Marketing_Approve_Campaign);
 
     INSERT INTO role_permissions(fk_idRole, fk_idPermission)
@@ -309,8 +252,6 @@ BEGIN
     INSERT INTO role_permissions(fk_idRole, fk_idPermission)
     VALUES (@var_Role_Grades_Teachers, @var_permission_Grades_Read_StudentDetails);
 
-    -- INSERT INTO role_permissions(fk_idRole, fk_idPermission) VALUES (@var_Role_admin, @var_permission_SharePoint_Basic_Access);
-
     INSERT INTO role_permissions(fk_idRole, fk_idPermission) VALUES (@var_Role_ICT_Support, @var_permission_AdminPanel_Attestation_Roles);
     INSERT INTO role_permissions(fk_idRole, fk_idPermission) VALUES (@var_Role_ICT_Support, @var_permission_AdminPanel_Attestation_Users);
 
@@ -321,11 +262,9 @@ BEGIN
     INSERT INTO role_permissions(fk_idRole, fk_idPermission) VALUES (@var_Role_ICT_Support, @var_permission_SharePoint_Basic_Access);
     INSERT INTO role_permissions(fk_idRole, fk_idPermission) VALUES (@var_Role_ICT_Support, @var_permission_Admin_Panel);
 
-    INSERT INTO role_permissions(fk_idRole, fk_idPermission)
-    VALUES (@var_Role_All_Students, @var_permission_SharePoint_Basic_Access);
+    INSERT INTO role_permissions(fk_idRole, fk_idPermission) VALUES (@var_Role_All_Students, @var_permission_SharePoint_Basic_Access);
 
-    INSERT INTO role_permissions(fk_idRole, fk_idPermission)
-    VALUES (@var_Role_HRM, @var_permission_HRM_Manage_Employees);
+    INSERT INTO role_permissions(fk_idRole, fk_idPermission) VALUES (@var_Role_HRM, @var_permission_HRM_Manage_Employees);
 
 
 END $$
