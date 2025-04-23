@@ -6,24 +6,24 @@ include_once '../../shared/lib/ldap_support.inc.php';
 
 $rbac = new RBACSupport($_SERVER["AUTHENTICATE_UID"]);
 if (!$rbac->process()) {
-  die('Could not connect to RBAC server.');
+    die('Could not connect to RBAC server.');
 }
-if (!$rbac->has(Permission_Admin_Panel)) {
-  echo "Not allowed to open the Admin panel\n";
-  die();
+if (!$rbac->has(Permission_AdminPanel_AddUserToRole)) {
+    echo "Add user to role form : Missing permissions\n";
+    die();
 }
 
-$lnk                        = ConnectAndCheckLDAP();
-$users_staff['HRM']         = GetAllUsersInDN($lnk, 'ou=HRM,ou=Staff,dc=NHLStenden,dc=com');
-$users_staff['Marketing']   = GetAllUsersInDN($lnk, 'ou=Marketing,ou=Staff,dc=NHLStenden,dc=com');
+$lnk = ConnectAndCheckLDAP();
+$users_staff['HRM'] = GetAllUsersInDN($lnk, 'ou=HRM,ou=Staff,dc=NHLStenden,dc=com');
+$users_staff['Marketing'] = GetAllUsersInDN($lnk, 'ou=Marketing,ou=Staff,dc=NHLStenden,dc=com');
 $users_staff['ICT Support'] = GetAllUsersInDN($lnk, 'ou=ICT Support,ou=Staff,dc=NHLStenden,dc=com');
-$users_staff['Docenten']    = GetAllUsersInDN($lnk, 'ou=Teachers,ou=Opleidingen,dc=NHLStenden,dc=com');
-$roles                      = GetAllRolesInDN($lnk, "ou=roles,dc=NHLStenden,dc=com");
+$users_staff['Docenten'] = GetAllUsersInDN($lnk, 'ou=Teachers,ou=Opleidingen,dc=NHLStenden,dc=com');
+$roles = GetAllRolesInDN($lnk, "ou=roles,dc=NHLStenden,dc=com");
 
 $idRole = '';
 if (isset($_GET['idRole'])) {
     // FIXME: sanitize!!!
-  $idRole = $_GET['idRole'];
+    $idRole = $_GET['idRole'];
 }
 
 ?>
@@ -40,7 +40,7 @@ if (isset($_GET['idRole'])) {
 <main class="container-fluid">
 
     <article>
-      <?= showheader(Websites::WEBSITE_ADMIN, basename(__FILE__), $rbac) ?>
+        <?= showheader(Websites::WEBSITE_ADMIN, basename(__FILE__), $rbac) ?>
     </article>
     <article class="form">
         <? $idRole ?>
@@ -48,30 +48,33 @@ if (isset($_GET['idRole'])) {
             <legend>Nieuwe autorisatie aanvraag verwerken</legend>
             <form method="post" action="AssignRoleToUser.php">
                 <div class="form-row">
-                    <label for="role">Rol:</label>
-                    <select name="role" id="role" size="10">
-                        <option value="-">-Kies een rol-</option>
-                      <?php foreach ($roles as $role) : ?>
-                          <option value="<?= $role['dn'] ?>" <?= ($idRole === $role['dn']) ? 'selected':'' ?>><?= $role['cn'] ?></option>
-                      <?php endforeach; ?>
-                    </select>
-                </div>
-                <div class="form-row">
-                    <label for="user">Gebruiker:</label>
-                    <select name="user" id="user" size="10">
-                      <?php foreach ($users_staff as $key => $department): ?>
-                          <optgroup label="<?= $key ?>">
-                            <?php foreach ($department as $user) : ?>
-                                <option value="<?= $user['dn'] ?>"><?= $user['sn'] . "," . $user['givenName'] ?></option>
+                    <div class="form-column">
+                        <label for="role">Rol:</label>
+                        <select name="role" id="role" size="20">
+                            <option value="-">-Kies een rol-</option>
+                            <?php foreach ($roles as $role) : ?>
+                                <option value="<?= $role['dn'] ?>" <?= ($idRole === $role['dn']) ? 'selected' : '' ?>><?= $role['cn'] ?></option>
                             <?php endforeach; ?>
-                          </optgroup>
-                      <?php endforeach; ?>
-                    </select>
+                        </select>
+                    </div>
+                    <div class="form-column">
+                        <label for="user">Gebruiker:</label>
+                        <select name="user" id="user" size="20">
+                            <?php foreach ($users_staff as $key => $department): ?>
+                                <optgroup label="<?= $key ?>">
+                                    <?php foreach ($department as $user) : ?>
+                                        <option value="<?= $user['dn'] ?>"><?= $user['sn'] . "," . $user['givenName'] ?></option>
+                                    <?php endforeach; ?>
+                                </optgroup>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                    <button type="submit">Autoriseer</button>
                 </div>
-                <button type="submit">Autoriseer</button>
             </form>
         </fieldset>
-        <div id="current-user-list">
+        <fieldset id="current-user-list">
+            <legend>Huidige gebruikers in deze rol</legend>
             <table>
                 <caption>Gebruikers in deze rol</caption>
                 <thead>
@@ -86,7 +89,7 @@ if (isset($_GET['idRole'])) {
                 </tbody>
             </table>
 
-        </div>
+        </fieldset>
     </article>
 
 </main>

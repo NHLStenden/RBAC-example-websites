@@ -35,11 +35,11 @@ function showheader(Websites $forWebsite, string $route, RBACSupport $rbac): str
 
     $navigationAdmin = [
         ['route' => 'logging.php', 'permission' => Permission_Admin_Panel, 'title' => 'Apache Logfiles'],
-        ['route' => 'attestation_users.php', 'permission' => Permission_Admin_Panel, 'title' => 'Attestation - Gebruikers'],
-        ['route' => 'attestation_roles.php', 'permission' => Permission_Admin_Panel, 'title' => 'Attestation - Rollen'],
-        ['route' => 'manage_roles.php', 'permission' => Permission_Admin_Panel, 'title' => 'Rollen'],
+        ['route' => 'attestation_users.php', 'permission' => Permission_AdminPanel_Attestation_Users, 'title' => 'Attestation - Gebruikers'],
+        ['route' => 'attestation_roles.php', 'permission' => Permission_AdminPanel_Attestation_Roles, 'title' => 'Attestation - Rollen'],
+        ['route' => 'manage_roles.php', 'permission' => Permission_AdminPanel_Manage_RolePermissions, 'title' => 'Rollen'],
         ['route' => 'view-user.php', 'permission' => Permission_Admin_Panel, 'title' => 'Zoeken...'],
-        ['route' => 'AssignUserToRoleForm.php', 'permission' => Permission_Admin_Panel, 'title' => 'Autorisatie aanvraag'],
+        ['route' => 'AssignUserToRoleForm.php', 'permission' => Permission_AdminPanel_AddUserToRole, 'title' => 'Autorisatie aanvraag'],
     ];
     $navigationMarketing = [
         ['route' => 'new-campaign.php', 'permission' => Permission_Marketing_Create_Campaign, 'title' => 'Nieuwe campagne'],

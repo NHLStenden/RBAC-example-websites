@@ -23,6 +23,15 @@ const Permission_Marketing_Update_Campaign  = 'Marketing_Update_Campaign';
 const Permission_Marketing_Approve_Campaign = 'Marketing_Approve_Campaign';
 const Permission_HRM_Manage_Employees       = 'HRM_Manage_Employees';
 
+const Permission_AdminPanel_Attestation_Roles = 'AdminPanel_Attestation_Roles';
+const Permission_AdminPanel_Attestation_Users = 'AdminPanel_Attestation_Users';
+const Permission_AdminPanel_AddUserToRole = 'AdminPanel_AddUserToRole';
+const Permission_AdminPanel_RevokeUserFromRole = 'AdminPanel_RevokeUserFromRole';
+const Permission_AdminPanel_Manage_RolePermissions = 'AdminPanel_Manage_RolePermissions';
+
+
+
+
 class RBACSupport
 {
 

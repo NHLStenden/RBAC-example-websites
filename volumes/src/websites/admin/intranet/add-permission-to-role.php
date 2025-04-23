@@ -5,11 +5,13 @@ include_once '../../shared/partials/header.php';
 
 $rbac = new RBACSupport($_SERVER["AUTHENTICATE_UID"]);
 if (!$rbac->process()) {
-  die('Could not connect to RBAC server.');
+    http_response_code(500);
+    die('Could not connect to RBAC server.');
 }
-if (!$rbac->has(Permission_Admin_Panel)) {
-  echo "Not allowed to open the Admin panel\n";
-  die();
+if (!$rbac->has(Permission_AdminPanel_Manage_RolePermissions)) {
+    http_response_code(406);
+    echo "Add permission to role (AJAX): Missing permissions\n";
+    die();
 }
 
 if (!is_numeric($_POST["idRole"]) || !is_numeric($_POST["idPermission"])) {
@@ -17,14 +19,14 @@ if (!is_numeric($_POST["idRole"]) || !is_numeric($_POST["idPermission"])) {
     die('not acceptable');
 }
 
-$idRole       = (int)$_POST["idRole"];
+$idRole = (int)$_POST["idRole"];
 $idPermission = (int)$_POST["idPermission"];
 
 echo "$idRole | $idPermission\n";
 
 $pdo = new PDO('mysql:host=iam-example-db-server;dbname=IAM;', "student", "test1234");
 
-$sql  = "INSERT INTO role_permissions (fk_idPermission, fk_idRole) VALUES(:idPermission, :idRole)";
+$sql = "INSERT INTO role_permissions (fk_idPermission, fk_idRole) VALUES(:idPermission, :idRole)";
 $stmt = $pdo->prepare($sql);
 $stmt->bindValue(':idPermission', $idPermission, PDO::PARAM_INT);
 $stmt->bindValue(':idRole', $idRole, PDO::PARAM_INT);

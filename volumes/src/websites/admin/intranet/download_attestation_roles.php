@@ -1,6 +1,15 @@
 <?php
 include_once 'lib/attestation-functions.inc.php';
+include_once '../../shared/lib/RBACSupport.php';
 
+$rbac = new RBACSupport($_SERVER["AUTHENTICATE_UID"]);
+if (!$rbac->process()) {
+    die('Could not connect to RBAC server.');
+}
+if (!$rbac->has(Permission_AdminPanel_Attestation_Roles)) {
+    echo "Download Attestation roles: Missing Permissions\n";
+    die();
+}
 $pdo = new PDO('mysql:host=iam-example-db-server;dbname=IAM;', "student", "test1234");
 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 

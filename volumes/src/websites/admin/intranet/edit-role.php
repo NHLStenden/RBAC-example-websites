@@ -7,8 +7,8 @@ $rbac = new RBACSupport($_SERVER["AUTHENTICATE_UID"]);
 if (!$rbac->process()) {
   die('Could not connect to RBAC server.');
 }
-if (!$rbac->has(Permission_Admin_Panel)) {
-  echo "Not allowed to open the Admin panel\n";
+if (!$rbac->has(Permission_AdminPanel_Manage_RolePermissions)) {
+  echo "Edit role: missing permissions\n";
   die();
 }
 
