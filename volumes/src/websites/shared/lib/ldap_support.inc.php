@@ -53,7 +53,7 @@ function ConnectAndCheckLDAP(): LDAP\Connection
 function AddUserToGroup(LDAP\Connection $lnk, string $groupDN, string $userDN)
 {
   $attributes = [GROUP_ATTR_NAME => $userDN];
-  if (ldap_mod_add($lnk, $groupDN, $attributes) === false) {
+  if (@ldap_mod_add($lnk, $groupDN, $attributes) === false) {
     $error = ldap_error($lnk);
     $errno = ldap_errno($lnk);
     throw new Exception($error, $errno);
@@ -426,7 +426,7 @@ function RevokeUserFromRole(LDAP\Connection $lnk, string $roleDN, string $userDN
     "uniqueMember" => $userDN
   ];
   $result = @ldap_mod_del($lnk, $roleDN, $entry);
-  if ($result ) {
+  if ($result) {
     return $result;
   }
   throw new Exception("Unable to revoke user from role. Er moet altijd één gebruiker in een rol zitten.");
@@ -436,7 +436,7 @@ function AssignUserToRole(LDAP\Connection $lnk, string $role, string $dn): bool
 {
   $entry = ["uniqueMember" => [$dn]];
   try {
-    if (ldap_mod_add($lnk, $role, $entry)) {
+    if (@ldap_mod_add($lnk, $role, $entry)) {
       return true;
     }
   } catch (Exception $e) {
@@ -450,7 +450,6 @@ function GetAllGroupMembersOfRole(LDAP\Connection $lnk, string $groupDN): array
   $attributes = ["uniqueMember"];
   $result     = ldap_read($lnk, $groupDN, "(objectClass=groupOfUniqueNames)", $attributes);
   $entries    = ldap_get_entries($lnk, $result);
-
 
   $members = [];
 
