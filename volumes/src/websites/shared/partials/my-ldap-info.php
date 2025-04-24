@@ -20,8 +20,13 @@ function GenerateSectionForMyLdapInfo(array $userInfoLDAP): string|null
     "Postcode" => $userInfoLDAP['postalcode'],
     "Kamernummer" => $userInfoLDAP['roomnumber'],
   ];
-  $jpegPhoto = base64_encode($userInfoLDAP['jpegphoto']);
 
+  if (isset($userInfoLDAP['jpegphoto'])) {
+      $jpegPhoto = base64_encode($userInfoLDAP['jpegphoto']);
+  }
+  else {
+      $jpegPhoto = null;
+  }
   $result = '<section class="my-info"><table>';
   foreach ($items as $key => $item) {
     $result .= "<tr><td>$key:</td><td>$item</td></tr>";
