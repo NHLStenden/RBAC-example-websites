@@ -1,0 +1,28 @@
+# Opdracht 2 - Inzicht in account administratie
+
+In deze opdracht gaan we in de account administratie kijken naar meer informatie. Deze is opgenomen in een zogenaamde
+*LDAP-store*.
+
+## Instructie
+
+Start nu een LDAP-management tool zoals de _Apache Directory Studio_. Zie de
+[installatiehandleiding](../Install/README.md#verbinding-maken-met-de-identity-server-ldap) voor instructies.
+
+## Opdracht
+
+Navigeer in de _Directory Information Tree_ (**DIT**) naar onderstaande locatie:
+
+    `dc=NHLStenden,dc=com > ou=Opleidingen > ou=Teachers`
+
+De zogenaamde **Distinguished Name** van deze locatie is
+
+    `ou=Teachers,ou=Opleidingen,dc=NHLStenden,dc=com`
+
+Je ziet hier een aantal gebruikersaccounts. Zoek de account *'Guus Willems'* en klik hier op. Je krijgt de eigenschappen
+te zien.
+
+![opdracht 2 - 02 user details gwillems.png](./images/opdracht%202%20-%2002%20user%20details%20gwillems.png)
+
+## Vragen
+
+1. Welke eigenschap van het account heb je gebruikt om mee in te loggen?

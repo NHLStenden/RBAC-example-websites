@@ -13,6 +13,11 @@ op het kunnen spelen met autorisaties op basis van een Role Based Access (RBAC) 
 
 Een uitgebreide installatiehandleiding kun je [hier](./Install/README.md) vinden.
 
+# Oefeningen
+
+In de map [Assignments](./Assignments) vind je de bestanden om mee te oefenen en de uitwerkingen. Zie hiervoor de
+[readme](./Assignments/README.MD).
+
 # Verantwoording
 
 Een toelichting op de gemaakte keuzes kun je vinden in de [verantwoording](./Documentation/Verantwoording.md).

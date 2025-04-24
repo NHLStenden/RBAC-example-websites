@@ -1,4 +1,4 @@
-# Oefeningen
+# Oefeningen rondom het onderwerp Identity and Access Management en User Provisioning
 
 Als de Docker containers draaien is het tijd om een aantal opdrachten en oefeningen uit te voeren. Deze worden in
 dit document verder uitgewerkt. De oplossingen / uitwerkingen staan aan in een apart [document](Oplossingen.MD).
@@ -35,7 +35,11 @@ De volgende opdrachten en oefeningen zijn opgenomen:
 9. [Aanmaken nieuwe rol](./Oefening%2009.MD)
 10. [Automatische provisioning van gebruikers](./Oefening%2010.MD)
 
-Je vindt de oefeningen in apart genummerde bestanden in deze map.
+Je vindt de oefeningen in apart genummerde bestanden in deze map. In het bestand [Oplossingen](./Oplossingen.MD) vind
+je de uitwerkingen van de oefeningen. 
+
+Als je klaar bent met de oefeningen dan kun je eventueel aan de slag met het zelf uitbreiden van de permissies in de 
+broncode. Zie hiervoor het bestand [Autorisaties toevoegen](./Autorisaties%20toevoegen.MD).
 
 ---
 
