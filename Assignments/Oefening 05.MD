@@ -55,3 +55,7 @@ Login bij het Admin Panel en experimenteer eens met beide mechanismen. Verander 
   organisatorisch?
 
 In de volgende opdracht gaan we kijken naar hoe dit proces ondersteund kan worden.
+
+# Navigatie
+
+Navigeer hier naar de volgende [opdracht](./Oefening%2006.MD) of de vorige [opdracht](./Oefening%2004.MD).

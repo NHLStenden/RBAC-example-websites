@@ -42,3 +42,7 @@ De rollen zijn ondergebracht op de volgende locatie: `ou=roles,dc=NHLStenden,dc=
     2. heeft de gebruiker de juiste rechten (groepslidmaatschappen, zie tabel hier boven) ?
 5. Kijk via het Admin-panel naar de eigenschappen van de gebruiker (via de button `Zoeken`).
 6. Lukt het nu om in te loggen op de website die bij deze rol hoort?
+
+# Navigatie
+
+Navigeer hier naar de vorige [opdracht](./Oefening%2009.MD).

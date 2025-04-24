@@ -53,3 +53,7 @@ We hebben nu dus in de administratie van de accounts een rol handmatig ingetrokk
 2. Wat zou de bron moeten zijn voor deze informatie?
 3. In welke situatie zou een handmatige actie nodig kunnen zijn?
 
+
+# Navigatie
+
+Navigeer hier naar de volgende [opdracht](./Oefening%2005.MD) of de vorige [opdracht](./Oefening%2003.MD).

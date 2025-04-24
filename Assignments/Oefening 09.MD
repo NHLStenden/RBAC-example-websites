@@ -51,3 +51,7 @@ Echter aan de rol van Marketing zitten de nodige permissies waardoor je meteen o
 eigenlijk veel te ruim opgezet: als je de rol Marketing heb mag je meteen teveel. We kunnen minder autorisaties in die
 rol opnemen en een nieuwe rol maken voor de standaard permissies van een echte Marketing medewerker. Echter, dan moeten
 we wel meteen alle gebruikers toewijzen aan die nieuwe rol.
+
+# Navigatie
+
+Navigeer hier naar de volgende [opdracht](./Oefening%2010.MD) of de vorige [opdracht](./Oefening%2008.MD).

@@ -26,3 +26,7 @@ De admin-pagina stelt ons in staat om de permissies bij een rol in te zien.
 6. Ga naar de pagina met "Mijn Gegevens"
 7. Ga in het Admin Panel terug naar de pagina met rollen en zoek de rol van Marketing Manager
 8. Wat valt op qua permissies met de "Mijn gegevens" pagina van de gebruiker zelf?
+
+# Navigatie
+
+Navigeer hier naar de volgende [opdracht](./Oefening%2008.MD) of de vorige [opdracht](./Oefening%2006.MD).

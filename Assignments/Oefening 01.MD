@@ -28,3 +28,7 @@ accounts. Vul bij 'Toegang' in welke functionele mogelijkheden je ziet (bijvoorb
 
 1. Is het verstandig of juist onverstandig vanuit een _security perspective_ om te werken met zoveel verschillende
    websites? Zou je niet liever zoveel mogelijk zaken combineren? Motiveer je antwoord.
+
+# Navigatie
+
+Navigeer hier naar de volgende [opdracht](./Oefening%2002.MD).

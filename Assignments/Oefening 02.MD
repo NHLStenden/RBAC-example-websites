@@ -26,3 +26,7 @@ te zien.
 ## Vragen
 
 1. Welke eigenschap van het account heb je gebruikt om mee in te loggen?
+
+# Navigatie
+
+Navigeer hier naar de volgende [opdracht](./Oefening%2003.MD) of de vorige [opdracht](./Oefening%2001.MD).

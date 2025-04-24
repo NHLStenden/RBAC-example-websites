@@ -29,8 +29,8 @@ te gebruiken of de geëxporteerde lijst te importeren in Excel en daar te filter
 
 ## Opdracht
 
-Kijk terug naar de wijzigingen in opdracht 5 (ongewenste combinatie van permissies). Voer wederom de wijziging
-door die daar beschreven staat: het toevoegen van een permissie aan een rol en het toevoegen van een rol
+Kijk terug naar de wijzigingen in [opdracht 5](./Oefening%2005.MD) (ongewenste combinatie van permissies). Voer wederom 
+de wijziging door die daar beschreven staat: het toevoegen van een permissie aan een rol en het toevoegen van een rol
 aan één gebruiker.
 
 1. Ga op zoek naar afwijkingen. Kijk bijvoorbeeld of een student geen rechten heeft die er niet thuishoren.
@@ -42,3 +42,7 @@ aan één gebruiker.
 1. Stel jij bent beheerder van deze school. Je kunt deze rapportages gebruiken om de organisatie beter te beveiligen.
    Aan wie ga je deze rapportages sturen?
 2. Wie zou er in actie moeten komen bij afwijkingen?
+
+# Navigatie
+
+Navigeer hier naar de volgende [opdracht](./Oefening%2009.MD) of de vorige [opdracht](./Oefening%2007.MD).

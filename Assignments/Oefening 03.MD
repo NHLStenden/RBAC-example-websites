@@ -21,8 +21,12 @@ maar wel in de website beschikbaar is.
 Kijk eens in dit project in de map `{ROOT}volumes/src/websites/grades/intranet`. Hier zie je diverse bestanden staan
 eindigend op de extensie `.php`. Elk bestand is een webpagina. Dus `my-data.php` kun je openen met :
 
-`https://grades.docker/intranet/my-data.php`
+[https://grades.docker/intranet/my-data.php](https://grades.docker/intranet/my-data.php)
 
 Probeer verschillende van deze pagina's te openen en noteer het resultaat in een lijstje.
 
 Als je nieuwsgierig bent kun je eens in de code kijken hoe de beveiliging geprogrammeerd is!
+
+# Navigatie
+
+Navigeer hier naar de volgende [opdracht](./Oefening%2004.MD) of de vorige [opdracht](./Oefening%2002.MD).

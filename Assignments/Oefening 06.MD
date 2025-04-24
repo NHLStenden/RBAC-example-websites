@@ -25,3 +25,7 @@ We gaan eerst kijken naar welke rechten één gebruiker heeft. Dit kan op twee m
 
 1. Waarom kan het nuttig zijn om inzicht te krijgen in de toegangsrechten van één gebruiker?
 2. Waarom kan het nuttig zijn om in bulk inzicht te krijgen in de toegangsrechten van veel gebruikers?
+
+# Navigatie
+
+Navigeer hier naar de volgende [opdracht](./Oefening%2007.MD) of de vorige [opdracht](./Oefening%2005.MD).
