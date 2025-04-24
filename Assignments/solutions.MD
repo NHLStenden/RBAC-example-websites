@@ -9,14 +9,14 @@ Hier vind je de uitwerkingen van de opgaven.
 Door in te loggen op de LDAP-administratie kan gekeken worden naar de structuur van de account administratie.
 Het personeel van Marketing is geen onderwijzend personeel dus valt onder Staff/Marketing.
 
-![opdracht 1 - 01.png](images/excersises/opdracht%201%20-%2001.png)
+![opdracht 1 - 01.png](images/opdracht%201%20-%2001.png)
 
 De aanname is dat je verwacht dat deze groep gebruikers inderdaad bij de applicatie voor Marketing website hoort. Dat
 kun je alleen zeker weten door het aan de programmeur of een website beheer te vragen of in de documentatie te kijken.
 
 In dit geval kun je het afleiden uit de configuratie van de webserver. Kijk op Github op de volgende locatie:
 
-* [marketing.conf](webserver/conf/marketing.conf) (webserver --> conf --> marketing.conf)
+* [marketing.conf](../webserver/conf/marketing.conf) (webserver --> conf --> marketing.conf)
 
 En zoek naar het onderstaande configuratie item:
 
@@ -28,6 +28,23 @@ Daar staat netjes dat het intranet alleen beschikbaar is voor de genoemde groep.
 
 ## Opdracht 2
 
+Het veld waarmee je probeert in te loggen is het veld *UID*. Dit veld moet uniek zijn in de administratie
+maar in het geval van LDAP is daar geen bewaking op. 
+
+Als je in de rest van de opdrachten dus gevraagd wordt om in te loggen dan kun je een gebruiker opzoeken in de
+LDAP administratie en kijken naar het veld *UID* en daarmee inloggen.
+
+## Opdracht 3
+
+Als je werkt met toegangsrechten in applicaties dan is het fijn als je niet een webpagina kunt oproepen
+waar je toch niks mee mag doen. Dus kun je de navigatie aanpassen op basis van de toegekende toegangsrechten. We
+zien dat hier ook duidelijk terugkomen in de navigatiebalk. 
+
+## Opdracht 4
+
+## Opdracht 5
+
+## Opdracht 6
 
 ## Opdracht 7
 
