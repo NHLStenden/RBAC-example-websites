@@ -32,8 +32,7 @@ De volgende opdrachten en oefeningen zijn opgenomen:
 6. Inzicht in rollen - gebruikers
 7. Inzicht in rollen - permissies
 8. Attestation
-8. Aanmaken nieuwe rol
-9. Aanmaken nieuwe gebruiker in LDAP
+9. Aanmaken nieuwe rol
 10. Automatische provisioning van gebruikers
 
 # Opdracht 1 - In kaart brengen van beveiliging
@@ -80,11 +79,11 @@ Start nu een LDAP-management tool zoals de _Apache Directory Studio_. Zie de
 
 Navigeer in de _Directory Information Tree_ (**DIT**) naar onderstaande locatie:
 
-    dc=NHLStenden,dc=com > ou=Opleidingen > ou=Teachers
+    `dc=NHLStenden,dc=com > ou=Opleidingen > ou=Teachers`
 
 De zogenaamde **Distinguished Name** van deze locatie is
 
-    ou=Teachers,ou=Opleidingen,dc=NHLStenden,dc=com
+    `ou=Teachers,ou=Opleidingen,dc=NHLStenden,dc=com`
 
 Je ziet hier een aantal gebruikersaccounts. Zoek de account *'Guus Willems'* en klik hier op. Je krijgt de eigenschappen
 te zien.
@@ -95,21 +94,36 @@ te zien.
 
 1. Welke eigenschap van het account heb je gebruikt om mee in te loggen?
 
-## Opdracht 3 - Accounts gebruiken om in te loggen
+# Opdracht 3 - Accounts gebruiken om in te loggen
 
 ## Instructie
 
 Zoek nu een andere _student_ of _teacher_ op in deze lijst met accounts. De studenten vind je op
 
-    dc=NHLStenden,dc=com > ou=Opleidingen > ou=Teachers
+    dc=NHLStenden,dc=com > ou=Opleidingen > ou=Students
 
 ## Opdracht
 
-Log in bij de website [http://grades.docker/](http://grades.docker/) met diverse rollen (student, teacher).
+1. Log in bij de website [http://grades.docker/](http://grades.docker/) met diverse rollen (student, teacher).
+2. Merk op hoe de navigatiebalk steeds veranderd afhankelijk van wie er inlogt.
+3. Maak een tabel met de mogelijke navigatie voor de verschillende gebruikers.
 
-## Vragen
+We gaan nu inloggen op [de cijferadministratie](http://grades.docker/) als student. Na inloggen krijg je een navigatiebalk met
+locaties/applicaties waar je naar toe mag. We gaan nu proberen om een pagina te benaderen die niet in de navigatie zit
+maar wel in de website beschikbaar is. 
 
-## Opdracht 4 - Handmatige aanpassing van toegangsrechten
+1. Probeer eens of je deze URL kunt openen: https://grades.docker/intranet/view-student.php. 
+
+Kijk eens in dit project in de map `{ROOT}volumes/src/websites/grades/intranet`. Hier zie je diverse bestanden staan 
+eindigend op de extensie `.php`. Elk bestand is een webpagina. Dus `my-data.php` kun je openen met : 
+
+`https://grades.docker/intranet/my-data.php`
+
+Probeer verschillende van deze pagina's te openen en noteer het resultaat in een lijstje. 
+
+Als je nieuwsgierig bent kun je eens in de code kijken hoe de beveiliging geprogrammeerd is!
+
+# Opdracht 4 - Handmatige aanpassing van toegangsrechten
 
 ## Introductie
 
@@ -181,21 +195,46 @@ gebruiken. Als we een nieuwe rol toewijzen aan een gebruiker dan gelden de permi
 alleen voor deze gebruiker.
 
 In beide gevallen kan er iets misgaan: je kunt onbedoeld rechten krijgen tot handelingen die elkaar horen uit te
-sluiten.
-Een veelgebruikt voorbeeld is dat je iets kunt bestellen, maar ook de bestelling kan goedkeuren. Dan kun je mooi een
-dure
-auto bestellen én je zorgt ook dat deze betaald wordt.
+sluiten. Een veelgebruikt voorbeeld is dat je iets kunt bestellen, maar ook de bestelling kan goedkeuren. Dan kun 
+je mooi een dure auto bestellen én je zorgt ook dat deze betaald wordt.
 
 Het scheiden van dergelijke functies noemen we dan ook "Functiescheiding" of (in het Engels) "Segregation Of Duty". Op
 deze manier zorg je er voor dat minimaal twee mensen betrokken moeten zijn bij dergelijke handelingen.
 
-In ons voorbeeld kunnen we dit laten zien door een gebruiker een rol toe te wijzen van Marketing Manager én Marketing
-
-## Instructie
+In ons voorbeeld kunnen we dit laten zien door een gebruiker een rol toe te wijzen van Marketing Manager én gewone 
+Marketing medewerker. Een medewerker kan nu een campagne maken én goedkeuren zodat deze ook daadwerkelijk gaat starten.
 
 ## Opdracht
 
+Login bij het Admin Panel en experimenteer eens met beide mechanismen. Verander de autorisaties 
+
+**Rol toevoegen**
+
+* Voeg via het scherm 'Autorisatie aanvraag' bij een gebruiker van Marketing de rol "Marketing Manager" toe.
+* Login bij de Marketing portaal als deze medewerker en merk op wat je allemaal mag
+* Trek de autorisatie weer in (rol verwijderen via 'Revoke button')
+* Ververs de pagina van de Marketing portaal en zie de veranderingen
+
+**Permissie toevoegen**
+
+* In het Admin-panel navigeer je naar 'Rollen'. Zoek de rol 'Marketing' en gebruik de 'Edit' button om te navigeren 
+  naar de pagina om de permissies bij deze rol te wijzigen
+* Voeg de permissie "Approve a marketing campaign" toe en druk op de button 'Toevoegen' om deze toe te voegen aan de 
+  rol "Marketing"
+* Login bij de Marketing portaal als deze medewerker en merk op wat je allemaal mag
+* Log uit bij deze gebruiker en sluit het tabblad
+* Open een nieuw tabblad en login als andere gewone Marketing gebruiker
+* Merk op wat ook deze gebruiker allemaal mag
+* Ga terug naar het Admin panel en verwijder de permissie "Approve a marketing campaing" bij de rol "Marketing"
+
 ## Vragen
+
+* Wat zou een technische maatregel kunnen zijn om deze ongewenste situaties te voorkomen? 
+* Wat zou een organisatorische maatregel kunnen zijn om deze ongewenste situatie te voorkomen?
+* Bij wie zou de verantwoordelijkheid moeten liggen om te zorgen dat dit niet kan gebeuren? Technisch of juist 
+  organisatorisch?
+
+In de volgende opdracht gaan we kijken naar hoe dit proces ondersteund kan worden. 
 
 # Opdracht 6 - Inzicht in rollen - gebruikers
 
@@ -205,6 +244,8 @@ De applicatie Apache Directory Studio helpt niet goed bij het inzichtelijk krijg
 gebruiker. We kunnen opzoeken welke gebruikers in een groep zitten, en dan vanuit de groepen zo een beeld opbouwen.
 
 Mocht je dus willen nazoeken welke rollen een gebruiker uiteindelijk allemaal heeft, dan is dat een flinke uitzoek klus.
+In aansluiting op de vorige opdracht over ongewenste combinaties van permissies is het goed om de organisatie te 
+ondersteunen met bruikbare informatie. 
 
 ## Instructie
 
@@ -228,54 +269,29 @@ We gaan eerst kijken naar welke rechten één gebruiker heeft. Dit kan op twee m
 ## Introductie
 
 Als een centrale oplossing zoals LDAP of Active Directory wordt gebruikt om **rollen** te administreren, dan zal een
-applicatie
-zelf moeten bepalen welke permissies er voor die applicatie gelden. Dit _kan_ ook in een centrale oplossing maar in ons
-voorbeeld is dat geregeld in een database.
+applicatie zelf moeten bepalen welke permissies er voor die applicatie gelden. Dit _kan_ ook in een centrale
+oplossing maar in ons voorbeeld is dat geregeld in slechts één database.
 
-De admin-pagina stelt ons in staat om de permissies bij een applicatie te veranderen.
+De admin-pagina stelt ons in staat om de permissies bij een rol in te zien.
 
 ## Opdracht
 
-1. Navigeer naar http://admin.docker/intranet en login met een admin gebruiker
+1. Navigeer naar http://admin.docker/intranet en login met een gebruiker van ICT Support. 
 2. Gebruik de knop 'Rollen' om naar de administratie van de rollen te gaan. Er volgt een lijst met beschikbare rollen.
-3. Klik op de knop 'Edit' achter de rol "All Students". Je kunt nu permissies toevoegen aan deze rol.
-4. Selecteer uit de lijst achter 'Permissie' het item 'Use Admin Panel' en druk op de knop Toevoegen.
-5. Klik op de knop 'Uitloggen' rechtsboven; je krijgt nu een popup om in te loggen. Sluit deze (Annuleren) en sluit het
-   tabblad.
-6. Open een nieuw tabblad en navigeer naar http://sharepoint.docker/intranet/my-data.php
-7. Login met een student account
-8. Wat valt op? Welke functionaliteit hebben we nu onbedoeld beschikbaar gesteld?
+3. Klik op de knop 'Edit' achter de rol "All Students". 
 
 ## Vragen
 
-Momenteel zijn de volgende permissies beschikbaar:
+1. Welke permissies heeft deze rol momenteel?
+2. Wat zegt dit over de permissies van één individuele student?
+3. Login als een student bij het Intranet (http://sharepoint.docker) 
+4. Ga naar de pagina "Mijn Gegevens" en vergelijk de lijst met Permissies met die in het admin panel
 
-| Permissie                  | Titel                            |
-|----------------------------|----------------------------------|
-| SharePoint_Basic_Access    | Basic Access to SharePoint       |
-| Grades_Basic_Access        | Basic Access to Grades app       |
-| Marketing_Basic_Access     | Basic Access to Marketing app    |
-| Use_Mail                   | Use college e-mail               |
-| AdminPanel                 | Use Admin Panel                  |
-| SharePoint_News            | Read news on SharePoint/Intranet |
-| SharePoint_HRM             | Go to Human Resource Management  |
-| SharePoint_StudentTools    | Open student tools               |
-| SharePoint_TeacherTools    | Open teacher's tools             |
-| Grades_Create_Gradelists   | Create a new list of grades      |
-| Grades_Approve_Gradeslist  | Approve a list of grades         |
-| Grades_Read_Own_Grades     | Student can read own grades      |
-| Grades_Read_StudentDetails | Get information on all students  |
-| Grades_Show_Self           | Show students own information    |
-| Marketing_Create_Campaign  | Create a new marketing campaign  |
-| Marketing_Read_Campaign    | Read a marketing campaign        |
-| Marketing_Delete_Campaign  | Delete a marketing campaign      |
-| Marketing_Update_Campaign  | Update a marketing campaign      |
-| Marketing_Approve_Campaign | Approve a marketing campaign     |
-| HRM_Manage_Employees       | Manage Employees                 |
-
-1. Welke permissies zijn er beschikbaar voor het admin panel?
-2. Welke problemen kunnen hierdoor ontstaan? Kijk naar het aantal functionaliteiten.
-3. Wat zou kunnen helpen om dit probleem op te lossen?
+5. Log de student uit, sluit het tabblad en login bij SharePoint als een Marketing Manager (zie
+   `cn=Marketing managers,ou=roles,dc=NHLStenden,dc=com`) 
+6. Ga naar de pagina met "Mijn Gegevens"
+7. Ga in het Admin Panel terug naar de pagina met rollen en zoek de rol van Marketing Manager
+8. Wat valt op qua permissies met de "Mijn gegevens" pagina van de gebruiker zelf?
 
 # Opdracht 8 - Attestation
 
@@ -305,7 +321,12 @@ We hebben nu een momentopname ('snapshot') van de huidige rollen en het gebruik 
 We willen nu inzicht krijgen in mogelijke afwijkingen. Dat kan door de filters en sorteermogelijkheden op de web pagina
 te gebruiken of de geëxporteerde lijst te importeren in Excel en daar te filteren en te sorteren.
 
+
 ## Opdracht
+
+Kijk terug naar de wijzigingen in opdracht 5 (ongewenste combinatie van permissies). Voer wederom de wijziging
+door die daar beschreven staat: het toevoegen van een permissie aan een rol en het toevoegen van een rol
+aan één gebruiker. 
 
 1. Ga op zoek naar afwijkingen. Kijk bijvoorbeeld of een student geen rechten heeft die er niet thuishoren.
 2. Maak bewust afwijkingen via het scherm "Rollen": voeg bijvoorbeeld "Teacher" of "Marketing" rechten toe.
@@ -324,7 +345,9 @@ Hier gaan we onderzoeken hoe we een nieuwe rol kunnen maken om deze in te zetten
 ## Introductie
 
 Stel er is een nieuw team opgezet dat marketing campagnes moet monitoren op voortgang. We noemen dit team de
-"Campagne Monitors".
+"Campagne Monitors". Het aanmaken van zo'n nieuw team moet kunnen zonder dat je een programmeur nodig hebt. Dit is één 
+van de voornaamste redenen om in je broncode niet de rol maar permissies te controleren. Je stelt nu een Functioneel
+Beheerder in staat om dit zelfstandig te doen. 
 
 ## Opdracht
 
@@ -347,7 +370,7 @@ Nu gaan we een gebruiker autoriseren voor deze rol
 
 We gaan nu kijken of de nieuwe medewerker ook daadwerkelijk naar de Marketing Website mag
 
-1. Ga naar de SharePoint website
+1. Ga naar de SharePoint [website](http://sharepoint.docker/)
 2. Login als de gebruiker die je net geautoriseerd hebt
 3. Zie dat er in de menu balk nu een button staat voor Marketing
 4. Druk op de button Marketing
@@ -361,32 +384,16 @@ Het blijkt dat we mogelijk nog niet de juiste autorisaties hebben.
 3. Probeer opnieuw in te loggen.
 
 Nog steeds zal het niet lukken om in te loggen op de website van Marketing. Dit heeft te maken met de beveiliging op
-applicatie
-niveau. Om gebruik te maken van de website moet je de rol 'Marketing' hebben. Het is dus niet genoeg om allerlei
-Marketing-*permissies*
-te hebben. Je moet ook de rol "Marketing" hebben.
+applicatie niveau. Om gebruik te maken van de website moet je de rol 'Marketing' hebben. Het is dus niet genoeg om 
+allerlei Marketing-*permissies* te hebben. Je moet ook de rol "Marketing" hebben.
 
 Echter aan de rol van Marketing zitten de nodige permissies waardoor je meteen ook bijna alles mag. Deze rol is dus
-eigenlijk veel
-te ruim opgezet: als je de rol Marketing heb mag je meteen teveel. We kunnen minder autorisaties in die rol opnemen en
-een nieuwe
-rol maken voor de standaard permissies van een echte Marketing medewerker. Echter, dan moeten we wel meteen alle
-gebruikers
-toewijzen aan die nieuwe rol.
+eigenlijk veel te ruim opgezet: als je de rol Marketing heb mag je meteen teveel. We kunnen minder autorisaties in die
+rol opnemen en een nieuwe rol maken voor de standaard permissies van een echte Marketing medewerker. Echter, dan moeten 
+we wel meteen alle gebruikers toewijzen aan die nieuwe rol.
 
-# Opdracht 10 - Gebruiker aanmaken in LDAP
 
-## Introductie
-
-## Instructie
-
-## Opdracht
-
-## Vragen
-
-----------------------------------------------------------------------------
-
-# Opdracht 11 - Automatische provisioning van gebruikers
+# Opdracht 10 - Automatische provisioning van gebruikers
 
 ## Instructie
 
@@ -431,53 +438,7 @@ De rollen zijn ondergebracht op de volgende locatie: `ou=roles,dc=NHLStenden,dc=
 5. Kijk via het Admin-panel naar de eigenschappen van de gebruiker (via de button `Zoeken`).
 6. Lukt het nu om in te loggen op de website die bij deze rol hoort?
 
-# Verwerking van kennis in de eigen werkomgeving ("Weekopdracht")
 
-We hebben de theorie behandeld en via de oefeningen inzicht gekregen in de werking van Role Based Access Control op
-basis van permissies. Ga op onderzoek uit en reflecteer op de volgende vragen en neem deze op in je portfolio.
-
-## Betreffende User Provisioning
-
-1. Onderzoek hoe het proces van "Hire to Retire" impact heeft op de gebruikersadministratie. Dit kan veel werk zijn,
-   maar verdiep eens op één belangrijke applicatie in jouw bedrijf.
-    1. gaat het vanzelf? moet je lang wachten? hoe kom je aan je wachtwoord(en)?
-    2. wanneer en hoe krijgt een nieuwe medewerker accounts (let op: meervoud! Er zijn vast vele applicaties)
-    3. Krijgt een nieuwe medewerker meteen de juiste rechten ("permissies" of "rollen")?
-2. Is er beleid (of procedures) geformuleerd rondom toegang, RBAC, aanmaken accounts? Is HR bijvoorbeeld betrokken? Geef
-   een korte
-   samenvatting.
-    1. Zo niet, wat zou jouw advies zijn? Probeer het zo concreet mogelijk te maken.
-3. Is er een User Provisioning proces? Geef een korte samenvatting eventueel ondersteund met een diagram.
-    1. Is dat proces (in enige mate) geautomatiseerd?
-    2. Zijn er bron- en doelsystemen gedefinieerd?
-    3. Wat is de frequentie van het proces ("hoe vaak draait het")
-    4. Wat zijn de regels om informatie uit bronsystemen naar doelsystemen te transformeren? Gebruik bijvoorbeeld
-       één bron- en doelsysteem
-4. Welke applicaties regelen hun eigen account-administratie?
-5. Indien er geen User Provisioning proces is:
-    1. Welke mogelijke bronsystemen zouden ingezet kunnen worden?
-    2. Welke informatie in het bronsysteem is bruikbaar voor RBAC?
-    3. Welke doelsystemen zouden aangemerkt kunnen worden voor User Provisioning?
-    4. Welke regels stel je voor als je kijkt naar de transformatie van bron- naar doelsystemen.
-
-## Governance van toegang
-
-1. Worden managers (afdeling/projecten) periodiek op de hoogte gehouden van de stand van zaken ("Attestation")?
-    1. Welke procedure
-2. Wat is jouw advies aan de organisatie op het gebied van een centrale opslag van accounts en gebruik in applicaties?
-
-## Over applicaties
-
-1. Kijk eens naar een applicatie waar toegang voor geregeld moet worden.
-    1. Is er een toegangsbeheerder aangesteld die deze aanvragen regelt
-    2. In hoeverre kan de beheerder zelf nieuwe permissies (géén rollen) instellen als er bijvoorbeeld een nieuw team
-       opgericht wordt dat afwijkende autorisaties/toegang nodig heeft?
-
-In je verslag neem je de lezer mee in de context van je verkenning. Je beschrijft kort het bedrijf en de betrokken
-afdelingen. Als je experts spreekt dan is het voldoende om de rol binnen de organisatie te benoemen en eventueel kort
-toe te lichten. Onderbouw je antwoorden met argumenten uit de aangeboden theorie. Een simpel antwoord "Ja er is ..." is
-niet voldoende. Geef dan een korte beschrijving of samenvatting, eventueel ondersteund met een diagram.
-
-Betrek daar waar mogelijk de bedrijfscontext in je verslag: veel rondom RBAC en User Provisioning moet passen bij hoe
-er binnen het bedrijf gewerkt wordt, de mate van verandering van de samenstelling van het personeel (instroom ,
-doorstroom, uitstroom), financiële middelen, uitbesteding van ICT-taken etcetera. 
+Martin Molema
+NHL Stenden Hogeschool
+April 2025
