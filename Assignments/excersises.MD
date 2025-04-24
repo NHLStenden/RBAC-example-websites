@@ -1,7 +1,7 @@
 # Oefeningen
 
 Als de Docker containers draaien is het tijd om een aantal opdrachten en oefeningen uit te voeren. Deze worden in
-dit document verder uitgewerkt. De oplossingen / uitwerkingen staan aan het einde van het document.
+dit document verder uitgewerkt. De oplossingen / uitwerkingen staan aan in een apart [document](./solutions.MD).
 
 Als je met onderstaande opdrachten aan de slag gaat dan kun je onderstaande tabel gebruiken voor de initiële login
 gegevens.
@@ -73,7 +73,8 @@ In deze opdracht gaan we in de account administratie kijken naar meer informatie
 
 ## Instructie
 
-Start nu een LDAP-management tool zoals de _Apache Directory Studio_. Zie de [readme.MD](./README.md) voor instructies.
+Start nu een LDAP-management tool zoals de _Apache Directory Studio_. Zie de 
+[installatiehandleiding](../Install/README.md#verbinding-maken-met-de-identity-server-ldap) voor instructies.
 
 ## Opdracht
 
@@ -88,7 +89,7 @@ De zogenaamde **Distinguished Name** van deze locatie is
 Je ziet hier een aantal gebruikersaccounts. Zoek de account *'Guus Willems'* en klik hier op. Je krijgt de eigenschappen
 te zien.
 
-![opdracht 2 - 02 user details gwillems.png](images/excersises/opdracht%202%20-%2002%20user%20details%20gwillems.png)
+![opdracht 2 - 02 user details gwillems.png](./images/opdracht%202%20-%2002%20user%20details%20gwillems.png)
 
 ## Vragen
 
@@ -175,13 +176,15 @@ Er zijn twee manieren om toegangsrechten toe te wijzen:
 1. De permissies bij een rol aanpassen
 2. Een nieuwe rol toewijzen (want deze impliceert dat je permissies krijgt).
 
-Als we nieuwe permissies toewijzen aan een rol, dan zullen alle gebruikers onmiddellijk deze toegangsrechten kunnen 
+Als we nieuwe permissies toewijzen aan een rol, dan zullen alle gebruikers onmiddellijk deze toegangsrechten kunnen
 gebruiken. Als we een nieuwe rol toewijzen aan een gebruiker dan gelden de permissies die bij die rol horen natuurlijk
 alleen voor deze gebruiker.
 
-In beide gevallen kan er iets misgaan: je kunt onbedoeld rechten krijgen tot handelingen die elkaar horen uit te sluiten.
-Een veelgebruikt voorbeeld is dat je iets kunt bestellen, maar ook de bestelling kan goedkeuren. Dan kun je mooi een dure
-auto bestellen én je zorgt ook dat deze betaald wordt. 
+In beide gevallen kan er iets misgaan: je kunt onbedoeld rechten krijgen tot handelingen die elkaar horen uit te
+sluiten.
+Een veelgebruikt voorbeeld is dat je iets kunt bestellen, maar ook de bestelling kan goedkeuren. Dan kun je mooi een
+dure
+auto bestellen én je zorgt ook dat deze betaald wordt.
 
 Het scheiden van dergelijke functies noemen we dan ook "Functiescheiding" of (in het Engels) "Segregation Of Duty". Op
 deze manier zorg je er voor dat minimaal twee mensen betrokken moeten zijn bij dergelijke handelingen.
@@ -404,20 +407,20 @@ Hieronder vind je meer informatie:
 
 De rollen zijn ondergebracht op de volgende locatie: `ou=roles,dc=NHLStenden,dc=com`
 
-| Rol                                             | Distinguished Name                                   |
-|-------------------------------------------------|------------------------------------------------------|
-| ICT Administrators                              | cn=admins,ou=roles,dc=NHLStenden,dc=com              | 
-| Al het personeel                                | cn=All Personell,ou=roles,dc=NHLStenden,dc=com       | 
-| Alle studenten                                  | cn=All Students,ou=roles,dc=NHLStenden,dc=com        | 
-| Alle docenten                                   | cn=All Teachers,ou=roles,dc=NHLStenden,dc=com        | 
-| Toegang tot de cijfer administratie als student | cn=Grades Students,ou=roles,dc=NHLStenden,dc=com     | 
-| Toegang tot de cijfer administratie als docent  | cn=Grades Teachers,ou=roles,dc=NHLStenden,dc=com     | 
-| Human Resource Management                       | cn=HRM,ou=roles,dc=NHLStenden,dc=com                 | 
-| Medewerkers ICT Support                         | cn=ICT Support,ou=roles,dc=NHLStenden,dc=com         | 
-| Medewerkers Marketing                           | cn=Marketing,ou=roles,dc=NHLStenden,dc=com           | 
-| Managers van de afdeling Marketing              | cn=Marketing managers,ou=roles,dc=NHLStenden,dc=com  | 
-| Toegang tot sharepoint voor studenten           | cn=SharePoint Students,ou=roles,dc=NHLStenden,dc=com | 
-| Toegang tot sharepoint voor docenten            | cn=SharePoint Teachers,ou=roles,dc=NHLStenden,dc=com | 
+| Rol                                             | Distinguished Name                                     |
+|-------------------------------------------------|--------------------------------------------------------|
+| Medewerkers ICT Support met autorisatierechten  | cn=Authorisation Manager,ou=roles,dc=NHLStenden,dc=com | 
+| Al het personeel                                | cn=All Personell,ou=roles,dc=NHLStenden,dc=com         | 
+| Alle studenten                                  | cn=All Students,ou=roles,dc=NHLStenden,dc=com          | 
+| Alle docenten                                   | cn=All Teachers,ou=roles,dc=NHLStenden,dc=com          | 
+| Toegang tot de cijfer administratie als student | cn=Grades Students,ou=roles,dc=NHLStenden,dc=com       | 
+| Toegang tot de cijfer administratie als docent  | cn=Grades Teachers,ou=roles,dc=NHLStenden,dc=com       | 
+| Human Resource Management                       | cn=HRM,ou=roles,dc=NHLStenden,dc=com                   | 
+| Medewerkers ICT Support                         | cn=ICT Support,ou=roles,dc=NHLStenden,dc=com           | 
+| Medewerkers Marketing                           | cn=Marketing,ou=roles,dc=NHLStenden,dc=com             | 
+| Managers van de afdeling Marketing              | cn=Marketing managers,ou=roles,dc=NHLStenden,dc=com    | 
+| Toegang tot sharepoint voor studenten           | cn=SharePoint Students,ou=roles,dc=NHLStenden,dc=com   | 
+| Toegang tot sharepoint voor docenten            | cn=SharePoint Teachers,ou=roles,dc=NHLStenden,dc=com   | 
 
 1. Login op de HRM website
 2. Kijk welke medewerkers er zijn. Wijzig de functie van een medewerker. Onthoudt even de gebruikersnaam.
@@ -426,7 +429,7 @@ De rollen zijn ondergebracht op de volgende locatie: `ou=roles,dc=NHLStenden,dc=
     1. staat de gebruiker nog op de juiste plek?
     2. heeft de gebruiker de juiste rechten (groepslidmaatschappen, zie tabel hier boven) ?
 5. Kijk via het Admin-panel naar de eigenschappen van de gebruiker (via de button `Zoeken`).
-6. Lukt het nu om in te loggen op de website die bij deze rol hoort? 
+6. Lukt het nu om in te loggen op de website die bij deze rol hoort?
 
 # Verwerking van kennis in de eigen werkomgeving ("Weekopdracht")
 
@@ -448,7 +451,7 @@ basis van permissies. Ga op onderzoek uit en reflecteer op de volgende vragen en
     1. Is dat proces (in enige mate) geautomatiseerd?
     2. Zijn er bron- en doelsystemen gedefinieerd?
     3. Wat is de frequentie van het proces ("hoe vaak draait het")
-    3. Wat zijn de regels om informatie uit bronsystemen naar doelsystemen te transformeren? Gebruik bijvoorbeeld
+    4. Wat zijn de regels om informatie uit bronsystemen naar doelsystemen te transformeren? Gebruik bijvoorbeeld
        één bron- en doelsysteem
 4. Welke applicaties regelen hun eigen account-administratie?
 5. Indien er geen User Provisioning proces is:
@@ -473,8 +476,8 @@ basis van permissies. Ga op onderzoek uit en reflecteer op de volgende vragen en
 In je verslag neem je de lezer mee in de context van je verkenning. Je beschrijft kort het bedrijf en de betrokken
 afdelingen. Als je experts spreekt dan is het voldoende om de rol binnen de organisatie te benoemen en eventueel kort
 toe te lichten. Onderbouw je antwoorden met argumenten uit de aangeboden theorie. Een simpel antwoord "Ja er is ..." is
-niet voldoende. Geef dan een korte beschrijving of samenvatting, eventueel ondersteund met een diagram. 
+niet voldoende. Geef dan een korte beschrijving of samenvatting, eventueel ondersteund met een diagram.
 
 Betrek daar waar mogelijk de bedrijfscontext in je verslag: veel rondom RBAC en User Provisioning moet passen bij hoe
-er binnen het bedrijf gewerkt wordt, de mate van verandering van de samenstelling van het personeel (instroom , 
+er binnen het bedrijf gewerkt wordt, de mate van verandering van de samenstelling van het personeel (instroom ,
 doorstroom, uitstroom), financiële middelen, uitbesteding van ICT-taken etcetera. 

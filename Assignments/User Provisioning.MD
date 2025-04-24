@@ -173,7 +173,7 @@ zodat die de juiste grenzen kan trekken.
 
 Samengevat ziet dit er als volgt uit:
 
-![User Provisioning - Infographic.png](images/User%20Provisioning/User%20Provisioning%20-%20Infographic.png)
+![User Provisioning - Infographic.png](./images/User%20Provisioning%20-%20Infographic.png)
 
 ## Relatie met de opdrachten
 
@@ -264,7 +264,7 @@ moet worden.
 
 Het proces ziet er als volgt uit. 
 
-![User Provisioning - Processing.png](images/User%20Provisioning/User%20Provisioning%20-%20Processing.png)
+![User Provisioning - Processing.png](./images/User%20Provisioning%20-%20Processing.png)
 
 ##  Initieel laden van gegevens
 

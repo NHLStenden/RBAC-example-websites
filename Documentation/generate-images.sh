@@ -1,1 +1,1 @@
-draw-io-export.py  -s 2 -t  -d "../images/Documentation" "Diagrammen.drawio"
+draw-io-export.py  -s 2 -t  -d "./images" "Diagrammen.drawio"
