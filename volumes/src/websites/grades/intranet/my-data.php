@@ -23,6 +23,7 @@ if (!$rbac->has(Permission_Grades_Show_Self)) {
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Cijferadministratie | Mijn gegevens</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="css/globals.css" rel="stylesheet">
     <link href="css/header.css" rel="stylesheet">
     <link href="css/my-data.css" rel="stylesheet">

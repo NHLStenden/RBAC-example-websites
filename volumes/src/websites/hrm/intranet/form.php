@@ -102,6 +102,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <html>
 <head>
     <title>Medewerker <?= $id ? 'Bewerken' : 'Toevoegen' ?></title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="css/styles.css" rel="stylesheet">
     <link href="css/globals.css" rel="stylesheet">
     <link href="css/header.css" rel="stylesheet">

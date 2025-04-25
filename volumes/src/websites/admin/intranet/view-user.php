@@ -33,6 +33,7 @@ if ($hasOtherUserData) {
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Admin Panel | Zoek gebruiker</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="css/view-user.css" rel="stylesheet">
     <link href="css/globals.css" rel="stylesheet">
     <link href="css/header.css" rel="stylesheet">

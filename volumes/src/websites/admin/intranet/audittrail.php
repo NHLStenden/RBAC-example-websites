@@ -28,6 +28,7 @@ $records = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <link rel='icon' type='image/png' href='../favicon.png'>
     <meta name='viewport' content='width=device-width, initial-scale=1.0'>
     <title>Admin Panel | Audit Trail</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="css/header.css" rel="stylesheet">
     <link href="css/globals.css" rel="stylesheet">
     <link href="css/audittrail.css" rel="stylesheet">

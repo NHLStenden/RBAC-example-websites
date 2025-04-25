@@ -101,6 +101,7 @@ echo <<< HTML_HEADER
     <link rel='icon' type='image/png' href='../favicon.png'>
     <meta name='viewport' content='width=device-width, initial-scale=1.0'>
     <title>Admin Panel | Apache Error Logs</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="css/header.css" rel="stylesheet">
     <link href="css/globals.css" rel="stylesheet">
     <link href="css/logging.css" rel="stylesheet">

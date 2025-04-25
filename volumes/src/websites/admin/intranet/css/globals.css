@@ -33,6 +33,9 @@ section.my-info {
         max-height: 128px;
         border-radius: 30%;
     }
+
+    & .value.Username {font-weight: bold}
+    & .value.DistinguishedName {font-family: monospace; font-size: 12pt}
 }
 
 button a {

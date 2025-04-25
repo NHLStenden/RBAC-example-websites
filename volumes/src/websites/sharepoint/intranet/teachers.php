@@ -35,6 +35,7 @@ $studentActions = [
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Intranet | Docentenportaal</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link href="css/globals.css" rel="stylesheet">
   <link href="css/header.css" rel="stylesheet">
   <link href="css/teachers.css" rel="stylesheet">

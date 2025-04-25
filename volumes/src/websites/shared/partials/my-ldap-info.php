@@ -9,7 +9,7 @@ function GenerateSectionForMyLdapInfo(array $userInfoLDAP): string|null
 {
 
   $items = [
-    "Distinguised Name" => $userInfoLDAP['dn'],
+    "Distinguished Name" => $userInfoLDAP['dn'],
     "Volledige naam" => $userInfoLDAP['cn'],
     "Voornaam" => $userInfoLDAP['givenname'],
     "Achternaam" => $userInfoLDAP['sn'],
@@ -34,10 +34,13 @@ function GenerateSectionForMyLdapInfo(array $userInfoLDAP): string|null
       $jpegPhoto = base64_encode($imageData);
     }
   }
-  
+
   $result = '<section class="my-info"><table>';
   foreach ($items as $key => $item) {
-    $result .= "<tr><td>$key:</td><td>$item</td></tr>";
+
+    $classNameExtra = preg_replace('/\s+/', '', $key);;
+
+    $result .= "<tr><td class='key {$classNameExtra}'>$key:</td><td class='value {$classNameExtra}'>$item</td></tr>";
   }
   $result .= "</table>";
   $result .= "<div><img src='data:image/jpeg;base64,$jpegPhoto' /></div>";

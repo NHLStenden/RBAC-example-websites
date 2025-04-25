@@ -23,6 +23,7 @@ $roles = $stmt->fetchAll();
 <html lang="NL">
 <head>
     <title>Admin Panel | Rollen</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="css/globals.css" rel="stylesheet">
     <link href="css/index.css" rel="stylesheet">
     <link href="css/manage_roles.css" rel="stylesheet">

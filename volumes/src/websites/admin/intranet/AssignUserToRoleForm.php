@@ -30,6 +30,7 @@ if (isset($_GET['idRole'])) {
 <html lang="NL">
 <head>
     <title>Admin Panel | Autorisatie aanvraag verwerken</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="css/globals.css" rel="stylesheet">
     <link href="css/AssignUserToRoleForm.css" rel="stylesheet">
     <link href="css/header.css" rel="stylesheet">
