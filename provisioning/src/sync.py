@@ -70,6 +70,7 @@ FUNCTIE_TO_ROLES = {
 def connect_db():
     return mysql.connector.connect(**DB_CONFIG)
 
+
 def connect_db_audittrail():
     return mysql.connector.connect(**DB_CONFIG_AUDITTRAIL)
 
@@ -80,13 +81,14 @@ def connect_ldap():
     conn = Connection(server, LDAP_CONFIG["user"], LDAP_CONFIG["password"], auto_bind=True)
     return conn
 
+
 def log_audit(category, code, level, description):
     db = connect_db_audittrail()
     cursor = db.cursor()
     query = """
-        INSERT INTO audittrail (category, code, level, username, description)
-        VALUES (%s, %s, %s, %s, %s)
-    """
+            INSERT INTO audittrail (category, code, level, username, description)
+            VALUES (%s, %s, %s, %s, %s) \
+            """
     cursor.execute(query, (category, code, level, "UserProv", description))
     db.commit()
     db.close()
@@ -101,6 +103,7 @@ def get_medewerkers():
     db.close()
     return medewerkers
 
+
 def get_medewerkers_employeeNumber():
     db = connect_db()
     cursor = db.cursor(dictionary=True)
@@ -108,6 +111,7 @@ def get_medewerkers_employeeNumber():
     medewerkers = {row["personeelsnummer"] for row in cursor.fetchall()}
     db.close()
     return medewerkers
+
 
 def verwerk_achternaam(achternaam):
     tussenvoegsels_map = {
@@ -130,7 +134,7 @@ def verwerk_achternaam(achternaam):
     while i < len(parts):
         # Probeer samengestelde tussenvoegsels eerst
         if i + 1 < len(parts):
-            samengestelde = f"{parts[i]} {parts[i+1]}"
+            samengestelde = f"{parts[i]} {parts[i + 1]}"
             if samengestelde in tussenvoegsels_map:
                 uid_parts.append(tussenvoegsels_map[samengestelde])
                 i += 2
@@ -143,6 +147,7 @@ def verwerk_achternaam(achternaam):
 
     return ''.join(uid_parts)
 
+
 def generate_uid(voornaam, achternaam, personeelsnummer):
     if '-' in achternaam:
         hoofdnaam, meisjesnaam = [deel.strip() for deel in achternaam.split('-', 1)]
@@ -154,6 +159,7 @@ def generate_uid(voornaam, achternaam, personeelsnummer):
         base_uid = f"{voornaam[0].lower()}{achternaam_uid}"
 
     return base_uid if len(base_uid) > 1 else f"{base_uid}{personeelsnummer}"
+
 
 # Zoek een medewerker in LDAP op basis van personeelsnummer
 def find_medewerker_by_personeelsnummer(conn, personeelsnummer):
@@ -210,7 +216,7 @@ def add_medewerker_to_ldap(conn, medewerker):
 
     if conn.add(dn, attributes=attributes):
         print(f"✅ Toegevoegd aan LDAP: {dn}")
-        log_audit("LDAP", "ADD", "INFO", f"Nieuwe medewerker toegevoegd: [{dn}]")
+        log_audit("ACCOUNT", "ADD", "INFO", f"Nieuwe medewerker toegevoegd: [{dn}]")
         updateLastSyncTimestampForUser(medewerker["idMedewerker"])
     else:
         print(f"❌ Fout bij toevoegen: {conn.result}")
@@ -259,7 +265,6 @@ def updateLastSyncTimestampForUser(idMedewerker):
 # Zorg dat een medewerker alle default rollen krijgt.
 # Hiervoor wordt de lijst 'FUNCTIE_TO_ROLES' gebruikt.
 def voeg_medewerker_toe_aan_rollen(conn, functie, medewerker_dn):
-
     # Haal de bijbehorende rollen op
     rollen = FUNCTIE_TO_ROLES.get(functie, [])
 
@@ -274,8 +279,10 @@ def voeg_medewerker_toe_aan_rollen(conn, functie, medewerker_dn):
             continue
 
         # Voeg de medewerker toe aan de groep
-        conn.modify(rol_dn, {"uniqueMember": [(MODIFY_ADD, [medewerker_dn])]})
-        print(f"✅ Medewerker {medewerker_dn} toegevoegd aan rol {rol_dn}")
+        if (conn.modify(rol_dn, {"uniqueMember": [(MODIFY_ADD, [medewerker_dn])]})):
+            log_audit("AUTHOR", "ADD", "INFO", f"Add user [{medewerker_dn}] to role: [{rol_dn}]")
+            print(f"✅ Medewerker {medewerker_dn} toegevoegd aan rol {rol_dn}")
+
 
 # Als een gebruikersaccount verplaatst wordt dan kan in de LDAP een ghost-entry in de GroupOfUniqueNames lijst komen
 # bij het attribuut "UniqueMember".
@@ -299,6 +306,7 @@ def verwijder_oude_groepslidmaatschappen(conn, old_dn):
             print(f"✅ Verwijderd uit groep: {group_dn}")
         else:
             print(f"❌ Fout bij verwijderen uit {group_dn}: {conn.result}")
+
 
 # Hoofdproces: synchroniseren MariaDB → LDAP
 def sync_medewerkers():
@@ -327,6 +335,7 @@ def sync_medewerkers():
                     print(f"❌ Fout bij verplaatsen: {conn_ldap.result}")
 
             update_medewerker_in_ldap(conn_ldap, dn, medewerker)
+
         else:
             dn = add_medewerker_to_ldap(conn_ldap, medewerker)
 
@@ -335,19 +344,42 @@ def sync_medewerkers():
     conn_ldap.unbind()
 
 
-# Zoek alle gebruikers in LDAP
 def get_all_ldap_users(conn):
     search_filter = "(&(objectClass=inetOrgPerson)(!(employeeType=Student)))"
-    conn.search(LDAP_CONFIG["base_dn"], search_filter, attributes=["employeeNumber"])
-    ldap_users = {entry.entry_dn: entry.employeeNumber.value for entry in conn.entries if entry.employeeNumber}
+    conn.search(LDAP_CONFIG["base_dn"], search_filter, attributes=["employeeNumber", "uid"])
+
+    ldap_users = {}
+    for entry in conn.entries:
+        if entry.employeeNumber:
+            ldap_users[entry.entry_dn] = {
+                "dn": entry.entry_dn,
+                "employeeNumber": entry.employeeNumber.value,
+                "uid": entry.uid.value if "uid" in entry else None
+            }
     return ldap_users
+
+
+#
+#
+# # Zoek alle gebruikers in LDAP
+# def get_all_ldap_users(conn):
+#
+#     search_filter = "(&(objectClass=inetOrgPerson)(!(employeeType=Student)))"
+#     conn.search(LDAP_CONFIG["base_dn"], search_filter, attributes=["employeeNumber", "userPassword"])
+#     ldap_users = {entry.entry_dn: entry.employeeNumber.value for entry in conn.entries if entry.employeeNumber}
+#     return ldap_users
 
 
 # Wachtwoord leegmaken voor een inactieve medewerker
 def deactivate_ldap_account(conn, dn):
-    if conn.modify(dn, {"userPassword": [(MODIFY_REPLACE, [""])]}):
-        log_audit("LDAP", "MOVE", "INFO", f"Disable account: [{dn}]")
-        print(f"⚠️ Wachtwoord geleegd voor gedeactiveerd account: {dn}")
+    changes = {
+        "userPassword": [(MODIFY_REPLACE, [""])],
+        "uid": [(MODIFY_DELETE, [])]
+    }
+
+    if conn.modify(dn, changes):
+        log_audit("ACCOUNT", "DISABLE", "INFO", f"Disable account: [{dn}]")
+        print(f"⚠️ Wachtwoord + UID geleegd voor gedeactiveerd account: {dn}")
     else:
         print(f"❌ Fout bij wachtwoord legen voor {dn}: {conn.result}")
 
@@ -355,7 +387,7 @@ def deactivate_ldap_account(conn, dn):
 # Controleer welke medewerkers niet meer in de database staan en deactiveer hun account
 def deactivate_removed_users():
     print("------------------------------------------------------------------------------------------")
-    print("---------------------- Opruimen accounts die niet meer in medewerkerslijst staan----------")
+    print("------------------- Deactiveren accounts die niet meer in medewerkerslijst staan----------")
     print("------------------------------------------------------------------------------------------")
     conn_ldap = connect_ldap()
     actieve_medewerkers = get_medewerkers_employeeNumber()
@@ -363,9 +395,12 @@ def deactivate_removed_users():
 
     ldap_users = get_all_ldap_users(conn_ldap)
 
-    for dn, employee_number in ldap_users.items():
+    for dn, entry in ldap_users.items():
         print(f"- testing employee {dn}")
-        if str(employee_number) not in actieve_medewerkers:
+        employee_nr = entry["employeeNumber"]
+        uid = entry["uid"]
+
+        if uid is not None and str(employee_nr) not in actieve_medewerkers:
             deactivate_ldap_account(conn_ldap, dn)
 
     conn_ldap.unbind()
