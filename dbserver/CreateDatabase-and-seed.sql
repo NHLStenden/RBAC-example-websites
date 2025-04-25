@@ -17,8 +17,19 @@ CREATE USER 'student'@'%' IDENTIFIED WITH mysql_native_password AS PASSWORD('tes
 -- Grant all permissions for the newly created student user.
 GRANT ALL ON IAM.* TO 'student'@'%';
 
+-- Create the audit trail table
+CREATE OR REPLACE TABLE audittrail (
+    idAuditTrail INT UNSIGNED PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    category VARCHAR(20) NOT NULL,
+    code VARCHAR(15) NOT NULL,
+    level VARCHAR(10) NOT NULL,
+    username VARCHAR(25),
+    description VARCHAR(200),
+    timestamp DATETIME DEFAULT NOW()
+) COMMENT 'Audit trail for authentication and permission changes';
+
 -- Create a table to hold the roles. The 'distinguishedName' should match an existing LDAP-role
-CREATE TABLE roles
+CREATE OR REPLACE TABLE roles
 (
     idRole             INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
     title              VARCHAR(30)  NOT NULL COMMENT 'Unique name for role',

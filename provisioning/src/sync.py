@@ -12,6 +12,15 @@ DB_CONFIG = {
     "database": "HRM",
 }
 
+# Configuratie voor MariaDB IAM Database
+DB_CONFIG_AUDITTRAIL = {
+    "host": "iam-example-db-server",
+    "user": "student",
+    "port": 3306,
+    "password": "test1234",
+    "database": "IAM",
+}
+
 # Configuratie voor toegang tot LDAP
 LDAP_CONFIG = {
     "server": "ldap://identityserver",
@@ -61,12 +70,26 @@ FUNCTIE_TO_ROLES = {
 def connect_db():
     return mysql.connector.connect(**DB_CONFIG)
 
+def connect_db_audittrail():
+    return mysql.connector.connect(**DB_CONFIG_AUDITTRAIL)
+
 
 # Verbinding maken met LDAP
 def connect_ldap():
     server = Server(LDAP_CONFIG["server"], get_info=ALL)
     conn = Connection(server, LDAP_CONFIG["user"], LDAP_CONFIG["password"], auto_bind=True)
     return conn
+
+def log_audit(category, code, level, description):
+    db = connect_db_audittrail()
+    cursor = db.cursor()
+    query = """
+        INSERT INTO audittrail (category, code, level, username, description)
+        VALUES (%s, %s, %s, %s, %s)
+    """
+    cursor.execute(query, (category, code, level, "UserProv", description))
+    db.commit()
+    db.close()
 
 
 # Haal medewerkers op uit MariaDB
@@ -187,6 +210,7 @@ def add_medewerker_to_ldap(conn, medewerker):
 
     if conn.add(dn, attributes=attributes):
         print(f"✅ Toegevoegd aan LDAP: {dn}")
+        log_audit("LDAP", "ADD", "INFO", f"Nieuwe medewerker toegevoegd: [{dn}]")
         updateLastSyncTimestampForUser(medewerker["idMedewerker"])
     else:
         print(f"❌ Fout bij toevoegen: {conn.result}")
@@ -215,6 +239,7 @@ def update_medewerker_in_ldap(conn, dn, medewerker):
 
     if conn.modify(dn, changes):
         print(f"🔄 Bijgewerkt in LDAP: {dn} met type {medewerkerType} / uid = {uid}")
+        # log_audit("LDAP", "UPDATE", "INFO", f"Bijgewerkt: {dn}")
         updateLastSyncTimestampForUser(medewerker["idMedewerker"])
     else:
         print(f"❌ Fout bij bijwerken: {conn.result} ({medewerkerType})")
@@ -270,6 +295,7 @@ def verwijder_oude_groepslidmaatschappen(conn, old_dn):
         })
 
         if success:
+            log_audit("AUTHOR", "REMOVE", "INFO", f"Remove user [{old_dn}] from role: [{group_dn}]")
             print(f"✅ Verwijderd uit groep: {group_dn}")
         else:
             print(f"❌ Fout bij verwijderen uit {group_dn}: {conn.result}")
@@ -320,6 +346,7 @@ def get_all_ldap_users(conn):
 # Wachtwoord leegmaken voor een inactieve medewerker
 def deactivate_ldap_account(conn, dn):
     if conn.modify(dn, {"userPassword": [(MODIFY_REPLACE, [""])]}):
+        log_audit("LDAP", "MOVE", "INFO", f"Disable account: [{dn}]")
         print(f"⚠️ Wachtwoord geleegd voor gedeactiveerd account: {dn}")
     else:
         print(f"❌ Fout bij wachtwoord legen voor {dn}: {conn.result}")

@@ -149,5 +149,6 @@ foreach ($logFiles as $logFile) {
 }
 ?>
 </section>
+
 </body>
 </html>
