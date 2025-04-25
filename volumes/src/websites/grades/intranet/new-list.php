@@ -42,11 +42,11 @@ $opleidingenHTML = implode('', array_map(function ($opleiding) {
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Blackboard - Nieuwe cijferlijst</title>
+    <title>Cijferadministratie | Nieuwe cijferlijst</title>
     <link href="css/globals.css" rel="stylesheet">
     <link href="css/header.css" rel="stylesheet">
     <link href="css/new-list.css" rel="stylesheet">
-
+    <link rel="icon" type="image/png" href="../favicon.png">
 </head>
 <body>
 <article>

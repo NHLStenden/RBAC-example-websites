@@ -5,68 +5,68 @@ include_once '../../shared/partials/header.php';
 
 $rbac = new RBACSupport($_SERVER["AUTHENTICATE_UID"]);
 if (!$rbac->process()) {
-  die('Could not connect to RBAC server.');
+    die('Could not connect to RBAC server.');
 }
 if (!$rbac->has(Permission_HRM_Manage_Employees)) {
-  echo "Not allowed to open the manage employees\n";
-  die();
+    echo "Not allowed to open the manage employees\n";
+    die();
 }
 
 // form.php - Toevoegen/bewerken
 require 'config.php';
-$id         = $_GET['id'] ?? null;
+$id = $_GET['id'] ?? null;
 $medewerker = [
-  'personeelsnummer' => '',
-  'voornaam' => '',
-  'achternaam' => '',
-  'team' => '',
-  'functie' => '',
-  'telefoonnummer' => '',
-  'kamernummer' => '',
-  'postcode' => '',
+    'personeelsnummer' => '',
+    'voornaam' => '',
+    'achternaam' => '',
+    'team' => '',
+    'functie' => '',
+    'telefoonnummer' => '',
+    'kamernummer' => '',
+    'postcode' => '',
 ];
 
 if ($id) {
-  $stmt = $pdo->prepare("SELECT * FROM medewerkers WHERE idMedewerker = ?");
-  $stmt->execute([$id]);
-  $medewerker = $stmt->fetch(PDO::FETCH_ASSOC);
+    $stmt = $pdo->prepare("SELECT * FROM medewerkers WHERE idMedewerker = ?");
+    $stmt->execute([$id]);
+    $medewerker = $stmt->fetch(PDO::FETCH_ASSOC);
 
-  if ($medewerker === false) {
-    die("Onbekende gebruiker $id");
-  }
+    if ($medewerker === false) {
+        die("Onbekende gebruiker $id");
+    }
 }
 
 $functions = [
-  "medewerker marketing",
-  "medewerker ICT",
-  "medewerker HRM",
-  "docent",
+    "medewerker marketing",
+    "medewerker ICT",
+    "medewerker HRM",
+    "docent",
 ];
 
 // FIXME: This is not very secure; SQL-injection possible; clean user input
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-  # FIXME: a lot of assumptions are done here. not very robust code....
-  $functie        = $_POST['functie'];
-  $medewerkerType = [
-    'docent' => 'Teacher',
-    'medewerker HRM' => 'Staff',
-    'medewerker marketing' => 'Staff',
-    'medewerker ICT' => 'Staff',
-  ][$functie];
+    # FIXME: a lot of assumptions are done here. not very robust code....
+    $functie = $_POST['functie'];
+    $medewerkerType = [
+        'docent' => 'Teacher',
+        'medewerker HRM' => 'Staff',
+        'medewerker marketing' => 'Staff',
+        'medewerker ICT' => 'Staff',
+    ][$functie];
 
-  $data = [
-    $_POST['voornaam'],
-    $_POST['achternaam'],
-    $_POST['team'],
-    $_POST['functie'],
-    $_POST['telefoonnummer'],
-    $_POST['kamernummer'],
-    $medewerkerType,
-    $_POST['postcode'],
-  ];
-  if ($id) {
-    $stmt = $pdo->prepare("UPDATE medewerkers 
+    $data = [
+        $_POST['voornaam'],
+        $_POST['achternaam'],
+        $_POST['team'],
+        $_POST['functie'],
+        $_POST['telefoonnummer'],
+        $_POST['kamernummer'],
+        $medewerkerType,
+        $_POST['postcode'],
+    ];
+    if ($id) {
+        $stmt = $pdo->prepare("UPDATE medewerkers 
                                     SET voornaam=?, 
                                         achternaam=?, 
                                         team=?, 
@@ -76,14 +76,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                         medewerkerType=?,
                                         postcode=?                                        
                                     WHERE idMedewerker=?");
-    $stmt->execute([...$data, $id]);
-  } else {
-    $stmt2 = $pdo->prepare('SELECT max(personeelsnummer) + 1 as maxnr FROM medewerkers');
-    $stmt2->execute();
-    $record          = $stmt2->fetch(PDO::FETCH_ASSOC);
-    $newPersoneelsNr = $record['maxnr'];
+        $stmt->execute([...$data, $id]);
+    } else {
+        $stmt2 = $pdo->prepare('SELECT max(personeelsnummer) + 1 as maxnr FROM medewerkers');
+        $stmt2->execute();
+        $record = $stmt2->fetch(PDO::FETCH_ASSOC);
+        $newPersoneelsNr = $record['maxnr'];
 
-    $stmt = $pdo->prepare("INSERT INTO medewerkers (personeelsnummer,
+        $stmt = $pdo->prepare("INSERT INTO medewerkers (personeelsnummer,
                                                 voornaam,
                                                 achternaam,
                                                 team,
@@ -92,10 +92,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                                 kamernummer,
                                                 medewerkerType,
                                                 postcode) VALUES (?, ?, ?, ?,?,?,?,?,?)");
-    $stmt->execute([$newPersoneelsNr, ...$data]);
-  }
-  header('Location: index.php');
-  exit;
+        $stmt->execute([$newPersoneelsNr, ...$data]);
+    }
+    header('Location: index.php');
+    exit;
 }
 ?>
 <!DOCTYPE html>
@@ -105,12 +105,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <link href="css/styles.css" rel="stylesheet">
     <link href="css/globals.css" rel="stylesheet">
     <link href="css/header.css" rel="stylesheet">
-
+    <link rel="icon" type="image/png" href="../favicon.png">
 </head>
 <body>
 <main class="container-fluid">
     <article>
-      <?= showheader(Websites::WEBSITE_HRM, basename(__FILE__), $rbac) ?>
+        <?= showheader(Websites::WEBSITE_HRM, basename(__FILE__), $rbac) ?>
     </article>
     <section>
 
@@ -144,13 +144,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <label for="functie">Functie: </label>
             <select name="functie" id="functie" required>
                 <option value="">[Kies een optie]</option>
-              <?php foreach ($functions as $functie): ?>
+                <?php foreach ($functions as $functie): ?>
 
-                  <option
-                          value="<?= $functie ?>"
-                    <?= (htmlspecialchars($medewerker['functie']) === $functie) ? "selected" : "" ?>
-                  ><?= $functie ?></option> >
-              <?php endforeach; ?>
+                    <option
+                            value="<?= $functie ?>"
+                        <?= (htmlspecialchars($medewerker['functie']) === $functie) ? "selected" : "" ?>
+                    ><?= $functie ?></option> >
+                <?php endforeach; ?>
             </select>
             <br>
             <button type="submit">Opslaan</button>

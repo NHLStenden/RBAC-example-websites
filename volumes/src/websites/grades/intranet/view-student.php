@@ -58,11 +58,11 @@ if (isset($_POST) && isset($_GET['search'])) {
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Cijferadministratie -Student gegevens</title>
+    <title>Cijferadministratie | Student gegevens</title>
     <link href="css/header.css" rel="stylesheet">
     <link href="css/globals.css" rel="stylesheet">
     <link href="css/view-student.css" rel="stylesheet">
-
+    <link rel="icon" type="image/png" href="../favicon.png">
 </head>
 <body>
 <article>

@@ -20,10 +20,11 @@ if (!$rbac->has(Permission_Grades_Create_Gradelists)) {
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Cijferadministratie - Nieuwe cijferlijst</title>
+    <title>Cijferadministratie | Goedkeuren cijferlijst</title>
     <link href="css/globals.css" rel="stylesheet">
     <link href="css/header.css" rel="stylesheet">
     <link href="css/approve-list.css" rel="stylesheet">
+    <link rel="icon" type="image/png" href="../favicon.png">
 
 </head>
 <body>
