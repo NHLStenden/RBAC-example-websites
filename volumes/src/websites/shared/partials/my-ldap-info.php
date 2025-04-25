@@ -21,12 +21,20 @@ function GenerateSectionForMyLdapInfo(array $userInfoLDAP): string|null
     "Kamernummer" => $userInfoLDAP['roomnumber'],
   ];
 
-  if (isset($userInfoLDAP['jpegphoto'])) {
-      $jpegPhoto = base64_encode($userInfoLDAP['jpegphoto']);
+  $jpegPhoto = '';
+
+  if (isset($rbac->userInfoLDAP['jpegphoto'])) {
+    $jpegPhoto = base64_encode($rbac->userInfoLDAP['jpegphoto']);
   }
   else {
-      $jpegPhoto = null;
+    $path = '/var/www/shared/partials/default-user.jpg';
+
+    if (file_exists($path)) {
+      $imageData = file_get_contents($path);
+      $jpegPhoto = base64_encode($imageData);
+    }
   }
+  
   $result = '<section class="my-info"><table>';
   foreach ($items as $key => $item) {
     $result .= "<tr><td>$key:</td><td>$item</td></tr>";

@@ -91,6 +91,9 @@ function showheader(Websites $forWebsite, string $route, RBACSupport $rbac): str
             $html .= $isActiveRoute ? 'class="active" ' : '';
             $html .= '>';
             $html .= $nav['title'];
+            if (str_contains($nav['route'], 'http://') ) {
+              $html .= '<span class="material-icons icon-small" >open_in_new</span>';
+            }
             $html .= '</a>';
 
             $navHTML .= $html;

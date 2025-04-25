@@ -1,3 +1,11 @@
+.material-icons.icon-small {
+    font-size:14px !important;
+    display: inline-block;
+    margin-left:8px;
+    vertical-align: top;
+}
+
+
 section.navigation-header {
     font-family: sans-serif;
 
@@ -10,6 +18,7 @@ section.navigation-header {
         margin: 0;
         height: 30px;
         align-items: center;
+
 
         & p.right {
             display: flex;
@@ -77,5 +86,11 @@ section.navigation-header {
         }
 
         background-color: lightblue;
+    }
+}
+
+@media print {
+    section.navigation-header {
+        display: none;
     }
 }
