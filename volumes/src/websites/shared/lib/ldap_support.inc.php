@@ -63,7 +63,7 @@ function AddUserToGroup(LDAP\Connection $lnk, string $groupDN, string $userDN)
     }
     $groupDN = preg_replace("/dc=NHLStenden,dc=com/", '', $groupDN);
     $userDN = preg_replace("/dc=NHLStenden,dc=com/", '', $userDN);
-    LogAuditRecord("USER", "01", "INFO", "Adding user to group " . $groupDN . " to " . $userDN);
+    LogAuditRecord("USER", "01", "INFO", "Adding user to group [$groupDN] to [$userDN]");
 }
 
 /**
@@ -103,7 +103,8 @@ function CreateNewUser(LDAP\Connection $lnk, string $newUserDN, string $cn, stri
         throw new Exception($error, $errno);
     }
 
-    LogAuditRecord("USER", "CREATE", "INFO", "Created new user " . $newUserDN);
+    LogAuditRecord("USER", "CREATE", "INFO", "Created new user [$newUserDN]");
+
     return true;
 }// CreateNewUser
 
@@ -437,7 +438,7 @@ function RevokeUserFromRole(LDAP\Connection $lnk, string $roleDN, string $userDN
         $roleDN = preg_replace("/dc=NHLStenden,dc=com/", '', $roleDN);
         $userDN = preg_replace("/dc=NHLStenden,dc=com/", '', $userDN);
 
-        LogAuditRecord("AUTHOR", "REVOKE", "WARN", "Revoked user $userDN role from $roleDN");
+        LogAuditRecord("AUTHOR", "REVOKE", "WARN", "Revoked user [$userDN] role from [$roleDN]");
         return $result;
 
     }
@@ -452,7 +453,7 @@ function AssignUserToRole(LDAP\Connection $lnk, string $roleDN, string $userDN):
             $roleDN = preg_replace("/dc=NHLStenden,dc=com/", '', $roleDN);
             $userDN = preg_replace("/dc=NHLStenden,dc=com/", '', $userDN);
 
-            LogAuditRecord("AUTHOR", "ADD", "INFO", "Role $roleDN assigned to user $userDN");
+            LogAuditRecord("AUTHOR", "ADD", "INFO", "Role [$roleDN] assigned to user [$userDN]");
             return true;
         }
     } catch (Exception $e) {
