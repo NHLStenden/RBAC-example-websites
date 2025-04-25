@@ -108,7 +108,7 @@ cd /app
 python3 /app/upload_avatars.py
 python3 /app/add-more-info.py
 
-cd /apps
+cd /app
 source venv/bin/activate
 python3 /app/import_once_from_ldap_to_db.py
 deactivate
