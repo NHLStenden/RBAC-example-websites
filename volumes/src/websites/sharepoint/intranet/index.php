@@ -35,7 +35,7 @@ if ($rbac->has(Permission_SharePoint_News)) {
 <!DOCTYPE html>
 <html lang="NL">
 <head>
-    <title>Intranet - SharePoint</title>
+    <title>Intranet | SharePoint</title>
     <link href="css/globals.css" rel="stylesheet">
     <link href="css/index.css" rel="stylesheet">
     <link href="css/header.css" rel="stylesheet">

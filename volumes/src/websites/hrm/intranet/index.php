@@ -48,7 +48,12 @@ $lnk = ConnectAndCheckLDAP();
 foreach ($medewerkers as $key => $medewerker) {
     try {
         $ldapInfo = SearchStaffByStaffNumber($lnk, $medewerker['personeelsnummer']);
-        $medewerkers[$key]['dn'] = preg_replace('/^cn=([^,]+),(.*?),dc=.*$/i', '$2', $ldapInfo['dn']);
+        if ($ldapInfo) {
+            $medewerkers[$key]['dn'] = preg_replace('/^cn=([^,]+),(.*?),dc=.*$/i', '$2', $ldapInfo['dn']);
+        }
+        else {
+            $medewerkers[$key]['dn'] = "[To be determined]";
+        }
     }
     catch (\Exception $e) {
         echo $e->getMessage();
@@ -59,11 +64,11 @@ foreach ($medewerkers as $key => $medewerker) {
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Medewerkers Beheer</title>
+    <title>HRM | Medewerkers Beheer</title>
     <link href="css/globals.css" rel="stylesheet">
     <link href="css/header.css" rel="stylesheet">
     <link href="css/styles.css" rel="stylesheet">
-
+    <link rel="icon" type="image/png" href="../favicon.png">
 </head>
 <body>
 <main class="container-fluid">

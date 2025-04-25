@@ -37,10 +37,11 @@ if ($isTeacher) {
 ?>
 <html lang="NL">
 <head>
-    <title>Hello Intranet - Cijferadministratie!</title>
+    <title>Cijferadministratie!</title>
     <link href="css/globals.css" rel="stylesheet">
     <link href="css/index.css" rel="stylesheet">
     <link href="css/header.css" rel="stylesheet">
+    <link rel="icon" type="image/png" href="../favicon.png">
 </head>
 <body>
 <main class="container-fluid">
