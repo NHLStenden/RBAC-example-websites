@@ -50,9 +50,9 @@ door onderstaande procedures te volgen.
 
 ## Vragen
 
-* Wat zou een technische maatregel kunnen zijn om deze ongewenste situaties te voorkomen?
-* Wat zou een organisatorische maatregel kunnen zijn om deze ongewenste situatie te voorkomen?
-* Bij wie zou de verantwoordelijkheid moeten liggen om te zorgen dat dit niet kan gebeuren? Technisch of juist
+1. Wat zou een technische maatregel kunnen zijn om deze ongewenste situaties te voorkomen?
+2. Wat zou een organisatorische maatregel kunnen zijn om deze ongewenste situatie te voorkomen?
+3. Bij wie zou de verantwoordelijkheid moeten liggen om te zorgen dat dit niet kan gebeuren? Technisch of juist
   organisatorisch?
 
 In de volgende opdracht gaan we kijken naar hoe dit proces ondersteund kan worden.
