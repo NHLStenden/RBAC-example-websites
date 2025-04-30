@@ -23,9 +23,10 @@ te zien.
 
 ![opdracht 2 - 02 user details gwillems.png](./images/opdracht%202%20-%2002%20user%20details%20gwillems.png)
 
-## Vragen
 
 1. Welke eigenschap van het account heb je gebruikt om mee in te loggen?
+2. Probeer eens in te loggen met andere accounts uit de lijst met accounts op verschillende plaatsen.
+
 
 # Navigatie
 

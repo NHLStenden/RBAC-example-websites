@@ -6,11 +6,11 @@ Als een centrale oplossing zoals LDAP of Active Directory wordt gebruikt om **ro
 applicatie zelf moeten bepalen welke permissies er voor die applicatie gelden. Dit _kan_ ook in een centrale
 oplossing maar in ons voorbeeld is dat geregeld in slechts één database.
 
-De admin-pagina stelt ons in staat om de permissies bij een rol in te zien.
+Het admin panel stelt ons in staat om de permissies bij een rol in te zien.
 
 ## Opdracht
 
-1. Navigeer naar http://admin.docker/intranet en login met een gebruiker van ICT Support.
+1. Navigeer naar [Admin Panel](http://admin.docker/intranet) en login met een gebruiker van ICT Support.
 2. Gebruik de knop 'Rollen' om naar de administratie van de rollen te gaan. Er volgt een lijst met beschikbare rollen.
 3. Klik op de knop 'Edit' achter de rol "All Students".
 
@@ -18,7 +18,7 @@ De admin-pagina stelt ons in staat om de permissies bij een rol in te zien.
 
 1. Welke permissies heeft deze rol momenteel?
 2. Wat zegt dit over de permissies van één individuele student?
-3. Login als een student bij het Intranet (http://sharepoint.docker)
+3. Login als een student bij [SharePoint](http://sharepoint.docker)
 4. Ga naar de pagina "Mijn Gegevens" en vergelijk de lijst met Permissies met die in het admin panel
 
 5. Log de student uit, sluit het tabblad en login bij SharePoint als een Marketing Manager (zie

@@ -22,6 +22,11 @@ In de map [Assignments](./Assignments) vind je de bestanden om mee te oefenen en
 
 Een toelichting op de gemaakte keuzes kun je vinden in de [verantwoording](./Documentation/Verantwoording.md).
 
+# Authenticatie en Autorisatie
+
+Elke website maakt gebruik van beveiliging. De gebruikte authenticatie en autorisatie flow
+wordt [hier](./Documentation/Authentication%20and%20Autorisation.MD) beschreven.
+
 # Colofon
 
 Martin Molema, ing MSc
@@ -30,4 +35,4 @@ Docent bij NHL Stenden, opleidingen Bachelor HBO-ICT en Associate Degree Cyber S
 
 [martin.molema@nhlstenden.com](mailto:martin.molema@nhlstenden.com)
 
-5 april 2025
+April 2025

@@ -11,6 +11,9 @@ Beheerder in staat om dit zelfstandig te doen.
 
 ## Opdracht
 
+Deze opdracht maakt gebruik van een instructie die opgenomen is in een apart [bestand](./CreateNewGroupOfUniqueNames.MD).
+Stappen 1 en 2 worden hier in detail beschreven.
+
 1. Maak via LDAP een nieuwe "GroupOfUniqueNames" aan in de DN `ou=roles,dc=NHLStenden,dc=com`.
 2. Gebruik de naam "Campagne Monitors" voor de CN.
 3. Login bij het Admin Panel

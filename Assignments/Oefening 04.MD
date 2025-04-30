@@ -2,7 +2,11 @@
 
 ## Introductie
 
-Kijk in de LDAP-administratie bij de administratie van de opleidingen. Er zijn twee opleidingen:
+Kijk in de LDAP-administratie bij de administratie van de opleidingen. Je vind deze hier:
+
+> cn=Teachers ADCSS,ou=opleidingen,ou=roles,dc=NHLStenden,dc=com
+
+Er zijn twee opleidingen:
 
 * HBO-ICT
 * AD CS&S
@@ -45,7 +49,7 @@ gebruikelijk.
     1. Ga naar "cn=Teachers HBO-ICT,ou=opleidingen,ou=roles,dc=NHLStenden,dc=com"
     2. Open het attribuut  "Unique Members"
     3. Selecteer "cn=Isabel Dekker,ou=Teachers,ou=Opleidingen,dc=NHLStenden,dc=com"
-    4. verwijder deze (Rechter muisknop 'delete *value*') of de delete-knop op je toetsenbord
+    4. verwijder deze (Rechter muisknop 'delete **value**') of de `delete` -knop op je toetsenbord
 4. Ververs de pagina in de website. Wat is er veranderd?
 
 We hebben nu dus in de administratie van de accounts een rol handmatig ingetrokken.

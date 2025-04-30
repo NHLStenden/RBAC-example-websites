@@ -18,13 +18,16 @@ We gaan eerst kijken naar welke rechten één gebruiker heeft. Dit kan op twee m
 
 ## Opdracht
 
-1. Login met een normale gebruiker op "SharePoint" en navigeer naar de "Mijn gegevens" pagina
-2. Login met een admin-gebruiker op het Admin Panel en zoek een gebruiker op via de knop 'Zoeken...'
+1. Login met een normale gebruiker op [SharePoint](http://sharepoint.docker/intranet/) en navigeer naar de
+   "Mijn gegevens" pagina
+2. Login met een admin-gebruiker op het [Admin Panel](http://admin.docker/intranet) en zoek een gebruiker op via de 
+   knop 'Zoeken...'
 
 ## Vragen
 
 1. Waarom kan het nuttig zijn om inzicht te krijgen in de toegangsrechten van één gebruiker?
 2. Waarom kan het nuttig zijn om in bulk inzicht te krijgen in de toegangsrechten van veel gebruikers?
+3. Welke doelgroepen kunnen we hier mee bedienen?
 
 # Navigatie
 

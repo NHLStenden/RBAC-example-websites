@@ -4,7 +4,28 @@
 
 Zoek nu een andere _student_ of _teacher_ op in deze lijst met accounts. De studenten vind je op
 
-    dc=NHLStenden,dc=com > ou=Opleidingen > ou=Students
+> `dc=NHLStenden,dc=com > ou=Opleidingen > ou=Students`
+
+De docenten vind je op de locatie
+
+> `dc=NHLStenden,dc=com > ou=Opleidingen > ou=Teachers`
+
+
+Je kunt zien welke student of docent bij welke opleiding hoort in de LDAP-groepen op de locatie
+
+> `dc=NHLStenden,dc=com > ou=opleidingen > ou=roles`
+
+Bijvoorbeeld:
+
+> `cn=Teachers ADCSS,ou=opleidingen,ou=roles,dc=NHLStenden,dc=com`
+
+
+Tip
+
+> Als je van gebruiker wilt wisselen, gebruik dan de `Logout` button. Je krijgt dan een popup om opnieuw in te loggen.
+> Druk op `Annuleren` om deze dialoog te sluiten. Sluit daarna het tabblad en open een nieuw tabblad om de nieuwe
+> gebruiker in te loggen.
+
 
 ## Opdracht
 
@@ -19,7 +40,7 @@ maar wel in de website beschikbaar is.
 1. Probeer eens of je deze URL kunt openen: https://grades.docker/intranet/view-student.php.
 
 Kijk eens in dit project in de map `{ROOT}volumes/src/websites/grades/intranet`. Hier zie je diverse bestanden staan
-eindigend op de extensie `.php`. Elk bestand is een webpagina. Dus `my-data.php` kun je openen met :
+eindigend op de extensie `.php`. Elk bestand is een webpagina. Dus `my-data.php` kun je openen met:
 
 [https://grades.docker/intranet/my-data.php](https://grades.docker/intranet/my-data.php)
 
