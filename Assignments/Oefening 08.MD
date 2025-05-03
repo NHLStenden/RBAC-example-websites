@@ -47,3 +47,5 @@ aan één gebruiker.
 # Navigatie
 
 Navigeer hier naar de volgende [opdracht](./Oefening%2009.MD) of de vorige [opdracht](./Oefening%2007.MD).
+
+[Uitwerking](./Oplossingen-08.MD)

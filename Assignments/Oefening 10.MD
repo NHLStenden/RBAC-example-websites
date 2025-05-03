@@ -45,4 +45,6 @@ De rollen zijn ondergebracht op de volgende locatie: `ou=roles,dc=NHLStenden,dc=
 
 # Navigatie
 
-Navigeer hier naar de vorige [opdracht](./Oefening%2009.MD).
+Navigeer hier naar de volgende [opdracht](./Oefening%2011.MD) of de vorige [opdracht](./Oefening%2009.MD).
+
+[Uitwerking](./Oplossingen-10.MD)

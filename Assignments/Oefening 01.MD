@@ -32,3 +32,5 @@ accounts. Vul bij 'Toegang' in welke functionele mogelijkheden je ziet (bijvoorb
 # Navigatie
 
 Navigeer hier naar de volgende [opdracht](./Oefening%2002.MD).
+
+[Uitwerking](./Oplossingen-01.MD)

@@ -13,7 +13,7 @@ Je ziet hier al meerdere rollen bestaan.
 
 ## Aanmaken nieuwe entry
 
-1. Selecteer de locatie ou=roles,dc=NHLStenden,dc=com` zoals in bovenstaande afbeelding.
+1. Selecteer de locatie `ou=roles,dc=NHLStenden,dc=com` zoals in bovenstaande afbeelding.
 2. Kies in het menu `LDAP` en dan `New entry`.
 3. Er opent zicht een dialoogvenster dat we stap voor stap gaan invullen.
 
@@ -38,20 +38,21 @@ er altijd een sleutel + waarde gebruikt wordt. Bijvoorbeeld 'Achternaam' met 'Mo
 van het object. Je mag zelf kiezen welke je wilt gebruiken. In dit geval kiezen we voor `CN` als sleutel en de waarde
 wordt `Campagne Monitors`.
 
-![CreateNewGroupOfUniqueNames-06.png](images/CreateNewGroupOfUniqueNames-06.png
+![CreateNewGroupOfUniqueNames-06.png](images/CreateNewGroupOfUniqueNames-06.png)
 
 Als het goed is, dan is de `DN Preview` dus de waarde `cn=Campagne Monitors,ou=roles,dc=NHLStenden,dc=com`.
 
 Druk weer op `Next` om verder te gaan naar de volgende stap. We kunnen andere waarden instellen. Officieel is de waarde
-`uniqueMember` verplicht en mag niet leeg zijn, maar je mag in onderstaande stap wel op 'Finish' klikken op het proces
-af te ronden.
+`uniqueMember` verplicht en mag niet leeg zijn. Voeg daarom een dummy gebruiker toe. Deze is al aanwezig en heeft
+de volgende DistinguishedName die je zo kunt kopiëren en plakken.
 
-![CreateNewGroupOfUniqueNames-07.png](images/CreateNewGroupOfUniqueNames-07.png)
+> `cn=Dummy User,ou=Staff,dc=NHLStenden,dc=com`
+
+![CreateNewGroupOfUniqueNames-08b.png](images/CreateNewGroupOfUniqueNames-07.png)
 
 Na het opslaan met `Finish` zou je onderstaande moeten zien.
 
 ![CreateNewGroupOfUniqueNames-08.png](images/CreateNewGroupOfUniqueNames-08.png)
-
 # Meer informatie over Multi-Value entries
 
 In LDAP kun je één sleutel hebben die meerdere waarden mag hebben. Dat is wat anders dan een attribuut dat meerdere

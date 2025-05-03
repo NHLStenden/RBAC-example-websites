@@ -32,3 +32,5 @@ We gaan eerst kijken naar welke rechten één gebruiker heeft. Dit kan op twee m
 # Navigatie
 
 Navigeer hier naar de volgende [opdracht](./Oefening%2007.MD) of de vorige [opdracht](./Oefening%2005.MD).
+
+[Uitwerking](./Oplossingen-06.MD)

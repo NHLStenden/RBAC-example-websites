@@ -63,3 +63,5 @@ We hebben nu dus in de administratie van de accounts een rol handmatig ingetrokk
 # Navigatie
 
 Navigeer hier naar de volgende [opdracht](./Oefening%2005.MD) of de vorige [opdracht](./Oefening%2003.MD).
+
+[Uitwerking](./Oplossingen-04.MD)

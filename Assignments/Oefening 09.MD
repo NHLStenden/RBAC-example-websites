@@ -11,23 +11,50 @@ Beheerder in staat om dit zelfstandig te doen.
 
 ## Opdracht
 
-Deze opdracht maakt gebruik van een instructie die opgenomen is in een apart [bestand](./CreateNewGroupOfUniqueNames.MD).
+Deze opdracht maakt gebruik van een instructie die opgenomen is in een
+apart [bestand](./CreateNewGroupOfUniqueNames.MD).
 Stappen 1 en 2 worden hier in detail beschreven.
 
 1. Maak via LDAP een nieuwe "GroupOfUniqueNames" aan in de DN `ou=roles,dc=NHLStenden,dc=com`.
 2. Gebruik de naam "Campagne Monitors" voor de CN.
 3. Login bij het Admin Panel
 4. Ga naar 'Rollen' en start de synchronisatie.
-    1. Als het goed is wordt de nieuwe rol uit LDAP overgenomen in de database
+    1. Als het goed is wordt de nieuwe rol uit LDAP overgenomen in de database. Je kunt dit zien in de logs op het
+       scherm
+
+```text
+Controleer rol: Authorisation Manager
+Controleer rol: All Personell
+Controleer rol: All Students
+Controleer rol: All Teachers
+Controleer rol: Grades Students
+Controleer rol: Grades Teachers
+Controleer rol: HRM
+Controleer rol: ICT Support
+Controleer rol: Marketing managers
+Controleer rol: Marketing
+Controleer rol: SharePoint Students
+Controleer rol: SharePoint Teachers
+Controleer rol: Students ADCSS
+Controleer rol: Students HBO-ICT
+Controleer rol: Teachers ADCSS
+Controleer rol: Teachers HBO-ICT
+Controleer rol: Campagne Monitors
+- Nieuwe rol gedetecteerd : cn=campagne monitors,ou=roles,dc=nhlstenden,dc=com
+
+
+Synchronisatie voltooid. Er zijn 1 nieuwe rollen aangemaakt in de permissie administratie
+```
+
 5. Ga terug naar de rollen
 6. Zoek de regel in de tabel met 'Campagne Monitors' op en druk op de `Edit` knop om deze te wijzigen
 7. Voeg de permissie 'Read a Marketing Campaign' toe
 
 Nu gaan we een gebruiker autoriseren voor deze rol
 
-1. Login bij het Admin Panel
-2. Ga naar 'Autorisatie Aanvraag'
-3. Kies de nieuwe rol 'Campagne Monitors' bij de rol
+1. Login bij het [Admin Panel](http://admin.docker/intranet)
+2. Ga naar [Autorisatie Aanvraag](http://admin.docker/intranet/AssignUserToRoleForm.php)
+3. Kies de nieuwe rol **'Campagne Monitors'** bij de rol
 4. Kies een stafmedewerker (niet een medewerker die al bij de afdeling Marketing zit!) bijv. Sophie Bakker van HRM
 5. Druk op Autoriseer
 
@@ -39,22 +66,33 @@ We gaan nu kijken of de nieuwe medewerker ook daadwerkelijk naar de Marketing We
 4. Druk op de button Marketing
 5. Login in bij de website voor Marketing (let op: als je al ingelogd was eerder moet je mogelijk daar eerst uitloggen).
 
-Het blijkt dat we mogelijk nog niet de juiste autorisaties hebben.
+Het blijkt dat we mogelijk nog niet de juiste autorisaties hebben. Je kunt dit controleren op het 
+[Admin Panel](http://admin.docker/intranet/logging.php) bij de Apache Logfiles van "Marketing".
 
 1. Waarom lukt het maar niet om in te loggen op de marketing website? Welke autorisatie mist er (zie de tabel bij
-   opdracht 7)
+   opdracht 7 )
 2. Ken de missende autorisaties toe aan de rol 'Campagne Monitors'
 3. Probeer opnieuw in te loggen.
 
 Nog steeds zal het niet lukken om in te loggen op de website van Marketing. Dit heeft te maken met de beveiliging op
 applicatie niveau. Om gebruik te maken van de website moet je de rol 'Marketing' hebben. Het is dus niet genoeg om
-allerlei Marketing-*permissies* te hebben. Je moet ook de rol "Marketing" hebben.
+allerlei Marketing-*permissies* te hebben. Je moet ook de rol *"Marketing"* hebben. Zie de flowchart in de beschrijving
+[Authentication and Authorisation](../Documentation/Authentication%20and%20Autorisation.MD)
 
-Echter aan de rol van Marketing zitten de nodige permissies waardoor je meteen ook bijna alles mag. Deze rol is dus
-eigenlijk veel te ruim opgezet: als je de rol Marketing heb mag je meteen teveel. We kunnen minder autorisaties in die
-rol opnemen en een nieuwe rol maken voor de standaard permissies van een echte Marketing medewerker. Echter, dan moeten
-we wel meteen alle gebruikers toewijzen aan die nieuwe rol.
+Dit is in de webserver voor de Marketing Website zo geconfigureerd:
+
+```apacheconf
+  Require ldap-group cn=Marketing,ou=roles,dc=NHLStenden,dc=com
+```
+
+We krijgen nu wel de vreemde situatie dat dus een HRM medewerker ook bij de afdeling Marketing lijkt te werken als je
+naar de autorisaties kijkt. Door middel van de (bijvoorbeeld maandelijkse) attestation rapporten (zie Oefening 8) zou
+dat duidelijk kunnen worden en wellicht zal een manager van HRM óf Marketing zich afvragen hoe dat zo gekomen is. We komen
+daar in [oefening 11](./Oefening%2011.MD) op terug.
+
 
 # Navigatie
 
 Navigeer hier naar de volgende [opdracht](./Oefening%2010.MD) of de vorige [opdracht](./Oefening%2008.MD).
+
+[Uitwerking](./Oplossingen-09.MD)

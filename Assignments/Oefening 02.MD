@@ -31,3 +31,5 @@ te zien.
 # Navigatie
 
 Navigeer hier naar de volgende [opdracht](./Oefening%2003.MD) of de vorige [opdracht](./Oefening%2001.MD).
+
+[Uitwerking](./Oplossingen-02.MD)

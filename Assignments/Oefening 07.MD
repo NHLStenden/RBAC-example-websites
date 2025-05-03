@@ -21,8 +21,8 @@ Het admin panel stelt ons in staat om de permissies bij een rol in te zien.
 3. Login als een student bij [SharePoint](http://sharepoint.docker)
 4. Ga naar de pagina "Mijn Gegevens" en vergelijk de lijst met Permissies met die in het admin panel
 
-5. Log de student uit, sluit het tabblad en login bij SharePoint als een Marketing Manager (zie
-   `cn=Marketing managers,ou=roles,dc=NHLStenden,dc=com`)
+5. Log de student uit, sluit het tabblad en login bij [SharePoint](http://sharepoint.docker) als een Marketing 
+   Manager (zie  `cn=Marketing managers,ou=roles,dc=NHLStenden,dc=com`)
 6. Ga naar de pagina met "Mijn Gegevens"
 7. Ga in het Admin Panel terug naar de pagina met rollen en zoek de rol van Marketing Manager
 8. Wat valt op qua permissies met de "Mijn gegevens" pagina van de gebruiker zelf?
@@ -30,3 +30,5 @@ Het admin panel stelt ons in staat om de permissies bij een rol in te zien.
 # Navigatie
 
 Navigeer hier naar de volgende [opdracht](./Oefening%2008.MD) of de vorige [opdracht](./Oefening%2006.MD).
+
+[Uitwerking](./Oplossingen-07.MD)

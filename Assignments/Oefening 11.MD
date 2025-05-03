@@ -80,3 +80,8 @@ het bedrijf verlaat.
 3. Wat is het effect op de **gebruiker** die gekoppeld was aan de **medewerker** die verwijderd is?
 4. Wat zijn mogelijke redenen dat de gebruiker van de verwijderde medewerker niet weggegooid wordt?
 5. Wat zou een redelijke bewaartermijn kunnen zijn van accounts van vertrokken medewerkers?
+
+Navigeer hier naar de vorige [opdracht](./Oefening%2011.MD).
+
+
+[Uitwerking](./Oplossingen-11.MD)
