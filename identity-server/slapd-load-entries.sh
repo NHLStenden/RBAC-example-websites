@@ -40,10 +40,13 @@ cat role_assignment_students-ADCSS.lst role_assignment_students-HBOICT.lst > rol
 cp role_assignment_all_teachers.lst role_assignment_grades-teachers.lst
 cp role_assignment_all_students.lst role_assignment_grades-students.lst
 
-# Now process the marketing users
+# Now process the marketing users; these should land in two groups: the basic Marketing group to access the application and a group for the basic permissions
 grep 'dn:' Ldap-data-03-Create-Users-marketing.ldif | awk -F \: '/dn:/{print "uniqueMember:" $2}' > role_assignment_marketing.lst
 
-# Make the last 3 users member of the marketing role
+# Leave out the last three members; they will be promoted to management in the Marketing Managers group.
+grep 'dn:' Ldap-data-03-Create-Users-marketing.ldif | awk -F \: '/dn:/{print "uniqueMember:" $2}' | head -n -3 > role_assignment_marketing_employees.lst
+
+# Make the last 3 users member of the marketing role; just take the last three items from the list
 grep 'dn:' Ldap-data-03-Create-Users-marketing.ldif | tail -n 3 | awk -F \: '/dn:/{print "uniqueMember:" $2}' > role_assignment_marketing-managers.lst
 
 # Now process the ICT Support users
