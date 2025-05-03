@@ -103,7 +103,7 @@ De tweede stap start daadwerkelijk de containers. De optie `-d` bij `docker comp
 command-prompt verder kunt werken omdat de dockers nu in de achtergrond draaien.
 
 ```cmd
-  docker compose build up -d
+  docker compose up -d
 ```
 
 Als we dit grofweg samenvatten zou het er uiteindelijk zo uit moeten zien (er zijn delen weggelaten).
@@ -259,8 +259,8 @@ willekeurig gekozen uit die rollen.
 
 # Verbinding maken met de Identity Server (LDAP)
 
-Als je een applicatie hebt geïnstalleerd (zoals _Apache Directory Studio_) die kan werken met een LDAP-server gebruik 
-dan onderstaande gegevens:
+1. Installeer  Apache Directory Studio via deze [handleiding](./InstallApacheDirectoryStudio.md).
+2. Maak verbinding met onderstaande informatie.
 
 * Connection:
     * Hostname: `localhost`
@@ -333,7 +333,7 @@ Als we bijvoorbeeld navigeren naar gebruiker naar Isabel Vos, dan krijgen we ond
 
 ## Plaats van accounts
 
-Accounts worden op een specifieke plaats opgeslagen in de LDAP-store. Hieronder volgt een overzicht.
+Accounts worden op een specifieke plaats opgeslagen in de LDAP-store. Hieronder volgen een aantal voorbeelden.
 
 | Type account          | Distinguished Name LDAP                         | 
 |-----------------------|-------------------------------------------------|
@@ -380,12 +380,18 @@ wordt weergegeven, worden verschillende navigatieopties getoond.
 - **Attestation - Gebruikers**: Inzage in gebruikers en hun gekoppelde rollen.
 - **Attestation - Rollen**: Inzage in rollen en permissies.
 - **Rollen**: Beheert rollen.
+- **Autorisatie aanvragen**: Het kunnen uitvoeren van een autorisatie aanvraag voor een gebruiker.
 
 5. Human Resources Management (HRM)
 
 - **Inzage in medewerkers**: op basis van een lijst kan een gebruiker bekeken worden
 - **Aanpassen van gegevens van medewerkers**: een gebruiker kan gewijzigd worden zodat persoonsgegevens, maar ook
   functie aangepast kan worden
+
+6. User Provisioning
+
+Er is nog een zesde Docker Container. Deze voert in de achtergrond processen uit voor User Provisioning. We komen daar
+in de oefeningen verder op terug.
 
 ## Navigatie
 
