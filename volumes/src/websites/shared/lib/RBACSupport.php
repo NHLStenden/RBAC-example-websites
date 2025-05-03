@@ -151,6 +151,11 @@ class RBACSupport
    */
   public function getPermissions(): array
   {
+
+    if (count($this->groups) === 0) {
+      return [];
+    }
+
     $allGroupsForSQL = implode(", ",
       array_map(function ($g) {
         return "'$g'";
@@ -166,10 +171,28 @@ class RBACSupport
         $this->permissions[$row["permission_code"]] = $row;
       }
     } catch (PDOException $ex) {
+      echo "RBAC::getPermissions \n";
       echo $ex->getMessage();
     }
 
     return $this->permissions;
+  }
+
+  public function addPermissionsForRole(string $role): bool {
+    $SQL = "SELECT * FROM vw_Role_Permissions WHERE dn = :role_dn";
+    $stmt = $this->db->prepare($SQL);
+    $stmt->bindValue('role_dn', $role, PDO::PARAM_STR);
+    try {
+      $stmt->execute();
+      foreach ($stmt as $row) {
+        $this->permissions[$row["permission_code"]] = $row;
+      }
+    }catch (PDOException $ex) {
+      echo $ex->getMessage();
+      return false;
+    }
+    return true;
+
   }
 
   public function has(string $permission): bool

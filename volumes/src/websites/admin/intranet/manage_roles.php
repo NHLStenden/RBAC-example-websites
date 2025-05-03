@@ -19,7 +19,6 @@ $stmt->execute();
 $roles = $stmt->fetchAll();
 
 ?>
-
 <html lang="NL">
 <head>
     <title>Admin Panel | Rollen</title>
@@ -34,8 +33,7 @@ $roles = $stmt->fetchAll();
 <main class="container-fluid">
 
     <article>
-      <?= showheader(Websites::WEBSITE_ADMIN,basename(__FILE__), $rbac) ?>
-
+      <?= showheader(Websites::WEBSITE_ADMIN, basename(__FILE__), $rbac) ?>
         <section class="roles">
             <p>
                 <button><a href="restore-all-permissions.php"> Restore all permissions</a></button>
@@ -47,7 +45,7 @@ $roles = $stmt->fetchAll();
                 ?>
                   <tr>
                       <td><?= $role['title'] ?></td>
-                      <td><?= $role['title'] ?></td>
+                      <td><?= $role['description'] ?></td>
                       <td>
                           <button><a href="edit-role.php?id=<?= $role['idRole'] ?>">Edit</a></button>
                       </td>

@@ -52,7 +52,7 @@ if (isset($_GET['id'])) {
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="css/globals.css" rel="stylesheet">
-    <link href="css/manage-sod.css" rel="stylesheet">
+    <link href="css/add-sod.css" rel="stylesheet">
     <link href="css/header.css" rel="stylesheet">
     <link rel="icon" type="image/png" href="../favicon.png">
     <title>Beheer Functiescheiding</title>
@@ -74,7 +74,7 @@ if (isset($_GET['id'])) {
                     ?>
                       <tr>
                           <td class="application" data-id="<?= $app['idApplication'] ?>"><a
-                                      href="./manage-sod.php?id=<?= $app['idApplication'] ?>"><?= $app['title'] ?></a>
+                                      href="./add-sod.php?id=<?= $app['idApplication'] ?>"><?= $app['title'] ?></a>
                           </td>
                       </tr>
                   <?php endforeach; ?>
@@ -82,36 +82,43 @@ if (isset($_GET['id'])) {
                 </table>
             </fieldset>
         </section>
-        <section>
-            <fieldset>
-                <legend>Permissie 1</legend>
-                <table class="permissions">
-                  <?php
-                  foreach ($permissions as $permission):
-                    ?>
-                      <tr>
-                          <td class="permission"
-                              data-id="<?= $permission['idPermission'] ?>"><?= $permission['title'] ?></td>
-                      </tr>
-                  <?php endforeach; ?>
-                </table>
-            </fieldset>
-        </section>
-        <section>
-            <fieldset>
-                <legend>Permissie 2</legend>
-                <table class="permissions">
-                  <?php
-                  foreach ($permissions as $permission):
-                    ?>
-                      <tr>
-                          <td class="permission"
-                              data-id="<?= $permission['idPermission'] ?>"><?= $permission['title'] ?></td>
-                      </tr>
-                  <?php endforeach; ?>
-                </table>
-            </fieldset>
-        </section>
+        <?php if(isset($idApplication)): ?>
+        <form action="create-new-sod.php" method="post">
+            <section>
+                <fieldset>
+                    <legend>Permissie 1</legend>
+                    <select class="permissions" size="15" name="permission1">
+                      <?php
+                      foreach ($permissions as $permission):
+                        ?>
+                          <option class="permission"
+                                  value="<?= $permission['idPermission'] ?>"><?= $permission['title'] ?></option>
+                      <?php endforeach; ?>
+                    </select>
+                </fieldset>
+            </section>
+            <section>
+                <fieldset>
+                    <legend>Permissie 2</legend>
+                    <select class="permissions" size="15" name="permission2">
+                      <?php
+                      foreach ($permissions as $permission):
+                        ?>
+                          <option class="permission"
+                                  value="<?= $permission['idPermission'] ?>"><?= $permission['title'] ?></option>
+                      <?php endforeach; ?>
+                    </select>
+                </fieldset>
+            </section>
+            <section>
+                <label for="description">Beschrijving:</label>
+                <input id="description" name="description" maxlength="200" minlength="10" type="text">
+
+                <button type="submit">Opslaan</button>
+            </section>
+        </form>
+        <?php endif ?>
+
     </article>
 </main>
 </body>

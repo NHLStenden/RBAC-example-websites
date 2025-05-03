@@ -52,7 +52,6 @@ if (isset($_GET['idRole'])) {
                     <div class="form-column">
                         <label for="role">Rol:</label>
                         <select name="role" id="role" size="20">
-                            <option value="-">-Kies een rol-</option>
                             <?php foreach ($roles as $role) : ?>
                                 <option value="<?= $role['dn'] ?>" <?= ($idRole === $role['dn']) ? 'selected' : '' ?>><?= $role['cn'] ?></option>
                             <?php endforeach; ?>

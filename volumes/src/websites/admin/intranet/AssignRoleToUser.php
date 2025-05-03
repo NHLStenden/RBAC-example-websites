@@ -13,16 +13,44 @@ if (!$rbac->has(Permission_AdminPanel_AddUserToRole)) {
   die();
 }
 
-$lnk     = ConnectAndCheckLDAP();
+$lnk = ConnectAndCheckLDAP();
 
 if (isset($_POST['user']) && isset($_POST['role'])) {
-
-
   $user_dn = $_POST['user'];
   $role_dn = $_POST['role'];
+} else {
+  die('Incorrect parameters.');
 }
-else {
-    die('Incorrect parameters.');
+
+$user = GetUserDataFromDN($lnk, $user_dn);
+if ($user == null) {
+  die('Incorrect parameters.');
+}
+$uid                 = $user['uid'][0];
+$existingRBACForUser = new RBACSupport($uid);
+
+// now pretend the user has already gotten the role assigned so finding conflicting permissions is easier
+if (!$existingRBACForUser->addPermissionsForRole($role_dn) ){
+  die("Could not find role : $role_dn\n");
+}
+
+$pdo     = new PDO('mysql:host=iam-example-db-server;dbname=IAM;', "student", "test1234");
+$sodsSQL = "SELECT * FROM vw_SOD";
+$stmt    = $pdo->prepare($sodsSQL);
+$stmt->execute();
+$sods = $stmt->fetchAll();
+
+foreach ($sods as $sod) {
+    if (
+            $existingRBACForUser->has($sod['permission1_code']) &&
+            $existingRBACForUser->has($sod['permission2_code'])
+    ) {
+        die("Deze gebruiker kan deze rol niet krijgen vanwege conflicterende autorisaties: " .
+          $sod['description']  . " => " .
+          $sod['permission1_title']  .
+          " - versus - "
+          . $sod['permission2_title']);
+    }
 }
 
 $result = AssignUserToRole($lnk, $role_dn, $user_dn);

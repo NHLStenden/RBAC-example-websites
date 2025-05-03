@@ -48,34 +48,42 @@ $sods = $stmt->fetchAll();
     <article>
       <?= showheader(Websites::WEBSITE_ADMIN, basename(__FILE__), $rbac) ?>
     </article>
-    <article class="tables">
-        <section>
-            <fieldset>
-                <legend>Bestaande functiescheidingen</legend>
-                <table>
-                    <thead>
-                    <tr>
-                        <th>Applicatie</th>
-                        <th>Permissie 1</th>
-                        <th>Permissie 2</th>
-                    </tr>
-                    </thead>
-                    <tbody>
 
-                    <?php
-                    foreach ($sods as $sod):
-                      ?>
-                        <tr>
-                            <td><?= $sod['applicationTitle'] ?></td>
-                            <td><?= $sod['permission1_title'] ?></td>
-                            <td><?= $sod['permission2_title'] ?></td>
-                        </tr>
-                    <?php endforeach; ?>
-                    </tbody>
-                </table>
-            </fieldset>
+    <article class="tables">
+        <header>
+            <h2>Bestaande functiescheidingen</h2>
+        </header>
+        <section>
+            <table>
+                <thead>
+                <tr>
+                    <th>Applicatie</th>
+                    <th>Beschrijving</th>
+                    <th>Permissie 1</th>
+                    <th>Permissie 2</th>
+                    <th>Actie</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                <?php
+                foreach ($sods as $sod):
+                  ?>
+                    <tr>
+                        <td><?= $sod['applicationTitle'] ?></td>
+                        <td><?= $sod['description'] ?></td>
+                        <td><?= $sod['permission1_title'] ?></td>
+                        <td><?= $sod['permission2_title'] ?></td>
+                        <td><a href="delete_sod.php?id=<?=  $sod['id'] ?>"><button>Delete</button></a></td>
+                    </tr>
+                <?php endforeach; ?>
+                </tbody>
+            </table>
         </section>
+        <p>
         <a href="add-sod.php"><button>Nieuw...</button></a>
+        <a href="check-sods.php"><button>Controleer gebruikers...</button></a>
+        </p>
     </article>
 </main>
 </body>

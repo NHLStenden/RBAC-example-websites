@@ -38,7 +38,6 @@ $stmt = $pdo->prepare($sql);
 $stmt->bindValue(':idPermission', $idRolePermission, PDO::PARAM_INT);
 $stmt->execute();
 $records = $stmt->fetchAll();
-var_dump($records);
 
 if ($stmt->rowCount() == 0) {
   http_response_code(406);

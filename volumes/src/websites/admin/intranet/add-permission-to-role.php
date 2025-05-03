@@ -5,32 +5,54 @@ include_once '../../shared/partials/header.php';
 
 $rbac = new RBACSupport($_SERVER["AUTHENTICATE_UID"]);
 if (!$rbac->process()) {
-    http_response_code(500);
-    die('Could not connect to RBAC server.');
+  http_response_code(500);
+  die('Could not connect to RBAC server.');
 }
 if (!$rbac->has(Permission_AdminPanel_Manage_RolePermissions)) {
-    http_response_code(406);
-    echo "Add permission to role (AJAX): Missing permissions\n";
-    die();
+  http_response_code(406);
+  echo "Add permission to role (AJAX): Missing permissions\n";
+  die();
 }
 
 if (!is_numeric($_POST["idRole"]) || !is_numeric($_POST["idPermission"])) {
-    http_response_code(406);
-    die('not acceptable');
+  http_response_code(406);
+  die('not acceptable');
 }
 
-$idRole = (int)$_POST["idRole"];
+$idRole       = (int)$_POST["idRole"];
 $idPermission = (int)$_POST["idPermission"];
-
-echo "$idRole | $idPermission\n";
 
 $pdo = new PDO('mysql:host=iam-example-db-server;dbname=IAM;', "student", "test1234");
 
-$sql = "INSERT INTO role_permissions (fk_idPermission, fk_idRole) VALUES(:idPermission, :idRole)";
+$sql  = "INSERT INTO role_permissions (fk_idPermission, fk_idRole) VALUES(:idPermission, :idRole)";
 $stmt = $pdo->prepare($sql);
 $stmt->bindValue(':idPermission', $idPermission, PDO::PARAM_INT);
 $stmt->bindValue(':idRole', $idRole, PDO::PARAM_INT);
-$stmt->execute();
+
+try {
+  $stmt->execute();
+} catch (PDOException $e) {
+  if ($e->getCode() == 45000) {
+    $sql = "SELECT * from vw_SOD WHERE id1 = :id OR id2 = :id";
+
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindValue(':id', $idPermission, PDO::PARAM_INT);
+    $stmt->execute();
+
+    echo "<html><body>";
+    echo 'Deze permissie mag niet samen in met een andere permissie in deze rol volgens functiescheiding!';
+    echo "<ul>";
+    foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $permission) {
+      $description = $permission['description'];
+      $name1       = $permission['permission1_title'];
+      $name2       = $permission['permission2_title'];
+      echo "<li>$description => $name1 &#x2194; $name2</li>";
+    }
+    echo "</ul></body></html>";
+    die();
+
+  }
+}
 
 // set expires header
 header('Expires: Thu, 1 Jan 1970 00:00:00 GMT');
