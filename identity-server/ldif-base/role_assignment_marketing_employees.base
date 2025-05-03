@@ -1,6 +1,6 @@
 version: 1
 
-dn: cn=Marketing,ou=roles,dc=NHLStenden,dc=com
+dn: cn=Marketing Employees,ou=roles,dc=NHLStenden,dc=com
 objectClass: groupOfUniqueNames
 objectClass: top
-cn: Marketing
+cn: Marketing Employees
