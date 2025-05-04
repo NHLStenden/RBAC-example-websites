@@ -44,6 +44,8 @@ if (!$rbac->has(Permission_Admin_Panel)) {
                 <li>Attestation van rollen en permissies.</li>
                 <li>Attestation van rollen en gebruikers.</li>
                 <li>Inzage in logging.</li>
+                <li>Beheren van functiescheidingen.</li>
+                <li>Zoeken van gebruikers.</li>
             </ul>
 
         </section>
