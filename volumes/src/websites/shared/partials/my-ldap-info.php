@@ -23,8 +23,8 @@ function GenerateSectionForMyLdapInfo(array $userInfoLDAP): string|null
 
   $jpegPhoto = '';
 
-  if (isset($rbac->userInfoLDAP['jpegphoto'])) {
-    $jpegPhoto = base64_encode($rbac->userInfoLDAP['jpegphoto']);
+  if (isset($userInfoLDAP['jpegphoto'])) {
+    $jpegPhoto = base64_encode($userInfoLDAP['jpegphoto']);
   }
   else {
     $path = '/var/www/shared/partials/default-user.jpg';
