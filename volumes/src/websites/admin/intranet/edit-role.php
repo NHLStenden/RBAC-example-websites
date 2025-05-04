@@ -28,7 +28,7 @@ if (count($role) != 1) {
 } else {
   $title = $role[0]['title'];
 
-  $sql  = "SELECT * FROM `vw_Role_Permissions` WHERE idRole = :idRole";
+  $sql  = "SELECT * FROM `vw_Role_Permissions` WHERE idRole = :idRole ORDER BY application, permission";
   $stmt = $pdo->prepare($sql);
   $stmt->bindValue(':idRole', $idRole, PDO::PARAM_INT);
   $stmt->execute();
