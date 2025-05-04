@@ -56,8 +56,8 @@ FUNCTIE_TO_ROLES = {
     ],
     "medewerker marketing": [
         "cn=All Personell,ou=roles,dc=NHLStenden,dc=com",
-        "cn=Marketing,ou=roles,dc=NHLStenden,dc=com"
-        "cn=Marketing Medewerker,ou=roles,dc=NHLStenden,dc=com"
+        "cn=Marketing,ou=roles,dc=NHLStenden,dc=com",
+        "cn=Marketing Employees,ou=roles,dc=NHLStenden,dc=com"
     ],
     "medewerker HRM": [
         "cn=All Personell,ou=roles,dc=NHLStenden,dc=com",
