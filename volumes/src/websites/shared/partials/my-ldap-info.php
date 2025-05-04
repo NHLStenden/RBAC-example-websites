@@ -71,14 +71,20 @@ SECTION_MY_LDAP_ROLES;
 
 function GenerateSectionForMyLdapPermissions(RBACSupport $rbac): string|null
 {
-  $permissions = implode("\n", array_map(function ($permission) {
+  $permissions = [...$rbac->permissions];
+  usort($permissions, function ($a, $b) {
+    $roleCompare =  strcmp($a['role'], $b['role']);
+    if ($roleCompare !==0 ) { return $roleCompare; }
+    return strcmp($a['application'], $b['application']);
+  });
+  $permissions_html = implode("\n", array_map(function ($permission) {
     $role = $permission['role'];
     $permissionName = $permission['permission'];
     $application = $permission['application'];
 
     return "<tr></tr><td>$role</td><td>$application</td><td>$permissionName</td></tr>\n";
 
-  }, $rbac->permissions));
+  }, $permissions));
 
   return <<< SECTION_MY_LDAP_ROLES
     <section class="ldap-permissions">
@@ -89,7 +95,7 @@ function GenerateSectionForMyLdapPermissions(RBACSupport $rbac): string|null
           <th>Applicatie</th>
           <th>Permissie</th>
       </thead>
-      <tbody>$permissions</tbody>      
+      <tbody>$permissions_html</tbody>      
       </table>
    </section>
 
