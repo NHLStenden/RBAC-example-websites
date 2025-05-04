@@ -58,7 +58,7 @@ function createAttestationTable()
     <article>
         <?= showheader(Websites::WEBSITE_ADMIN, basename(__FILE__), $rbac) ?>
         <section class="report roles header">
-            <button><a href="download_attestation_roles.php">Download</a></button>
+            <a class="button" href="download_attestation_roles.php">Download</a>
         </section>
         <section class="report roles results">
             <?php createAttestationTable(); ?>
