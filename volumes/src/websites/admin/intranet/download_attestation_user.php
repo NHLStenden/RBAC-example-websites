@@ -24,7 +24,7 @@ foreach ($report as $user_info) {
 
 // Offer file as download
 header('Content-Type: text/csv');
-header('Content-Disposition: attachment; filename="attestation.csv"');
+header('Content-Disposition: attachment; filename="role_user_report.csv"');
 
 rewind($fp);
 fpassthru($fp);
