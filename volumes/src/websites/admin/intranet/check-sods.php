@@ -40,18 +40,20 @@ if ($results !== false && $results['count'] > 0) {
   for ($i = 0; $i < $count; $i++) {
     // get one record from the result
     $record = $results[$i];
-    $uid    = $record['uid'][0];
+    if (isset($record['uid'])) {
+      $uid = $record['uid'][0];
 
-    // make an LDAP-support object for this user
-    $rbac = new RBACSupport($uid);
-    $rbac->process();
+      // make an LDAP-support object for this user
+      $rbac = new RBACSupport($uid);
+      $rbac->process();
 
-    foreach ($sods as $sod) {
-      $id1 = $sod['permission1_code'];
-      $id2 = $sod['permission2_code'];
-      if ($rbac->has($id1) && $rbac->has($id2)) {
-        $usersWithSODViolations[$uid]['user']         = $record;
-        $usersWithSODViolations[$uid]['violations'][] = $sod;
+      foreach ($sods as $sod) {
+        $id1 = $sod['permission1_code'];
+        $id2 = $sod['permission2_code'];
+        if ($rbac->has($id1) && $rbac->has($id2)) {
+          $usersWithSODViolations[$uid]['user']         = $record;
+          $usersWithSODViolations[$uid]['violations'][] = $sod;
+        }
       }
     }
   }
