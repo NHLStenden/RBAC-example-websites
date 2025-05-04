@@ -36,8 +36,8 @@ $roles = $stmt->fetchAll();
       <?= showheader(Websites::WEBSITE_ADMIN, basename(__FILE__), $rbac) ?>
         <section class="roles">
             <p>
-                <button><a href="restore-all-permissions.php"> Restore all permissions</a></button>
-                <button><a href="sync-ldap-db.php"> Synchroniseer Rollen</a></button>
+                <a class="button" href="restore-all-permissions.php"> Restore all permissions</a>
+                <a class="button" href="sync-ldap-db.php"> Synchroniseer Rollen</a>
             </p>
             <table>
               <?php
@@ -47,7 +47,7 @@ $roles = $stmt->fetchAll();
                       <td><?= $role['title'] ?></td>
                       <td><?= $role['description'] ?></td>
                       <td>
-                          <button><a href="edit-role.php?id=<?= $role['idRole'] ?>">Edit</a></button>
+                          <a class="button" href="edit-role.php?id=<?= $role['idRole'] ?>">Edit</a>
                       </td>
                   </tr>
 
