@@ -458,7 +458,7 @@ FROM roles
 
 DELIMITER $$
 
-CREATE FUNCTION GenerateRolePermissionCrossTable()
+CREATE OR REPLACE FUNCTION GenerateRolePermissionCrossTable()
     RETURNS TEXT
 BEGIN
     DECLARE sql_query TEXT;
@@ -492,8 +492,8 @@ END $$
 -- Create a stored procedure to clear all the tables in the right order.
 CREATE OR REPLACE PROCEDURE ClearAllRolesAndPermissions()
 BEGIN
-    DELETE FROM application;
     DELETE FROM permission_conflicts;
+    DELETE FROM application;
     DELETE FROM role_permissions;
     DELETE FROM permissions;
     DELETE FROM roles;
