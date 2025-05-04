@@ -74,7 +74,7 @@ $sods = $stmt->fetchAll();
                         <td><?= $sod['description'] ?></td>
                         <td><?= $sod['permission1_title'] ?></td>
                         <td><?= $sod['permission2_title'] ?></td>
-                        <td><a href="delete_sod.php?id=<?=  $sod['id'] ?>"><button>Delete</button></a></td>
+                        <td><a href="delete_sod.php?id=<?=  $sod['id'] ?>" class="button">Delete</a></td>
                     </tr>
                 <?php endforeach; ?>
                 </tbody>
