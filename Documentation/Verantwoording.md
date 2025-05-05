@@ -4,7 +4,7 @@ Hier volgt een motivatie voor de gekozen architectuur en haar componenten.
 ## Architectuur
 De architectuur is als volgt opgebouwd:
 
-![Diagrams - Architectuur.png](images/Diagrams-Architectuur.png)
+![Diagrams - Architectuur.png](./images/Diagrammen%20-%20Architectuur.png)
 
 Op een *host*-systeem (Windows, iOS, Linux) wordt de *Docker Engine* gebruikt om verschillende containers te maken. Elke
 container wordt gebruikt om één rol in de architectuur te verzorgen. Er is een webserver gebouwd op Apache. Deze
@@ -178,8 +178,9 @@ en is voorlopig even buiten scope geplaatst.
 # Referenties / bronnen
 
 * [Apache Directory Studio](https://directory.apache.org/studio/)
-* [Traefik](https://traefik.io/traefik/)
-  * getting started with Traefik as reverse proxy with Docker: [URL](https://doc.traefik.io/traefik/getting-started/quick-start/)
+* [slapd](https://www.openldap.org/software/man.cgi?query=slapd)
+* [Docker](https://www.docker.com/)
+* 
 
 # Colofon
 
