@@ -54,10 +54,16 @@ De volgende onderwerpen kunnen geoefend worden met de websites en andere compone
     * koppelen van een rol aan een gebruiker (autorisatie aanvraag)
     * koppelen van permissies aan rollen
 * Segregation of Duties (SOD, Functiescheiding)
+  * beheren van conflicten
+  * testen van conflicten
+  * beschermen van ontstaan van conflicten (rollen, permissies)
 * Human Resources Management
     * aanmaken nieuwe medewerkers
     * wijzigen medewerkers
 * User Provisioning van HRM naar LDAP
+  * synchronisatie (aanmaken, bijwerken, uitschakelen)
+  * uid regels + uniek houden
+  * automatische rol toewijzing o.b.v. functie
 * Attestation / Recertification
     * Users gekoppeld aan rollen
     * Rollen gekoppeld aan permissies
@@ -65,7 +71,7 @@ De volgende onderwerpen kunnen geoefend worden met de websites en andere compone
 * Audit trails voor inzicht in events
     * inlog pogingen
     * wijzigingen in rollen/permissies/gebruikers
-    * user provisioning
+    * user provisioning proces log
 
 Voor Software Engineers is er een handleiding om zelf nieuwe permissies toe te voegen.
 
@@ -151,4 +157,4 @@ Docent bij NHL Stenden, opleidingen Bachelor HBO-ICT en Associate Degree Cyber S
 
 [martin.molema@nhlstenden.com](mailto:martin.molema@nhlstenden.com)
 
-mei 2025
+Mei 2025
