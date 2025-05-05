@@ -155,8 +155,8 @@ def uid_exists(dn, uid, ldap_conn, base_dn):
         attributes=["uid"]
     )
     if len(ldap_conn.entries) > 0:
-        if ldap_conn.entries[0]["dn"] != dn:
-            return False;
+        if ldap_conn.entries[0].entry_dn == dn:
+            return False
 
     return True
 
@@ -179,10 +179,7 @@ def generate_uid(userDN, voornaam, achternaam, personeelsnummer):
     counter = 1
     lnk = connect_ldap()
 
-    print(f"Base uid: {base_uid}")
-
     while uid_exists(userDN, uid, lnk, LDAP_CONFIG["base_dn"]):
-        print(f"- {uid} already exists")
         uid = f"{base_uid}{counter}"
         counter += 1
 
