@@ -12,7 +12,7 @@ op het kunnen spelen met autorisaties op basis van een Role Based Access (RBAC) 
 
 ---
 
-# Audience
+# Doelgroep
 
 Deze repository is gericht op studenten die zich bezighouden met ICT-vraagstukken waar Identity & Access Management
 relevant is. Dit kunnen zijn:
@@ -96,6 +96,14 @@ Eventueel handig om te hebben:
   of [MySQL Workbench](https://www.mysql.com/products/workbench/)
 * **Spreadsheet** software voor het importeren van sommige exportbestanden (in .csv-formaat) zoals Excel of
   [LibreOffice Calc](https://nl.libreoffice.org/ontdek/calc/).
+* **Markdown** lezer. Alle documenten en beschrijvingen/uitwerkingen van de oefeningen zijn geschreven in Markdown. Als
+  je deze bestanden op GitHub leest, dan is dat geen probleem. Wil je bestanden lokaal wilt kunnen bekijken in hun
+  opgemaakte versie dan is er een andere [GitHub Repository](https://github.com/mundimark/awesome-markdown-editors) waar
+  je kunt kiezen uit veel verschillende software die bij jou/jouw werkplek past. Eventueel kun je ook een complete IDE
+  installeren om het project in zijn geheel beter te bekijken. Denk dan
+  aan [Visual Studio Code](https://code.visualstudio.com/) of  [PHP Storm](https://www.jetbrains.com/phpstorm/).
+  Eventueel kun je ook gewoon [Notepad++](https://notepad-plus-plus.org/)  installeren met
+  de [Markdown Viewer ++](https://github.com/nea/MarkdownViewerPlusPlus)
 
 ---
 
