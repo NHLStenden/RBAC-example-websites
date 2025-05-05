@@ -172,7 +172,7 @@ for diagram in root.findall('diagram'):
         # construct a new filename (directory already ends with OS-path separator char
         newfilename = f"{directory}{basename} - {pagename}.png"
 
-        # construct a command line. assume that drawio can be run using the path-variable;
+        # construct a command line.
         # setup the commandline as an array of parameters; options that have parameters will be separated into two parts
         # escaping spaces for filenames is not necessary
         commandline = []
