@@ -81,7 +81,6 @@ het bedrijf verlaat.
 4. Wat zijn mogelijke redenen dat de gebruiker van de verwijderde medewerker niet weggegooid wordt?
 5. Wat zou een redelijke bewaartermijn kunnen zijn van accounts van vertrokken medewerkers?
 
-Navigeer hier naar de vorige [opdracht](./Oefening%2011.MD).
-
+Navigeer hier naar de volgende [opdracht](./Oefening%2012.MD) of de vorige [opdracht](./Oefening%2010.MD).
 
 [Uitwerking](./Oplossingen-11.MD)

@@ -13,3 +13,12 @@ Hier vind je de uitwerkingen van de opgaven. Deze zijn steeds uitgewerkt in apar
 9. [Aanmaken nieuwe rol](./Oplossingen-09.MD)
 10. [Automatische provisioning van gebruikers](./Oplossingen-10.MD)
 11. [Audit trails](./Oplossingen-11.MD)
+12. [Functiescheidingen maken](./Oplossingen-12.MD)
+
+---
+
+Martin Molema (martin.molema@nhlstenden.com)
+
+NHL Stenden
+
+Mei 2025
