@@ -14,7 +14,8 @@ Er is een achtergrond proces gemaakt dat elke 3 minuten een synchronisatie doet 
 
 ## Opdracht
 
-Voor deze opdracht moet je iets meer weten over hoe je kunt nagaan of een gebruiker lid is van een bepaalde groep.
+Voor deze opdracht moet je iets meer weten over hoe je kunt nagaan of een gebruiker lid is van een bepaalde groep. Deze 
+groepen staan in de LDAP administratie en kun je inzien met de Apache Directory Studio of vergelijkbare software.
 Hieronder vind je meer informatie:
 
 De rollen zijn ondergebracht op de volgende locatie: `ou=roles,dc=NHLStenden,dc=com`

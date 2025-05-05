@@ -67,7 +67,7 @@ We gaan nu een gebruiker wijzigen via het HRM portaal
 Vervolgens gaan we een medewerker die we net hebben aangemaakt verwijderen. Dit zou typisch gebeuren als de medewerker
 het bedrijf verlaat.
 
-1. Zoek als HRM-medewerker de nieuw aangemaakte gebruiker op in de lijst en druk op de knop 'Verwijderen
+1. Zoek als HRM-medewerker de nieuw aangemaakte gebruiker op in de lijst en druk op de knop `Verwijderen`.
 2. Wacht weer tot de wijzigingen door het *User Provisioning* proces zijn doorgevoerd.
 3. Kijk in het project naar de map `{ROOT}volumes/src/user-provisioning` en zoek de naam die je net hebt opgevoerd.
 

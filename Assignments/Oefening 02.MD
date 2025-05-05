@@ -12,11 +12,11 @@ Start nu een LDAP-management tool zoals de _Apache Directory Studio_. Zie de
 
 Navigeer in de _Directory Information Tree_ (**DIT**) naar onderstaande locatie:
 
-    `dc=NHLStenden,dc=com > ou=Opleidingen > ou=Teachers`
+>    `dc=NHLStenden,dc=com > ou=Opleidingen > ou=Teachers`
 
 De zogenaamde **Distinguished Name** van deze locatie is
 
-    `ou=Teachers,ou=Opleidingen,dc=NHLStenden,dc=com`
+>    `ou=Teachers,ou=Opleidingen,dc=NHLStenden,dc=com`
 
 Je ziet hier een aantal gebruikersaccounts. Zoek de account *'Guus Willems'* en klik hier op. Je krijgt de eigenschappen
 te zien.
