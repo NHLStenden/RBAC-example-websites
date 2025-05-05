@@ -148,18 +148,46 @@ def verwerk_achternaam(achternaam):
 
     return ''.join(uid_parts)
 
+def uid_exists(dn, uid, ldap_conn, base_dn):
+    ldap_conn.search(
+        search_base=base_dn,
+        search_filter=f"(uid={uid})",
+        attributes=["uid"]
+    )
+    if len(ldap_conn.entries) > 0:
+        if ldap_conn.entries[0]["dn"] != dn:
+            return False;
 
-def generate_uid(voornaam, achternaam, personeelsnummer):
-    if '-' in achternaam:
-        hoofdnaam, meisjesnaam = [deel.strip() for deel in achternaam.split('-', 1)]
-        hoofd_uid = verwerk_achternaam(hoofdnaam)
-        meisjes_uid = verwerk_achternaam(meisjesnaam)
-        base_uid = f"{voornaam[0].lower()}{hoofd_uid}.{meisjes_uid}"
-    else:
-        achternaam_uid = verwerk_achternaam(achternaam)
-        base_uid = f"{voornaam[0].lower()}{achternaam_uid}"
+    return True
 
-    return base_uid if len(base_uid) > 1 else f"{base_uid}{personeelsnummer}"
+def generate_uid(userDN, voornaam, achternaam, personeelsnummer):
+    def maak_basis_uid():
+        if '-' in achternaam:
+            hoofdnaam, meisjesnaam = [deel.strip() for deel in achternaam.split('-', 1)]
+            hoofd_uid = verwerk_achternaam(hoofdnaam)
+            meisjes_uid = verwerk_achternaam(meisjesnaam)
+            return f"{voornaam[0].lower()}{hoofd_uid}.{meisjes_uid}"
+        else:
+            achternaam_uid = verwerk_achternaam(achternaam)
+            return f"{voornaam[0].lower()}{achternaam_uid}"
+
+    base_uid = maak_basis_uid()
+    if len(base_uid) <= 1:
+        base_uid = f"{base_uid}{personeelsnummer}"
+
+    uid = base_uid
+    counter = 1
+    lnk = connect_ldap()
+
+    print(f"Base uid: {base_uid}")
+
+    while uid_exists(userDN, uid, lnk, LDAP_CONFIG["base_dn"]):
+        print(f"- {uid} already exists")
+        uid = f"{base_uid}{counter}"
+        counter += 1
+
+    print(f"Definitive uid: {uid}")
+    return uid
 
 
 # Zoek een medewerker in LDAP op basis van personeelsnummer
@@ -231,7 +259,7 @@ def update_medewerker_in_ldap(conn, dn, medewerker):
     voornaam = medewerker["voornaam"]
     achternaam = medewerker["achternaam"]
 
-    uid = generate_uid(voornaam, achternaam, medewerker["personeelsnummer"])
+    uid = generate_uid(dn, voornaam, achternaam, medewerker["personeelsnummer"])
 
     changes = {
         "givenName": [(MODIFY_REPLACE, [voornaam])],
