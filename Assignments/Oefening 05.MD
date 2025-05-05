@@ -31,7 +31,7 @@ door onderstaande procedures te volgen.
 
 **Rol toevoegen**
 
-* Voeg via het scherm 'Autorisatie aanvraag' bij een gebruiker van Marketing de rol "Marketing Manager" toe.
+* Voeg via het scherm 'Autorisatie aanvraag' bij een gebruiker van *Marketing* de rol "Marketing Manager" toe.
 * Login bij de Marketing portaal als deze medewerker en merk op wat je allemaal mag
 * Trek de autorisatie weer in (rol verwijderen via 'Revoke button')
 * Ververs de pagina van de Marketing portaal en zie de veranderingen
