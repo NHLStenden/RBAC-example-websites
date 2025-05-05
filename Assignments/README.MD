@@ -35,6 +35,7 @@ De volgende opdrachten en oefeningen zijn opgenomen:
 9. [Aanmaken nieuwe rol](./Oefening%2009.MD)
 10. [Automatische provisioning van gebruikers](./Oefening%2010.MD)
 11. [Audit trails](./Oefening%2011.MD)
+12. [Instellen van functiescheiding](./Oefening%2012.MD)
 
 Je vindt de oefeningen in apart genummerde bestanden in deze map. In het bestand [Oplossingen](./Oplossingen.MD) vind
 je de uitwerkingen van de oefeningen. 
@@ -44,8 +45,8 @@ broncode. Zie hiervoor het bestand [Autorisaties toevoegen](./Autorisaties%20toe
 
 ---
 
-Martin Molema
+Martin Molema (martin.molema@nhlstenden.com)
 
-NHL Stenden Hogeschool
+NHL Stenden
 
-April 2025
+Mei 2025
