@@ -28,6 +28,7 @@ if ($user == null) {
 }
 $uid                 = $user['uid'][0];
 $existingRBACForUser = new RBACSupport($uid);
+$existingRBACForUser->process();
 
 // now pretend the user has already gotten the role assigned so finding conflicting permissions is easier
 if (!$existingRBACForUser->addPermissionsForRole($role_dn) ){
