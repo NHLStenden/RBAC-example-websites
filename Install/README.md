@@ -216,6 +216,35 @@ Instructies per OS volgen verderop.
     - Druk op `Ctrl + O` om op te slaan, druk op Enter om te bevestigen.
     - Druk op `Ctrl + X` om nano af te sluiten.
 
+
+# Linux gebruikers opgelet!
+
+Als je werkt op een Linux systeem dan moet er mogelijk een extra aanpassing gedaan worden voordat je kunt testen. Dat 
+komt omdat de map met de websites verbonden wordt met een map in jouw eigen Linux host systeem! Het betreft de map
+
+> volumes/src/websites
+
+die wordt verbonden aan de map
+
+> /var/www
+
+in de Docker container. Zorg dat iedereen daar lees- en schrijfrechten heeft! Dus bijvoorbeeld door onderstaande 
+commando uit te voeren in de Docker container óf op je host systeem
+
+In de container
+
+```bash
+docker exec -it iam-example-webserver  chmod -R a+rwX /var/www
+```
+(Let op de hoofdletter X: dit zorgt dat de X-bit alleen op mappen wordt ingesteld en niet op bestanden.)
+
+Of op je Linux Host:
+
+```bash
+chmod -R a+rwX /mijn/map/met/projecten/RBAC-example-websites/volumes/src/websites
+```
+
+
 # Testen van de websites
 
 Nu de Docker Containers goed draaien is het tijd om een eerste test uit te voeren. Dit doen we door de websites te
