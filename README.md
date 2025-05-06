@@ -54,16 +54,16 @@ De volgende onderwerpen kunnen geoefend worden met de websites en andere compone
     * koppelen van een rol aan een gebruiker (autorisatie aanvraag)
     * koppelen van permissies aan rollen
 * Segregation of Duties (SOD, Functiescheiding)
-  * beheren van conflicten
-  * testen van conflicten
-  * beschermen van ontstaan van conflicten (rollen, permissies)
+    * beheren van conflicten
+    * testen van conflicten
+    * beschermen van ontstaan van conflicten (rollen, permissies)
 * Human Resources Management
     * aanmaken nieuwe medewerkers
     * wijzigen medewerkers
 * User Provisioning van HRM naar LDAP
-  * synchronisatie (aanmaken, bijwerken, uitschakelen)
-  * uid regels + uniek houden
-  * automatische rol toewijzing o.b.v. functie
+    * synchronisatie (aanmaken, bijwerken, uitschakelen)
+    * uid regels + uniek houden
+    * automatische rol toewijzing o.b.v. functie
 * Attestation / Recertification
     * Users gekoppeld aan rollen
     * Rollen gekoppeld aan permissies
@@ -137,7 +137,12 @@ Een toelichting op de gemaakte keuzes kun je vinden in de [verantwoording](./Doc
 # Authenticatie en Autorisatie
 
 Elke website maakt gebruik van beveiliging. De gebruikte authenticatie en autorisatie flow
-wordt [hier](./Documentation/Authentication%20and%20Autorisation.MD) beschreven.
+wordt [hier](./Documentation/Authentication%20and%20Autorisation.MD) beschreven. De vastlegging van de rollen en
+permissies wordt [hier](./Documentation/Rollen-en-permissies.md) verder uitgelegd.
+
+# De websites
+
+Er is een [toelichting](./Documentation/Websites.md) beschikbaar over de werking van de websites.
 
 ---
 
