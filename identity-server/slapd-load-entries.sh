@@ -14,12 +14,6 @@ cd /app
 # create a new file
 touch role_assignment_mail.lst
 
-## loop through all files creating users and collect the unique DN's
-#for LDIF_FILE in ./Ldap-data-[0-9]*-Create-Users*.ldif ; do
-#  echo "Collecting users from file $LDIF_FILE" >&2
-#  grep 'dn:' $LDIF_FILE | awk -F \: '{print "uniqueMember:" $2}' >> role_assignment_mail.lst
-#done
-
 # Now split the teachers and students in two lists per course
 grep 'dn:' Ldap-data-02a-Create-Users-Opleiding-AD.ldif | awk -F \: '/ou=Teachers/{print "uniqueMember:" $2}' > role_assignment_teachers-ADCSS.lst
 grep 'dn:' Ldap-data-02a-Create-Users-Opleiding-AD.ldif | awk -F \: '/ou=Students/{print "uniqueMember:" $2}' > role_assignment_students-ADCSS.lst
@@ -115,6 +109,8 @@ cd /app
 source venv/bin/activate
 python3 /app/import_once_from_ldap_to_db.py
 deactivate
+
+exit 1
 
 ########################################################################################
 ########################################################################################
