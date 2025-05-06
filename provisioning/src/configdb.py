@@ -1,16 +1,14 @@
-
-# Configuratie voor MariaDB
 DB_CONFIG = {
-    "host": "localhost",
+    "host": "iam-example-hrm-server",
     "user": "admin",
-    "port": 3307,
+    "port": 3306,
     "password": "Test1234!",
     "database": "HRM",
 }
 
 # Configuratie voor MariaDB IAM Database
 DB_CONFIG_AUDITTRAIL = {
-    "host": "localhost",
+    "host": "iam-example-db-server",
     "user": "student",
     "port": 3306,
     "password": "test1234",
