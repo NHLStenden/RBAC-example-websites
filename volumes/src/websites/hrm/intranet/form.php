@@ -40,6 +40,7 @@ if ($id) {
 
 $functions = [
     "medewerker marketing",
+    "marketing manager",
     "medewerker ICT",
     "medewerker HRM",
     "docent",
@@ -54,6 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         'docent' => 'Teacher',
         'medewerker HRM' => 'Staff',
         'medewerker marketing' => 'Staff',
+        'marketing manager' => 'Staff',
         'medewerker ICT' => 'Staff',
     ][$functie];
 
