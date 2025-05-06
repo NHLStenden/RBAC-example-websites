@@ -1,33 +1,9 @@
+import configldap3
+import configdb
 import mysql.connector
 from ldap3 import Server, Connection, ALL, MODIFY_REPLACE, MODIFY_ADD, MODIFY_DELETE
 import hashlib
 import base64
-
-# Configuratie voor MariaDB
-DB_CONFIG = {
-    "host": "iam-example-hrm-server",
-    "user": "admin",
-    "port": 3306,
-    "password": "Test1234!",
-    "database": "HRM",
-}
-
-# Configuratie voor MariaDB IAM Database
-DB_CONFIG_AUDITTRAIL = {
-    "host": "iam-example-db-server",
-    "user": "student",
-    "port": 3306,
-    "password": "test1234",
-    "database": "IAM",
-}
-
-# Configuratie voor toegang tot LDAP
-LDAP_CONFIG = {
-    "server": "ldap://identityserver",
-    "user": "cn=admin,dc=NHLStenden,dc=com",
-    "password": "test12345!",
-    "base_dn": "dc=NHLStenden,dc=com",
-}
 
 # Mapping van functie naar LDAP OU (Organizational Unit)
 # Dit bepaalt waar gebruikersaccounts aangemaakt moeten worden op basis van de functie van een medewerker
@@ -36,6 +12,7 @@ FUNCTIE_TO_DN = {
     "docent": "ou=Teachers,ou=Opleidingen,dc=NHLStenden,dc=com",
     "medewerker ICT": "ou=ICT Support,ou=Staff,dc=NHLStenden,dc=com",
     "medewerker marketing": "ou=Marketing,ou=Staff,dc=NHLStenden,dc=com",
+    "marketing manager": "ou=Marketing,ou=Staff,dc=NHLStenden,dc=com",
     "medewerker HRM": "ou=HRM,ou=Staff,dc=NHLStenden,dc=com",
 }
 
@@ -59,6 +36,11 @@ FUNCTIE_TO_ROLES = {
         "cn=Marketing,ou=roles,dc=NHLStenden,dc=com",
         "cn=Marketing Employees,ou=roles,dc=NHLStenden,dc=com"
     ],
+    "marketing manager": [
+        "cn=All Personell,ou=roles,dc=NHLStenden,dc=com",
+        "cn=Marketing,ou=roles,dc=NHLStenden,dc=com",
+        "cn=Marketing managers,ou=roles,dc=NHLStenden,dc=com",
+    ],
     "medewerker HRM": [
         "cn=All Personell,ou=roles,dc=NHLStenden,dc=com",
         "cn=HRM,ou=roles,dc=NHLStenden,dc=com",
@@ -69,17 +51,17 @@ FUNCTIE_TO_ROLES = {
 
 # Verbinding maken met MariaDB
 def connect_db():
-    return mysql.connector.connect(**DB_CONFIG)
+    return mysql.connector.connect(**configdb.DB_CONFIG)
 
 
 def connect_db_audittrail():
-    return mysql.connector.connect(**DB_CONFIG_AUDITTRAIL)
+    return mysql.connector.connect(**configdb.DB_CONFIG_AUDITTRAIL)
 
 
 # Verbinding maken met LDAP
 def connect_ldap():
-    server = Server(LDAP_CONFIG["server"], get_info=ALL)
-    conn = Connection(server, LDAP_CONFIG["user"], LDAP_CONFIG["password"], auto_bind=True)
+    server = Server(configldap3.LDAP_CONFIG["server"], port=configldap3.LDAP_CONFIG["port"],  get_info=ALL)
+    conn = Connection(server, configldap3.LDAP_CONFIG["user"], configldap3.LDAP_CONFIG["password"], auto_bind=True)
     return conn
 
 
@@ -186,7 +168,7 @@ def generate_uid(userDN, voornaam, achternaam, personeelsnummer):
     counter = 1
     lnk = connect_ldap()
 
-    while uid_exists(userDN, uid, lnk, LDAP_CONFIG["base_dn"]):
+    while uid_exists(userDN, uid, lnk, configldap3.LDAP_CONFIG["base_dn"]):
         uid = f"{base_uid}{counter}"
         counter += 1
         print(f"- Trying {uid}")
@@ -197,7 +179,7 @@ def generate_uid(userDN, voornaam, achternaam, personeelsnummer):
 
 # Zoek een medewerker in LDAP op basis van personeelsnummer
 def find_medewerker_by_personeelsnummer(conn, personeelsnummer):
-    search_base = LDAP_CONFIG["base_dn"]
+    search_base = configldap3.LDAP_CONFIG["base_dn"]
     search_filter = f"(employeeNumber={personeelsnummer})"
 
     print(f"Searching for {personeelsnummer} medewerker")
@@ -229,7 +211,7 @@ def add_medewerker_to_ldap(conn, medewerker):
     dn = genereer_dn(medewerker)
     print(f"DN = {dn}")
 
-    uid = generate_uid(voornaam, achternaam, medewerker["personeelsnummer"])
+    uid = generate_uid(dn, voornaam, achternaam, medewerker["personeelsnummer"])
     password = "Test1234!"
     password_hash = "{SHA}" + base64.b64encode(hashlib.sha1(password.encode()).digest()).decode()
 
@@ -286,7 +268,7 @@ def update_medewerker_in_ldap(conn, dn, medewerker):
         print(f"❌ Fout bij bijwerken: {conn.result} ({medewerkerType})")
 
 
-# ALs een gebruiker gewijzigd is in de LDAP dan zal het moment van de laatste synchronisatie opgenomen worden in
+# Als een gebruiker gewijzigd is in de LDAP dan zal het moment van de laatste synchronisatie opgenomen worden in
 # de database bij het veld "last_sync"
 def updateLastSyncTimestampForUser(idMedewerker):
     db = connect_db()
@@ -314,7 +296,7 @@ def voeg_medewerker_toe_aan_rollen(conn, functie, medewerker_dn):
             continue
 
         # Voeg de medewerker toe aan de groep
-        if (conn.modify(rol_dn, {"uniqueMember": [(MODIFY_ADD, [medewerker_dn])]})):
+        if conn.modify(rol_dn, {"uniqueMember": [(MODIFY_ADD, [medewerker_dn])]}):
             log_audit("AUTHOR", "ADD", "INFO", f"Add user [{medewerker_dn}] to role: [{rol_dn}]")
             print(f"✅ Medewerker {medewerker_dn} toegevoegd aan rol {rol_dn}")
 
@@ -327,7 +309,7 @@ def verwijder_oude_groepslidmaatschappen(conn, old_dn):
     search_filter = f"(uniqueMember={old_dn})"
 
     # Geen "dn" als attribuut opvragen!
-    conn.search(LDAP_CONFIG["base_dn"], search_filter, attributes=["uniqueMember"])
+    conn.search(configldap3.LDAP_CONFIG["base_dn"], search_filter, attributes=["uniqueMember"])
 
     for entry in conn.entries:
         group_dn = entry.entry_dn
@@ -381,7 +363,7 @@ def sync_medewerkers():
 
 def get_all_ldap_users(conn):
     search_filter = "(&(objectClass=inetOrgPerson)(!(employeeType=Student)))"
-    conn.search(LDAP_CONFIG["base_dn"], search_filter, attributes=["employeeNumber", "uid"])
+    conn.search(configldap3.LDAP_CONFIG["base_dn"], search_filter, attributes=["employeeNumber", "uid"])
 
     ldap_users = {}
     for entry in conn.entries:
