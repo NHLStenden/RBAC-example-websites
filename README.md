@@ -84,9 +84,9 @@ De volgende eisen worden gesteld aan de werkplek (jou computer / laptop):
 1. Een Command Line Interface zoals Powershell, Xterm, cmd.exe voor het uitvoeren van Docker commando's
 2. Een werkende Docker installatie die gebruik kan maken van `docker compose`.
 3. Een werkende recente JAVA versie.
-    1. Voor Windows: Te downloaden via [Java.com](https://www.java.com/nl/download/)
+    1. Voor Windows: OpenJDK te downloaden via [adoptium.net](https://adoptium.net/)
     2. Debian Linux: `sudo apt install openjdk-21-jre`
-    3. MacOS:te installeren via [Oracle](https://www.oracle.com/java/technologies/downloads/)
+    3. MacOS:te installeren via [adoptium.net](https://adoptium.net/)
 4. Geïnstalleerde versie van [Apache Directory Studie](https://directory.apache.org/studio/). Zie ook de
    [handleiding](./Install/InstallApacheDirectoryStudio.md).
 5. Een recente Browser zoals Google Chrome, Brave, Firefox, Chromium, Vivaldi of Microsoft Edge. Lees voor gebruik
