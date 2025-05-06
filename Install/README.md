@@ -33,7 +33,7 @@ Om deze oefeningen uit te kunnen voeren heb je de volgende zaken nodig:
 
 Om aan de slag te gaan doorlopen we de volgende stappen. Deze worden verderop verder toegelicht.
 
-1. Gebruik een GIT-client of download deze repository als een ZIP file.
+1. Download deze repository als een ZIP file.
 2. Als je deze repository op je computer hebt staan ga je naar de map en open je een Command Prompt (bash, cmd,
    Powershell)
 3. Bouw en start de container
@@ -41,26 +41,16 @@ Om aan de slag te gaan doorlopen we de volgende stappen. Deze worden verderop ve
 
 ## Ophalen repository
 
-Je kunt eenvoudig de repository downloaden of een `git clone` uitvoeren. 
-
-**Downloaden als ZIP**
-
 Als je deze repository wilt downloaden gebruik dan de download optie van GitHub. Deze vind je op boven de lijst met 
 bestanden via de groene knop `code`. Zie de afbeelding hier onder. Door op de groene knop te drukken wordt een 
 popup geopend met onderin de optie 'Download ZIP'. Druk op deze knop en er zal een download starten. 
 
 ![get-repo-zip.png](images/get-repo-zip.png)
 
-**git clone**
-
-Gebruik je favoriete GIT-client of open een Command Prompt en typ onderstaande commando. De repository wordt dan
-aangemaakt in de map waar je op dat moment staat.
-
-```text
-c:\sources > git clone https://github.com/NHLStenden/RBAC-example-websites.git 
-```
-
 ## Controle bestanden
+
+Mocht je gebruik maken van `git clone` om de bestanden op te halen, dan zijn er op Windows enkele correcties die je 
+moet uitvoeren! Zo niet lees dan verder bij de volgende [stap](#bouw-en-start-de-containers).
 
 Let op: veel bestanden worden gebruikt binnen een Linux Docker omgeving (Debian). Tekstbestanden worden daar opgemaakt
 met regelovergangen die alleen een Linefeed (ASCII code 10) `LF` gebruiken. Bij het ophalen en uitpakken van de
@@ -406,7 +396,7 @@ is ook een link om uit te loggen.
 
 # Oefeningen
 
-Deze zijn opgenomen in een apart [bestand](./excersises.MD).
+Deze zijn opgenomen in een apart [bestand](../Assignments/README.MD).
 
 # Verantwoording testgegevens
 
