@@ -197,7 +197,7 @@ objectClass: person
 objectClass: top
 cn: Guus van der Meer
 sn: van der Meer
-uid: gvandermeer
+uid: gvdmeer
 userPassword:: e0NSWVBUfSQ1JGI5WHY4VU1QJGF0akZEMmVtTFpLZE0xQlAvYlBOVTlqcGFpODQwVS9XU0swdGhTQkhYbzE=
 
 dn: cn=Nora Kramer,ou=Marketing,ou=Staff,dc=NHLStenden,dc=com

@@ -177,7 +177,7 @@ objectClass: person
 objectClass: top
 cn: Ruben van der Meer
 sn: Meer
-uid: rvandermeer
+uid: rvdmeer
 userPassword:: e0NSWVBUfSQ1JGI5WHY4VU1QJGF0akZEMmVtTFpLZE0xQlAvYlBOVTlqcGFpODQwVS9XU0swdGhTQkhYbzE=
 
 dn: cn=Isabel Bos,ou=Students,ou=Opleidingen,dc=NHLStenden,dc=com
@@ -287,7 +287,7 @@ objectClass: person
 objectClass: top
 cn: Lieke van der Linden
 sn: Linden
-uid: lvanderlinden
+uid: lvdlinden
 userPassword:: e0NSWVBUfSQ1JGI5WHY4VU1QJGF0akZEMmVtTFpLZE0xQlAvYlBOVTlqcGFpODQwVS9XU0swdGhTQkhYbzE=
 
 dn: cn=Gijs Peeters,ou=Students,ou=Opleidingen,dc=NHLStenden,dc=com

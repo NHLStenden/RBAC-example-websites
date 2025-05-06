@@ -167,7 +167,7 @@ objectClass: person
 objectClass: top
 cn: Sophie van der Linden
 sn: van der Linden
-uid: svanderlinden
+uid: svdlinden
 userPassword:: e0NSWVBUfSQ1JGI5WHY4VU1QJGF0akZEMmVtTFpLZE0xQlAvYlBOVTlqcGFpODQwVS9XU0swdGhTQkhYbzE=
 
 dn: cn=Kim Dekker,ou=Students,ou=Opleidingen,dc=NHLStenden,dc=com
@@ -277,7 +277,7 @@ objectClass: person
 objectClass: top
 cn: Kim van der Meer
 sn: van der Meer
-uid: kvandermeer
+uid: kvdmeer
 userPassword:: e0NSWVBUfSQ1JGI5WHY4VU1QJGF0akZEMmVtTFpLZE0xQlAvYlBOVTlqcGFpODQwVS9XU0swdGhTQkhYbzE=
 
 dn: cn=Daan Hoekstra,ou=Students,ou=Opleidingen,dc=NHLStenden,dc=com
@@ -327,7 +327,7 @@ objectClass: person
 objectClass: top
 cn: Kim van der Linden
 sn: van der Linden
-uid: kvanderlinden
+uid: kvdlinden
 userPassword:: e0NSWVBUfSQ1JGI5WHY4VU1QJGF0akZEMmVtTFpLZE0xQlAvYlBOVTlqcGFpODQwVS9XU0swdGhTQkhYbzE=
 
 dn: cn=Mark Meijer,ou=Students,ou=Opleidingen,dc=NHLStenden,dc=com
@@ -357,7 +357,7 @@ objectClass: person
 objectClass: top
 cn: Jan van der Linden
 sn: van der Linden
-uid: jvanderlinden
+uid: jvdlinden
 userPassword:: e0NSWVBUfSQ1JGI5WHY4VU1QJGF0akZEMmVtTFpLZE0xQlAvYlBOVTlqcGFpODQwVS9XU0swdGhTQkhYbzE=
 
 dn: cn=Milan Tess,ou=Students,ou=Opleidingen,dc=NHLStenden,dc=com
@@ -397,7 +397,7 @@ objectClass: person
 objectClass: top
 cn: Yara van der Linden
 sn: van der Linden
-uid: yvanderlinden
+uid: yvdlinden
 userPassword:: e0NSWVBUfSQ1JGI5WHY4VU1QJGF0akZEMmVtTFpLZE0xQlAvYlBOVTlqcGFpODQwVS9XU0swdGhTQkhYbzE=
 
 dn: cn=Milan de Vries,ou=Students,ou=Opleidingen,dc=NHLStenden,dc=com
@@ -607,7 +607,7 @@ objectClass: person
 objectClass: top
 cn: Evi van der Linden
 sn: van der Linden
-uid: evanderlinden
+uid: evdlinden
 userPassword:: e0NSWVBUfSQ1JGI5WHY4VU1QJGF0akZEMmVtTFpLZE0xQlAvYlBOVTlqcGFpODQwVS9XU0swdGhTQkhYbzE=
 
 dn: cn=Milan van Dijk,ou=Teachers,ou=Opleidingen,dc=NHLStenden,dc=com
@@ -677,7 +677,7 @@ objectClass: person
 objectClass: top
 cn: Ruben van der Linden
 sn: van der Linden
-uid: rvanderlinden
+uid: rvdlinden
 userPassword:: e0NSWVBUfSQ1JGI5WHY4VU1QJGF0akZEMmVtTFpLZE0xQlAvYlBOVTlqcGFpODQwVS9XU0swdGhTQkhYbzE=
 
 dn: cn=Julia Hoek,ou=Teachers,ou=Opleidingen,dc=NHLStenden,dc=com
