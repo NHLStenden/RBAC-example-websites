@@ -149,18 +149,24 @@ def verwerk_achternaam(achternaam):
     return ''.join(uid_parts)
 
 def uid_exists(dn, uid, ldap_conn, base_dn):
+    print(f"- Check if uid {uid} exists for {dn}")
     ldap_conn.search(
         search_base=base_dn,
         search_filter=f"(uid={uid})",
         attributes=["uid"]
     )
     if len(ldap_conn.entries) > 0:
+        print(f"# found {ldap_conn.entries[0].entry_dn}")
         if ldap_conn.entries[0].entry_dn == dn:
             return False
+        else:
+            return True
 
-    return True
+    return False
 
 def generate_uid(userDN, voornaam, achternaam, personeelsnummer):
+
+    print(f"* Creating uid for {userDN}")
     def maak_basis_uid():
         if '-' in achternaam:
             hoofdnaam, meisjesnaam = [deel.strip() for deel in achternaam.split('-', 1)]
@@ -176,12 +182,14 @@ def generate_uid(userDN, voornaam, achternaam, personeelsnummer):
         base_uid = f"{base_uid}{personeelsnummer}"
 
     uid = base_uid
+    print(f"- Trying {uid}")
     counter = 1
     lnk = connect_ldap()
 
     while uid_exists(userDN, uid, lnk, LDAP_CONFIG["base_dn"]):
         uid = f"{base_uid}{counter}"
         counter += 1
+        print(f"- Trying {uid}")
 
     print(f"Definitive uid: {uid}")
     return uid
@@ -197,6 +205,7 @@ def find_medewerker_by_personeelsnummer(conn, personeelsnummer):
     conn.search(search_base, search_filter, attributes=["*"])
 
     if conn.entries:
+        print(f"- Found : {conn.entries[0].entry_dn}")
         return conn.entries[0].entry_dn  # Geeft de bestaande DN terug
     return None
 
