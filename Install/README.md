@@ -30,7 +30,6 @@ Om deze oefeningen uit te kunnen voeren heb je de volgende zaken nodig:
 * Toegang tot je `hosts`-file voor het toevoegen van hostnames.
 * De applicatie Apache Directory Studio
 
-
 Om aan de slag te gaan doorlopen we de volgende stappen. Deze worden verderop verder toegelicht.
 
 1. Download deze repository als een ZIP file.
@@ -41,15 +40,15 @@ Om aan de slag te gaan doorlopen we de volgende stappen. Deze worden verderop ve
 
 ## Ophalen repository
 
-Als je deze repository wilt downloaden gebruik dan de download optie van GitHub. Deze vind je op boven de lijst met 
-bestanden via de groene knop `code`. Zie de afbeelding hier onder. Door op de groene knop te drukken wordt een 
-popup geopend met onderin de optie 'Download ZIP'. Druk op deze knop en er zal een download starten. 
+Als je deze repository wilt downloaden gebruik dan de download optie van GitHub. Deze vind je op boven de lijst met
+bestanden via de groene knop `code`. Zie de afbeelding hier onder. Door op de groene knop te drukken wordt een
+popup geopend met onderin de optie 'Download ZIP'. Druk op deze knop en er zal een download starten.
 
 ![get-repo-zip.png](images/get-repo-zip.png)
 
 ## Controle bestanden
 
-Mocht je gebruik maken van `git clone` om de bestanden op te halen, dan zijn er op Windows enkele correcties die je 
+Mocht je gebruik maken van `git clone` om de bestanden op te halen, dan zijn er op Windows enkele correcties die je
 moet uitvoeren! Zo niet lees dan verder bij de volgende [stap](#bouw-en-start-de-containers).
 
 Let op: veel bestanden worden gebruikt binnen een Linux Docker omgeving (Debian). Tekstbestanden worden daar opgemaakt
@@ -63,8 +62,9 @@ moeten bevatten voor de regelovergangen.
 
 Fouten die voor kunnen komen zijn onder andere `exit code 127: file not found`.
 
-Eventueel kan GIT ingesteld worden om dit globaal te negeren door onderstaande commando uit te voeren. Als je dat commando
-hebt uitgevoerd en je gebruikte `git clone` dan moet je deze nieuwe map weggooien en opnieuw `git clone` uitvoeren. 
+Eventueel kan GIT ingesteld worden om dit globaal te negeren door onderstaande commando uit te voeren. Als je dat
+commando
+hebt uitgevoerd en je gebruikte `git clone` dan moet je deze nieuwe map weggooien en opnieuw `git clone` uitvoeren.
 
 ```text
 git config --global core.autocrlf false
@@ -76,12 +76,13 @@ In de folder van deze repository staan ook twee programma's die de bestanden kun
 * Voor onder WSL: `convert-cr-lf-wsl`
 
 Mocht het nodig zijn om deze programma's aan te passen of te hercompileren, kijk dan in de map
-`_resources/support/convert-crlf` en het daar aanwezige [`README.md`](../_resources/support/convert-crlf/README.md) 
+`_resources/support/convert-crlf` en het daar aanwezige [`README.md`](../_resources/support/convert-crlf/README.md)
 bestand voor instructies.
 
 ## Bouw en start de containers
 
 De eerste stap is het bouwen van de containers. Dat doe je met onderstaande commando:
+
 ```cmd
   docker compose build --no-cache
 ```
@@ -89,7 +90,7 @@ De eerste stap is het bouwen van de containers. Dat doe je met onderstaande comm
 In de eerste stap worden de containers gebouwd. De optie `--no-cache` zorgt er voor dat je eerdere instanties/images
 van je containers niet hergebruikt, maar echt helemaal opnieuw begint.
 
-De tweede stap start daadwerkelijk de containers. De optie `-d` bij `docker compose up` zorgt er voor dat je in deze 
+De tweede stap start daadwerkelijk de containers. De optie `-d` bij `docker compose up` zorgt er voor dat je in deze
 command-prompt verder kunt werken omdat de dockers nu in de achtergrond draaien.
 
 ```cmd
@@ -124,8 +125,14 @@ c:\mijn\project\map\RBAC-example-websites> docker compose up -d
 Als de containers eenmaal zijn gebouwd, kunnen ze ook eenvoudig beheerd worden via bijvoorbeeld een plug-in in je IDE of
 via de Docker Desktop applicatie (niet beschikbaar op Linux).
 
-Start nu het script om alle accounts en gerelateerde informatie te genereren. Dit doe je door een script dat in de
-container zit te starten. We gebruiker het commando `docker exec` om commando's in een lopende container te kunnen starten.
+## Aanmaken van accounts en vullen van de database
+
+Nu de containers draaien moeten we de accounts aanmaken, rollen en permissies definiëren en het personeel in de
+datababase laden. Hiervoor is een script beschikbaar in de container voor de Identity provider (LDAP).
+
+Start het script om alle accounts en gerelateerde informatie te genereren. Dit doe je door een script dat in de
+container zit te starten. We gebruiker het commando `docker exec` om commando's in een lopende container te kunnen
+starten.
 
 ```cmd
   docker exec -it iam-example-identity-server /bin/bash -c /app/slapd-load-entries.sh
@@ -133,16 +140,15 @@ container zit te starten. We gebruiker het commando `docker exec` om commando's 
 
 ## Aanpassingen in de hosts file
 
-We willen meerdere websites kunnen gebruiken, terwijl er maar één webserver actief is. Om de webserver te vertellen welke
-website we willen benaderen moeten we steeds de goede URL gebruiken. Echter, we moeten ons Operating System (Windows,
-Linux, Mac) wel een handje helpen om te bepalen welke URL's we gebruiken en waar die naar toe moeten leiden. We gebruiken
-hiervoor de `hosts` file om het DNS-proces te ondersteunen. Voeg onderstaande items toe aan je `hosts` file. Instructies
-per OS volgen verderop. 
+We willen meerdere websites kunnen gebruiken, terwijl er maar één webserver actief is. Om de webserver te vertellen
+welke website we willen benaderen moeten we steeds de goede URL gebruiken. Echter, we moeten ons Operating System (
+Windows, Linux, Mac) wel een handje helpen om te bepalen welke URL's we gebruiken en waar die naar toe moeten leiden. We
+gebruiken hiervoor de `hosts` file om het DNS-proces te ondersteunen. Voeg onderstaande items toe aan je `hosts` file.
+Instructies per OS volgen verderop.
 
 ```text
 # Docker RBAC Example
 127.0.0.1	grades.docker sharepoint.docker admin.docker marketing.docker hrm.docker
-
 ```
 
 ### Windows
@@ -213,7 +219,8 @@ per OS volgen verderop.
 # Testen van de websites
 
 Nu de Docker Containers goed draaien is het tijd om een eerste test uit te voeren. Dit doen we door de websites te
-openen in een browser die **BasicAuthentication** beschikbaar heeft. Let op: in Microsoft Edge kan het zijn dat een policy
+openen in een browser die **BasicAuthentication** beschikbaar heeft. Let op: in Microsoft Edge kan het zijn dat een
+policy
 niet langer BasicAuthentication (`basic`) toestaat.
 
 Zie https://answers.microsoft.com/en-us/microsoftedge/forum/all/latest-version-of-edge-no-longer-shows-basic/3601252b-e56b-46c0-a088-0f6084eabe47
@@ -231,7 +238,7 @@ De volgende websites zijn beschikbaar:
 | Het SharePoint platform voor gedeelde informatie | http://sharepoint.docker/ | `cn=SharePoint Students,ou=roles,dc=NHLStenden,dc=com` of `cn=SharePoint Teachers,ou=roles,dc=NHLStenden,dc=com` |
 
 Je kunt hierbij inloggen met de volgende gebruikers. Het wachtwoord is altijd  `Test1234!`. Je kunt met Apache Directory
-Studio (zie verderop) ook kijken in de aangegeven rollen in de Identity Server. De onderstaande gebruikersaccounts zijn 
+Studio (zie verderop) ook kijken in de aangegeven rollen in de Identity Server. De onderstaande gebruikersaccounts zijn
 willekeurig gekozen uit die rollen.
 
 * http://marketing.docker/
@@ -249,7 +256,7 @@ willekeurig gekozen uit die rollen.
 
 # Verbinding maken met de Identity Server (LDAP)
 
-1. Installeer  Apache Directory Studio via deze [handleiding](./InstallApacheDirectoryStudio.md).
+1. Installeer Apache Directory Studio via deze [handleiding](./InstallApacheDirectoryStudio.md).
 2. Maak verbinding met onderstaande informatie.
 
 * Connection:
@@ -303,106 +310,10 @@ Als we bijvoorbeeld navigeren naar gebruiker naar Isabel Vos, dan krijgen we ond
 
 ![ldap-authorisations-02.png](images/ldap-authorisations-02.png)
 
-# Uitleg over technische vastlegging van rollen en permissies
-
-- Rollen worden beheerd in een LDAP-server als `groupOfUniqueNames`.
-- Elke rol in LDAP heeft een corresponderende entry in de `roles` tabel via het veld `distinguishedName`.
-- Dit zorgt ervoor dat de rollen consistent zijn tussen de LDAP-server en de database.
-
-## Praktische uitleg
-
-- **Rollenbeheer**: Rollen worden centraal beheerd in de LDAP-server. Elke rol in de LDAP-server heeft een unieke naam (
-  distinguishedName) die overeenkomt met een record in de `roles` tabel van de database.
-- **Permissiebeheer**: Permissies worden beheerd in de database. Elke permissie heeft een unieke code en beschrijving.
-  Alleen een programmeur
-  kan nieuwe permissies voorstellen als er nieuwe functionaliteiten geimplementeerd worden.
-- **Koppeling van rollen en permissies**: De tabel `role_permissions` koppelt rollen aan permissies. Dit betekent dat je
-  kunt specificeren welke permissies aan welke rollen zijn toegewezen.
-- **Gebruik van de website**: Studenten kunnen via een website permissies aan rollen koppelen. Dit stelt hen in staat om
-  de toegangsrechten te beheren zonder nieuwe permissies te hoeven aanmaken.
-
-## Plaats van accounts
-
-Accounts worden op een specifieke plaats opgeslagen in de LDAP-store. Hieronder volgen een aantal voorbeelden.
-
-| Type account          | Distinguished Name LDAP                         | 
-|-----------------------|-------------------------------------------------|
-| Docenten              | ou=Teachers,ou=Opleidingen,dc=NHLStenden,dc=com |
-| Studenten             | ou=Students,ou=Opleidingen,dc=NHLStenden,dc=com |
-| Medewerkers ICT       | ou=ICT Support,ou=Staff,dc=NHLStenden,dc=com    |
-| Medewerkers Marketing | ou=Marketing,ou=Staff,dc=NHLStenden,dc=com      |
-| Medewerkers HRM       | ou=HRM,ou=Staff,dc=NHLStenden,dc=com            |
-
-# Menu structuur van de websites
-
-Deze menubalk wordt gebruikt om navigatie te bieden voor vier verschillende websites: **Cijferadministratie**, *
-*Sharepoint | Intranet**, **Marketing**, **HRM** en het **Admin Panel**. Afhankelijk van de website waarvoor de menubalk
-wordt weergegeven, worden verschillende navigatieopties getoond.
-
-## Websites
-
-1. **Cijferadministratie**
-
-- **Cijfers**: Toont je eigen cijfers.
-- **Mijn gegevens**: Toont je persoonlijke gegevens.
-- **Nieuwe cijferlijst**: Maakt een nieuwe cijferlijst aan.
-- **Bekijk student**: Toont details van een student.
-- **Lijsten goedkeuren**: Keurt cijferlijsten goed.
-
-2. **Sharepoint | Intranet**
-
-- **Mijn gegevens**: Toont je persoonlijke gegevens.
-- **Human Resource Management**: Toegang tot HRM.
-- **Cijfers**: Link naar de cijferadministratie.
-- **Marketing**: Link naar de marketingwebsite.
-- **Admin Panel**: Link naar het admin panel.
-
-3. **Marketing**
-
-- **Nieuwe campagne**: Maakt een nieuwe marketingcampagne aan.
-- **Bekijk campagne**: Toont details van een campagne.
-- **Campagne goedkeuren**: Keurt marketingcampagnes goed.
-- **Verwijder campagne**: Verwijdert een marketingcampagne.
-
-4. **Admin Panel**
-
-- **Apache Logfiles**: Toont Apache logbestanden.
-- **Attestation - Gebruikers**: Inzage in gebruikers en hun gekoppelde rollen.
-- **Attestation - Rollen**: Inzage in rollen en permissies.
-- **Rollen**: Beheert rollen.
-- **Autorisatie aanvragen**: Het kunnen uitvoeren van een autorisatie aanvraag voor een gebruiker.
-
-5. Human Resources Management (HRM)
-
-- **Inzage in medewerkers**: op basis van een lijst kan een gebruiker bekeken worden
-- **Aanpassen van gegevens van medewerkers**: een gebruiker kan gewijzigd worden zodat persoonsgegevens, maar ook
-  functie aangepast kan worden
-
-6. User Provisioning
-
-Er is nog een zesde Docker Container. Deze voert in de achtergrond processen uit voor User Provisioning. We komen daar
-in de oefeningen verder op terug.
-
-## Navigatie
-
-De menubalk wordt dynamisch gegenereerd op basis van de website en de gebruikersrechten. Alleen de opties waarvoor de
-gebruiker de juiste permissies heeft, worden getoond. De actieve route wordt gemarkeerd om de huidige pagina aan te
-geven.
-
-## Welkomstbericht
-
-Bovenaan de menubalk wordt een welkomstbericht weergegeven met de naam van de gebruiker en een gebruikersafbeelding. Er
-is ook een link om uit te loggen.
-
-# Oefeningen
-
-Deze zijn opgenomen in een apart [bestand](../Assignments/README.MD).
-
 # Verantwoording testgegevens
 
 In deze repository zijn grote hoeveelheden gebruikers opgenomen om te kunnen testen. De reden voor deze grote aantallen
-is om
-ook beter de attestation te kunnen demonstreren.
+is om ook beter de attestation te kunnen demonstreren.
 
 De grote aantallen gebruikers zijn tot stand gekomen door middel van generatieve AI (Chat GPT). Daardoor is geen grip op
 de kwaliteit van de namen. Zo zijn er vooral nederlandstalige namen gekozen en is er bijvoorbeeld geen rekening gehouden
