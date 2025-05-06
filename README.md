@@ -79,7 +79,7 @@ Voor Software Engineers is er een handleiding om zelf nieuwe permissies toe te v
 
 # Eisen aan de werkplek
 
-De volgende eisen worden gesteld aan de werkplek (jou computer / laptop):
+De volgende eisen worden gesteld aan de werkplek (jouw computer / laptop):
 
 1. Een Command Line Interface zoals Powershell, Xterm, cmd.exe voor het uitvoeren van Docker commando's
 2. Een werkende Docker installatie die gebruik kan maken van `docker compose`.
