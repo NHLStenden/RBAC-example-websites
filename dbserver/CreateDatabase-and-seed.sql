@@ -361,72 +361,44 @@ BEGIN
     VALUES (@var_Role_all_personell, @var_permission_SharePoint_News);
 
     -- Marketing
-    INSERT INTO role_permissions(fk_idRole, fk_idPermission)
-    VALUES (@var_Role_Marketing_Management, @var_permission_Marketing_Read_Campaign);
+    INSERT INTO role_permissions(fk_idRole, fk_idPermission) VALUES (@var_Role_Marketing, @var_permission_Marketing_Basic_Access);
 
-    INSERT INTO role_permissions(fk_idRole, fk_idPermission)
-    VALUES (@var_Role_Marketing_Management, @var_permission_Marketing_Delete_Campaign);
+    INSERT INTO role_permissions(fk_idRole, fk_idPermission) VALUES (@var_Role_Marketing_Management, @var_permission_Marketing_Read_Campaign);
+    INSERT INTO role_permissions(fk_idRole, fk_idPermission) VALUES (@var_Role_Marketing_Management, @var_permission_Marketing_Delete_Campaign);
+    INSERT INTO role_permissions(fk_idRole, fk_idPermission) VALUES (@var_Role_Marketing_Management, @var_permission_Marketing_Approve_Campaign);
 
-    INSERT INTO role_permissions(fk_idRole, fk_idPermission)
-    VALUES (@var_Role_Marketing_Management, @var_permission_Marketing_Approve_Campaign);
-
-    INSERT INTO role_permissions(fk_idRole, fk_idPermission)
-    VALUES (@var_Role_Marketing, @var_permission_Marketing_Basic_Access);
-
-    INSERT INTO role_permissions(fk_idRole, fk_idPermission)
-    VALUES (@var_Role_Marketing_Employees, @var_permission_Marketing_Create_Campaign);
-    INSERT INTO role_permissions(fk_idRole, fk_idPermission)
-    VALUES (@var_Role_Marketing_Employees, @var_permission_Marketing_Read_Campaign);
-    INSERT INTO role_permissions(fk_idRole, fk_idPermission)
-    VALUES (@var_Role_Marketing_Employees, @var_permission_Marketing_Update_Campaign);
+    INSERT INTO role_permissions(fk_idRole, fk_idPermission) VALUES (@var_Role_Marketing_Employees, @var_permission_Marketing_Create_Campaign);
+    INSERT INTO role_permissions(fk_idRole, fk_idPermission) VALUES (@var_Role_Marketing_Employees, @var_permission_Marketing_Read_Campaign);
+    INSERT INTO role_permissions(fk_idRole, fk_idPermission) VALUES (@var_Role_Marketing_Employees, @var_permission_Marketing_Update_Campaign);
 
     -- Grades
     INSERT INTO role_permissions(fk_idRole, fk_idPermission) VALUES (@var_Role_all_students, @var_permission_Use_Mail);
-    INSERT INTO role_permissions(fk_idRole, fk_idPermission)
-    VALUES (@var_Role_All_Students, @var_permission_Grades_Basic_Access);
-    INSERT INTO role_permissions(fk_idRole, fk_idPermission)
-    VALUES (@var_Role_All_Students, @var_permission_Grades_Read_Own_Grades);
-    INSERT INTO role_permissions(fk_idRole, fk_idPermission)
-    VALUES (@var_Role_All_Students, @var_permission_Grades_Show_Self);
-    INSERT INTO role_permissions(fk_idRole, fk_idPermission)
-    VALUES (@var_Role_All_Students, @var_permission_SharePoint_StudentTools);
-    INSERT INTO role_permissions(fk_idRole, fk_idPermission)
-    VALUES (@var_Role_All_Students, @var_permission_SharePoint_News);
+    INSERT INTO role_permissions(fk_idRole, fk_idPermission) VALUES (@var_Role_All_Students, @var_permission_Grades_Basic_Access);
+    INSERT INTO role_permissions(fk_idRole, fk_idPermission) VALUES (@var_Role_All_Students, @var_permission_Grades_Read_Own_Grades);
+    INSERT INTO role_permissions(fk_idRole, fk_idPermission) VALUES (@var_Role_All_Students, @var_permission_Grades_Show_Self);
+    INSERT INTO role_permissions(fk_idRole, fk_idPermission) VALUES (@var_Role_All_Students, @var_permission_SharePoint_StudentTools);
+    INSERT INTO role_permissions(fk_idRole, fk_idPermission) VALUES (@var_Role_All_Students, @var_permission_SharePoint_News);
 
-    INSERT INTO role_permissions(fk_idRole, fk_idPermission)
-    VALUES (@var_Role_All_Teachers, @var_permission_Grades_Basic_Access);
-    INSERT INTO role_permissions(fk_idRole, fk_idPermission)
-    VALUES (@var_Role_All_Teachers, @var_permission_SharePoint_TeacherTools);
+    INSERT INTO role_permissions(fk_idRole, fk_idPermission) VALUES (@var_Role_All_Teachers, @var_permission_Grades_Basic_Access);
+    INSERT INTO role_permissions(fk_idRole, fk_idPermission) VALUES (@var_Role_All_Teachers, @var_permission_SharePoint_TeacherTools);
 
-    INSERT INTO role_permissions(fk_idRole, fk_idPermission)
-    VALUES (@var_Role_Grades_Teachers, @var_permission_Grades_Create_Gradelists);
-    INSERT INTO role_permissions(fk_idRole, fk_idPermission)
-    VALUES (@var_Role_Grades_Teachers, @var_permission_Grades_Approve_Gradeslist);
-    INSERT INTO role_permissions(fk_idRole, fk_idPermission)
-    VALUES (@var_Role_Grades_Teachers, @var_permission_Grades_Read_StudentDetails);
+    INSERT INTO role_permissions(fk_idRole, fk_idPermission) VALUES (@var_Role_Grades_Teachers, @var_permission_Grades_Create_Gradelists);
+    INSERT INTO role_permissions(fk_idRole, fk_idPermission) VALUES (@var_Role_Grades_Teachers, @var_permission_Grades_Approve_Gradeslist);
+    INSERT INTO role_permissions(fk_idRole, fk_idPermission) VALUES (@var_Role_Grades_Teachers, @var_permission_Grades_Read_StudentDetails);
 
-    INSERT INTO role_permissions(fk_idRole, fk_idPermission)
-    VALUES (@var_Role_ICT_Support, @var_permission_AdminPanel_Attestation_Roles);
-    INSERT INTO role_permissions(fk_idRole, fk_idPermission)
-    VALUES (@var_Role_ICT_Support, @var_permission_AdminPanel_Attestation_Users);
+    INSERT INTO role_permissions(fk_idRole, fk_idPermission) VALUES (@var_Role_ICT_Support, @var_permission_AdminPanel_Attestation_Roles);
+    INSERT INTO role_permissions(fk_idRole, fk_idPermission) VALUES (@var_Role_ICT_Support, @var_permission_AdminPanel_Attestation_Users);
 
-    INSERT INTO role_permissions(fk_idRole, fk_idPermission)
-    VALUES (@var_Role_Authorisation_Manager, @var_permission_AdminPanel_AddUserToRole);
-    INSERT INTO role_permissions(fk_idRole, fk_idPermission)
-    VALUES (@var_Role_Authorisation_Manager, @var_permission_AdminPanel_RevokeUserFromRole);
-    INSERT INTO role_permissions(fk_idRole, fk_idPermission)
-    VALUES (@var_Role_Authorisation_Manager, @var_permission_AdminPanel_Manage_RolePermissions);
+    INSERT INTO role_permissions(fk_idRole, fk_idPermission) VALUES (@var_Role_Authorisation_Manager, @var_permission_AdminPanel_AddUserToRole);
+    INSERT INTO role_permissions(fk_idRole, fk_idPermission) VALUES (@var_Role_Authorisation_Manager, @var_permission_AdminPanel_RevokeUserFromRole);
+    INSERT INTO role_permissions(fk_idRole, fk_idPermission) VALUES (@var_Role_Authorisation_Manager, @var_permission_AdminPanel_Manage_RolePermissions);
 
-    INSERT INTO role_permissions(fk_idRole, fk_idPermission)
-    VALUES (@var_Role_ICT_Support, @var_permission_SharePoint_Basic_Access);
-    INSERT INTO role_permissions(fk_idRole, fk_idPermission)
-    VALUES (@var_Role_ICT_Support, @var_permission_Admin_Panel);
+    INSERT INTO role_permissions(fk_idRole, fk_idPermission) VALUES (@var_Role_ICT_Support, @var_permission_SharePoint_Basic_Access);
+    INSERT INTO role_permissions(fk_idRole, fk_idPermission) VALUES (@var_Role_ICT_Support, @var_permission_Admin_Panel);
 
-    INSERT INTO role_permissions(fk_idRole, fk_idPermission)
-    VALUES (@var_Role_All_Students, @var_permission_SharePoint_Basic_Access);
+    INSERT INTO role_permissions(fk_idRole, fk_idPermission) VALUES (@var_Role_All_Students, @var_permission_SharePoint_Basic_Access);
 
-    INSERT INTO role_permissions(fk_idRole, fk_idPermission)
-    VALUES (@var_Role_HRM, @var_permission_HRM_Manage_Employees);
+    INSERT INTO role_permissions(fk_idRole, fk_idPermission) VALUES (@var_Role_HRM, @var_permission_HRM_Manage_Employees);
 
 
 END $$
