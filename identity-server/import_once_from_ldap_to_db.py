@@ -25,7 +25,8 @@ DB_CONFIG = {
 dn_naar_functie = {
     "ou=Teachers,ou=Opleidingen,dc=NHLStenden,dc=com": "docent",
     "ou=ICT Support,ou=Staff,dc=NHLStenden,dc=com": "medewerker ICT",
-    "ou=Marketing,ou=Staff,dc=NHLStenden,dc=com":"medewerker marketing",
+    "ou=Marketing Employee,ou=Staff,dc=NHLStenden,dc=com":"medewerker marketing",
+    "cn=Marketing managers,ou=roles,dc=NHLStenden,dc=com":"marketing manager",
     "ou=HRM,ou=Staff,dc=NHLStenden,dc=com":"medewerker HRM",
 }
 def clear_table(cursor):
