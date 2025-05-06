@@ -2,6 +2,7 @@
 
 include_once '../../shared/lib/RBACSupport.php';
 include_once '../../shared/partials/header.php';
+include_once '../../shared/lib/db.php';
 
 $rbac = new RBACSupport($_SERVER["AUTHENTICATE_UID"]);
 if (!$rbac->process()) {
@@ -13,7 +14,7 @@ if (!$rbac->has(Permission_HRM_Manage_Employees)) {
 }
 
 // form.php - Toevoegen/bewerken
-require 'config.php';
+
 $id = $_GET['id'] ?? null;
 $medewerker = [
     'personeelsnummer' => '',
@@ -27,6 +28,7 @@ $medewerker = [
 ];
 
 if ($id) {
+    $pdo = ConnectDatabaseHRM();
     $stmt = $pdo->prepare("SELECT * FROM medewerkers WHERE idMedewerker = ?");
     $stmt->execute([$id]);
     $medewerker = $stmt->fetch(PDO::FETCH_ASSOC);

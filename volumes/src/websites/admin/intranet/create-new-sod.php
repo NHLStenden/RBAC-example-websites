@@ -1,6 +1,7 @@
 <?php
 include_once '../../shared/lib/RBACSupport.php';
 include_once '../../shared/partials/header.php';
+include_once '../../shared/lib/db.php';
 
 $rbac = new RBACSupport($_SERVER["AUTHENTICATE_UID"]);
 if (!$rbac->process()) {
@@ -29,7 +30,7 @@ if ($permission1 > $permission2) {
 }
 
 
-$pdo  = new PDO('mysql:host=iam-example-db-server;dbname=IAM;', "student", "test1234");
+$pdo  = ConnectDatabaseIAM();
 $sql  = "INSERT INTO permission_conflicts (idPermissionA, idPermissionB, description) VALUES (:id1, :id2, :description)";
 $stmt = $pdo->prepare($sql);
 

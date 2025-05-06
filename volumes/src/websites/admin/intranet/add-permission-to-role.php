@@ -2,6 +2,7 @@
 
 include_once '../../shared/lib/RBACSupport.php';
 include_once '../../shared/partials/header.php';
+include_once '../../shared/lib/db.php';
 
 $rbac = new RBACSupport($_SERVER["AUTHENTICATE_UID"]);
 if (!$rbac->process()) {
@@ -22,7 +23,7 @@ if (!is_numeric($_POST["idRole"]) || !is_numeric($_POST["idPermission"])) {
 $idRole       = (int)$_POST["idRole"];
 $idPermission = (int)$_POST["idPermission"];
 
-$pdo = new PDO('mysql:host=iam-example-db-server;dbname=IAM;', "student", "test1234");
+$pdo = ConnectDatabaseIAM();
 
 $sql  = "INSERT INTO role_permissions (fk_idPermission, fk_idRole) VALUES(:idPermission, :idRole)";
 $stmt = $pdo->prepare($sql);

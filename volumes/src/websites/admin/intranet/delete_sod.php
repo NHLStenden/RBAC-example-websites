@@ -2,6 +2,7 @@
 
 include_once '../../shared/lib/RBACSupport.php';
 include_once '../../shared/partials/header.php';
+include_once '../../shared/lib/db.php';
 
 // set expires header
 header('Expires: Thu, 1 Jan 1970 00:00:00 GMT');
@@ -31,7 +32,7 @@ if (!is_numeric($_GET["id"])) {
 
 $idConflict = (int)$_GET['id'];
 
-$pdo = new PDO('mysql:host=iam-example-db-server;dbname=IAM;', "student", "test1234");
+$pdo = ConnectDatabaseIAM();
 
 $sql  = "DELETE FROM permission_conflicts WHERE idConflict = :idConflict";
 $stmt = $pdo->prepare($sql);

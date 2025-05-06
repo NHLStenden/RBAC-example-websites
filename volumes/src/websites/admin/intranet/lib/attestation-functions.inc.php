@@ -39,7 +39,7 @@ function collectAllUsersAndGroupMemberships(): array
       $user_info = [
         'CN' => $user['cn'][0],
         'SN' => $user['sn'][0],
-        'UID' => $user['uid'][0],
+        'UID' => $user['uid'][0] ?? '',
         'Last DN Part' => $last_dn_part
       ];
 

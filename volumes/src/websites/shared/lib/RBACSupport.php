@@ -2,6 +2,7 @@
 
 include_once 'ldap_constants.inc.php';
 include_once 'ldap_support.inc.php';
+include_once 'db.php';
 
 const Permission_Use_Mail                   = 'Use_Mail';
 const Permission_Admin_Panel                = 'AdminPanel';
@@ -47,7 +48,7 @@ class RBACSupport
 
   public function __construct(string $username)
   {
-    $this->db = new PDO('mysql:host=iam-example-db-server;dbname=IAM;', "student", "test1234");
+    $this->db = ConnectDatabaseIAM();
     try {
       $this->lnk = ConnectAndCheckLDAP();
     } catch (Exception $ex) {

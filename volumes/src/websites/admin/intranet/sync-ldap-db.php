@@ -2,6 +2,7 @@
 
 include_once '../../shared/lib/RBACSupport.php';
 include_once '../../shared/partials/header.php';
+include_once '../../shared/lib/db.php';
 
 $rbac = new RBACSupport($_SERVER["AUTHENTICATE_UID"]);
 if (!$rbac->process()) {
@@ -22,7 +23,7 @@ function DoSync()
         $ldap_conn = ConnectAndCheckLDAP();
 
         // Verbinding maken met MySQL via PDO
-        $pdo = new PDO('mysql:host=iam-example-db-server;dbname=IAM;', "student", "test1234");
+        $pdo = ConnectDatabaseIAM();
 
         // LDAP zoekopdracht uitvoeren
         $search = ldap_search($ldap_conn, $ldap_dn, "(objectClass=groupOfUniqueNames)");

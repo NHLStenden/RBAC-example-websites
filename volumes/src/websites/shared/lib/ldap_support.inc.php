@@ -1,6 +1,7 @@
 <?php
 
 include_once 'audittrail.lib.php';
+include_once 'db.php';
 
 /** @file ldap_support.inc.php
  * Lots of documented LDAP function

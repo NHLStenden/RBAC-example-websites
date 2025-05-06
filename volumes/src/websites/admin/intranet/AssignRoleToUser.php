@@ -3,6 +3,7 @@
 include_once '../../shared/lib/RBACSupport.php';
 include_once '../../shared/partials/header.php';
 include_once '../../shared/lib/ldap_support.inc.php';
+include_once '../../shared/lib/db.php';
 
 $rbac = new RBACSupport($_SERVER["AUTHENTICATE_UID"]);
 if (!$rbac->process()) {
@@ -35,7 +36,7 @@ if (!$existingRBACForUser->addPermissionsForRole($role_dn) ){
   die("Could not find role : $role_dn\n");
 }
 
-$pdo     = new PDO('mysql:host=iam-example-db-server;dbname=IAM;', "student", "test1234");
+$pdo     = ConnectDatabaseIAM();
 $sodsSQL = "SELECT * FROM vw_SOD";
 $stmt    = $pdo->prepare($sodsSQL);
 $stmt->execute();

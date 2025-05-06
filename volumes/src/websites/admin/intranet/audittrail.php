@@ -1,6 +1,7 @@
 <?php
 include_once '../../shared/lib/RBACSupport.php';
 include_once '../../shared/partials/header.php';
+include_once '../../shared/lib/db.php';
 
 define('MAX_LINES_DISPLAYED_PER_LOGFILE', 20);
 
@@ -15,7 +16,7 @@ if (!$rbac->has(Permission_Admin_Panel)) {
 
 $header = showheader(Websites::WEBSITE_ADMIN, basename(__FILE__), $rbac);
 
-$db = new PDO('mysql:host=iam-example-db-server;dbname=IAM;', "student", "test1234");
+$db = ConnectDatabaseIAM();
 $SQL = "SELECT * FROM audittrail ORDER BY timestamp DESC LIMIT " . MAX_LINES_DISPLAYED_PER_LOGFILE . ";";
 $stmt = $db->prepare($SQL);
 $stmt->execute();

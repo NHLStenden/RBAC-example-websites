@@ -1,11 +1,13 @@
 <?php
 // delete.php - Verwijderen
-require 'config.php';
+include_once '../../shared/lib/db.php';
+
 $id = $_GET['id'] ?? null;
 
 if ($id) {
-    $stmt = $pdo->prepare("DELETE FROM medewerkers WHERE idMedewerker = ?");
-    $stmt->execute([$id]);
+  $pdo  = ConnectDatabaseHRM();
+  $stmt = $pdo->prepare("DELETE FROM medewerkers WHERE idMedewerker = ?");
+  $stmt->execute([$id]);
 }
 header('Location: index.php');
 exit;

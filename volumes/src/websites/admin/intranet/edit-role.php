@@ -2,6 +2,7 @@
 
 include_once '../../shared/lib/RBACSupport.php';
 include_once '../../shared/partials/header.php';
+include_once '../../shared/lib/db.php';
 
 $rbac = new RBACSupport($_SERVER["AUTHENTICATE_UID"]);
 if (!$rbac->process()) {
@@ -14,7 +15,7 @@ if (!$rbac->has(Permission_AdminPanel_Manage_RolePermissions)) {
 
 $idRole = (int)$_GET["id"];
 
-$pdo = new PDO('mysql:host=iam-example-db-server;dbname=IAM;', "student", "test1234");
+$pdo = ConnectDatabaseIAM();
 
 $sql  = "SELECT * FROM `roles` WHERE idRole = :idRole";
 $stmt = $pdo->prepare($sql);

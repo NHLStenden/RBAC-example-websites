@@ -2,6 +2,7 @@
 include_once '../../shared/lib/RBACSupport.php';
 include_once '../../shared/partials/header.php';
 include_once '../../shared/lib/ldap_support.inc.php';
+include_once '../../shared/lib/db.php';
 
 function formatDate($date)
 {
@@ -41,7 +42,8 @@ if (!$rbac->has(Permission_HRM_Manage_Employees)) {
 }
 
 // index.php - Medewerkers lijst
-require 'config.php';
+
+$pdo = ConnectDatabaseHRM();
 $medewerkers = $pdo->query("SELECT * FROM medewerkers ORDER BY achternaam, voornaam")->fetchAll(PDO::FETCH_ASSOC);
 $lnk = ConnectAndCheckLDAP();
 

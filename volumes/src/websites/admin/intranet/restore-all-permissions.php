@@ -11,7 +11,7 @@ if (!$rbac->has(Permission_AdminPanel_Manage_RolePermissions)) {
   die();
 }
 
-$pdo = new PDO('mysql:host=iam-example-db-server;dbname=IAM;', "student", "test1234");
+$pdo = ConnectDatabaseIAM();
 
 $sql  = "CALL ResetAllRolesAndPermissions();";
 $stmt = $pdo->prepare($sql);

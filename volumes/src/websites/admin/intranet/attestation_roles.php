@@ -4,6 +4,7 @@
 include_once '../../shared/lib/RBACSupport.php';
 include_once '../../shared/partials/header.php';
 include_once 'lib/attestation-functions.inc.php';
+include_once '../../shared/lib/db.php';
 
 $rbac = new RBACSupport($_SERVER["AUTHENTICATE_UID"]);
 if (!$rbac->process()) {
@@ -17,7 +18,7 @@ if (!$rbac->has(Permission_AdminPanel_Attestation_Roles)) {
 
 function createAttestationTable()
 {
-    $pdo = new PDO('mysql:host=iam-example-db-server;dbname=IAM;', "student", "test1234");
+    $pdo = ConnectDatabaseIAM();
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     [$header, $report] = getRolePermissionCrossTable($pdo);
