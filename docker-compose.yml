@@ -36,9 +36,7 @@ services:
       - "iam-identity-server.docker:127.0.0.1"
     working_dir: /app
     volumes:
-      - type: bind
-        source: ./volumes/ldap-data
-        target: /etc/slapd
+      - identity-server:/app
 
   iam-example-db-server:
     # https://hub.docker.com/_/mariadb/
@@ -100,3 +98,4 @@ networks:
 volumes:
   mariadb-data:
   hrm-data:
+  identity-server:
