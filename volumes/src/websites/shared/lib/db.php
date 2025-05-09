@@ -37,3 +37,37 @@ function ConnectDatabaseHRM(): PDO
 
   return $pdo;
 }
+
+function getRoleById(int $id): string {
+  $pdo = ConnectDatabaseIAM();
+
+  $sql = "SELECT * FROM roles WHERE idRole = :id";
+  $stmt = $pdo->prepare($sql);
+  $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+  $stmt->execute();
+
+  $record = $stmt->fetch(PDO::FETCH_ASSOC);
+  if (is_array($record)) {
+    return $record['title'];
+  }
+  else {
+    return '?';
+  }
+}
+
+function getPermissionById(int $id): string
+{
+  $pdo = ConnectDatabaseIAM();
+
+  $sql  = "SELECT * FROM permissions WHERE idPermission = :id";
+  $stmt = $pdo->prepare($sql);
+  $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+  $stmt->execute();
+
+  $record = $stmt->fetch(PDO::FETCH_ASSOC);
+  if (is_array($record)) {
+    return $record['title'];
+  } else {
+    return '?';
+  }
+}

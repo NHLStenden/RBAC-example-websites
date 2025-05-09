@@ -45,8 +45,10 @@ if ($stmt->rowCount() == 0) {
   die();
 }
 
-$role   = $records[0];
-$idRole = $role['idRole'];
+$role           = $records[0];
+$roleName       = $role['role'];
+$permissionName = $role['permission'];
+$idRole         = $role['idRole'];
 
 $sql  = "DELETE FROM role_permissions WHERE idRolePermission = :idRole";
 $stmt = $pdo->prepare($sql);
@@ -57,6 +59,9 @@ if ($stmt->rowCount() !== 1) {
   http_response_code(404);
   die('not found');
 }
+
+LogAuditRecord("PERM", "02", "INFO", "Deleted permission [$permissionName] from role [$roleName]");
+
 
 http_response_code(301);
 header('Location: edit-role.php?id=' . $idRole);

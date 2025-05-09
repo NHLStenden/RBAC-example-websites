@@ -40,6 +40,11 @@ $stmt->bindParam(":description", $description);
 
 try {
   $stmt->execute();
+
+  $permission1Name = getPermissionById($permission1);
+  $permission2Name = getPermissionById($permission2);
+
+  LogAuditRecord("SOD", "03", "INFO", "Created new SOD-rule { $description }: [$permission1Name] + [$permission2Name]");
 } catch (PDOException $e) {
   if ($e->getCode() == 23000) {
     die("Deze combinatie van permissies bestaat al. ");

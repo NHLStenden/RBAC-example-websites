@@ -436,8 +436,8 @@ function RevokeUserFromRole(LDAP\Connection $lnk, string $roleDN, string $userDN
   ];
   $result = @ldap_mod_del($lnk, $roleDN, $entry);
   if ($result) {
-    $roleDN = preg_replace("/dc=NHLStenden,dc=com/", '', $roleDN);
-    $userDN = preg_replace("/dc=NHLStenden,dc=com/", '', $userDN);
+    $roleDN = preg_replace("/,dc=NHLStenden,dc=com/", '', $roleDN);
+    $userDN = preg_replace("/,dc=NHLStenden,dc=com/", '', $userDN);
 
     LogAuditRecord("AUTHOR", "REVOKE", "WARN", "Revoked user [$userDN] role from [$roleDN]");
     return $result;
@@ -451,8 +451,8 @@ function AssignUserToRole(LDAP\Connection $lnk, string $roleDN, string $userDN):
   $entry = ["uniqueMember" => [$userDN]];
   try {
     if (@ldap_mod_add($lnk, $roleDN, $entry)) {
-      $roleDN = preg_replace("/dc=NHLStenden,dc=com/", '', $roleDN);
-      $userDN = preg_replace("/dc=NHLStenden,dc=com/", '', $userDN);
+      $roleDN = preg_replace("/,dc=NHLStenden,dc=com/", '', $roleDN);
+      $userDN = preg_replace("/,dc=NHLStenden,dc=com/", '', $userDN);
 
       LogAuditRecord("AUTHOR", "ADD", "INFO", "Role [$roleDN] assigned to user [$userDN]");
       return true;

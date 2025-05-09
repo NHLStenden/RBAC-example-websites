@@ -63,13 +63,6 @@ $stmt->bindValue(':idRole', $idRole, PDO::PARAM_INT);
 $stmt->execute();
 $allExistingPermissions = $stmt->fetchAll();
 
-/*
-$optionsListForSelectPermissions = implode("\n", array_map(
-        function ($p) {
-    return "<option value='{$p['idPermission']}'>{$p['title']}</option>";
-}, $allExistingPermissions));
-*/
-
 // Groepeer permissies per applicatie
 $groupedPermissions = [];
 foreach ($allExistingPermissions as $permission) {
@@ -142,7 +135,7 @@ header('Pragma: no-cache');
               </table>
           <?php } else {
             echo <<< NO_DATA
-<p>Er zijn nog geen permissies bij deze rol gedefinieerd</p>
+        <p>Er zijn nog geen permissies bij deze rol gedefinieerd</p>
 NO_DATA;
           }
           ?>
