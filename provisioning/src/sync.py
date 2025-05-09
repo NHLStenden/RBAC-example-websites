@@ -427,3 +427,4 @@ def deactivate_removed_users():
 if __name__ == "__main__":
     sync_medewerkers()
     deactivate_removed_users()
+    print(f"Finished User Provisioning synchronisation")
