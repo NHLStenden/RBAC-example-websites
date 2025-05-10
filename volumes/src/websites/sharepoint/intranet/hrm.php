@@ -26,8 +26,6 @@ if (!$rbac->has(Permission_SharePoint_HRM)) {
     <link href="css/header.css" rel="stylesheet">
     <link href="css/hrm.css" rel="stylesheet">
     <link rel="icon" type="image/png" href="../favicon.png">
-    <style>
-    </style>
 </head>
 <body>
 <article>
