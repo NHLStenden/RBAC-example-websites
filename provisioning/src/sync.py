@@ -242,12 +242,12 @@ def add_medewerker_to_ldap(conn, medewerker):
 
 # Update een bestaande medewerker in LDAP
 def update_medewerker_in_ldap(conn, dn, medewerker):
-    medewerkerType = medewerker["medewerkerType"]
 
+    medewerkerType = medewerker["medewerkerType"]
     voornaam = medewerker["voornaam"]
     achternaam = medewerker["achternaam"]
 
-    uid = generate_uid(dn, voornaam, achternaam, medewerker["personeelsnummer"])
+    # uid = generate_uid(dn, voornaam, achternaam, medewerker["personeelsnummer"])
 
     changes = {
         "givenName": [(MODIFY_REPLACE, [voornaam])],
@@ -257,11 +257,11 @@ def update_medewerker_in_ldap(conn, dn, medewerker):
         "postalCode": [(MODIFY_REPLACE, [medewerker["postcode"] or ""])],
         "employeeType": [(MODIFY_REPLACE, [medewerkerType or ""])],
         "organizationName": [(MODIFY_REPLACE, [medewerker["team"] or ""])],
-        "uid": [(MODIFY_REPLACE, [uid or ""])],
     }
 
+
     if conn.modify(dn, changes):
-        print(f"🔄 Bijgewerkt in LDAP: {dn} met type {medewerkerType} / uid = {uid}")
+        print(f"🔄 Bijgewerkt in LDAP: {dn} met type {medewerkerType} ")
         # log_audit("LDAP", "UPDATE", "INFO", f"Bijgewerkt: {dn}")
         updateLastSyncTimestampForUser(medewerker["idMedewerker"])
     else:
@@ -332,7 +332,7 @@ def sync_medewerkers():
 
     for medewerker in medewerkers:
         dn = find_medewerker_by_personeelsnummer(conn_ldap, medewerker["personeelsnummer"])
-        if dn:
+        if dn and not userIsDummy(dn):
             correct_dn = genereer_dn(medewerker)
             if dn.lower() != correct_dn.lower():
                 # De gebruiker zit in de verkeerde OU → verplaatsen
@@ -361,9 +361,9 @@ def sync_medewerkers():
     conn_ldap.unbind()
 
 
-def get_all_ldap_users(conn):
-    search_filter = "(&(objectClass=inetOrgPerson)(!(employeeType=Student)))"
-    conn.search(configldap3.LDAP_CONFIG["base_dn"], search_filter, attributes=["employeeNumber", "uid"])
+def get_all_existing_ldap_users(conn):
+    search_filter = "(&(objectClass=inetOrgPerson)(!(employeeType=Student))(employeeNumber=*)(uid=*))"
+    conn.search(configldap3.LDAP_CONFIG["base_dn"], search_filter, attributes=["employeeNumber", "uid","sn","givenName"])
 
     ldap_users = {}
     for entry in conn.entries:
@@ -371,21 +371,26 @@ def get_all_ldap_users(conn):
             ldap_users[entry.entry_dn] = {
                 "dn": entry.entry_dn,
                 "employeeNumber": entry.employeeNumber.value,
-                "uid": entry.uid.value if "uid" in entry else None
+                "uid": entry.uid.value if "uid" in entry else None,
+                "givenName": entry.givenname.value if "givenname" in entry else None,
+                "sn": entry.sn.value if "sn" in entry else None,
             }
     return ldap_users
 
+def get_all_disabled_ldap_users(conn):
+    search_filter = "(&(objectClass=inetOrgPerson)(!(employeeType=Student))(employeeNumber=*)(!(uid=*)))"
+    conn.search(configldap3.LDAP_CONFIG["base_dn"], search_filter, attributes=["employeeNumber","sn","givenName"])
 
-#
-#
-# # Zoek alle gebruikers in LDAP
-# def get_all_ldap_users(conn):
-#
-#     search_filter = "(&(objectClass=inetOrgPerson)(!(employeeType=Student)))"
-#     conn.search(LDAP_CONFIG["base_dn"], search_filter, attributes=["employeeNumber", "userPassword"])
-#     ldap_users = {entry.entry_dn: entry.employeeNumber.value for entry in conn.entries if entry.employeeNumber}
-#     return ldap_users
-
+    ldap_users = {}
+    for entry in conn.entries:
+        if entry.employeeNumber:
+            ldap_users[entry.entry_dn] = {
+                "dn": entry.entry_dn,
+                "employeeNumber": entry.employeeNumber.value,
+                "givenName": entry.givenname.value if "givenname" in entry else None,
+                "sn": entry.sn.value if "sn" in entry else None,
+            }
+    return ldap_users
 
 # Wachtwoord leegmaken voor een inactieve medewerker
 def deactivate_ldap_account(conn, dn):
@@ -400,25 +405,74 @@ def deactivate_ldap_account(conn, dn):
     else:
         print(f"❌ Fout bij wachtwoord legen voor {dn}: {conn.result}")
 
+# Wachtwoord leegmaken voor een inactieve medewerker
+def activate_ldap_account(conn, dn, ldapEntry):
+    password = "Test1234!"
+    password_hash = "{SHA}" + base64.b64encode(hashlib.sha1(password.encode()).digest()).decode()
+
+    voornaam = ldapEntry["givenName"]
+    achternaam = ldapEntry["sn"]
+    personeelsNr = ldapEntry["employeeNumber"]
+
+    uid = generate_uid(dn, voornaam, achternaam, personeelsNr)
+
+    changes = {
+        "userPassword": [(MODIFY_REPLACE, [password_hash])],
+        "uid": [(MODIFY_ADD, [uid])]
+    }
+
+    print(f"- Enable user {dn}")
+    if conn.modify(dn, changes):
+        log_audit("ACCOUNT", "ENABLE", "INFO", f"Enable account: [{dn}]")
+        print(f"+ Wachtwoord + UID opnieuw ingesteld account: {dn}")
+    else:
+        print(f"❌ Fout bij wachtwoord opnieuw instellen voor {dn}: {conn.result}")
+
+def userIsDummy(dn):
+    return dn == 'cn=Dummy User,ou=Staff,dc=NHLStenden,dc=com'
 
 # Controleer welke medewerkers niet meer in de database staan en deactiveer hun account
 def deactivate_removed_users():
     print("------------------------------------------------------------------------------------------")
-    print("------------------- Deactiveren accounts die niet meer in medewerkerslijst staan----------")
+    print("------------------- deactiveren accounts die niet meer in medewerkerslijst staan ---------")
     print("------------------------------------------------------------------------------------------")
     conn_ldap = connect_ldap()
     actieve_medewerkers = get_medewerkers_employeeNumber()
     actieve_medewerkers = {str(num) for num in actieve_medewerkers}
 
-    ldap_users = get_all_ldap_users(conn_ldap)
+    ldap_users = get_all_existing_ldap_users(conn_ldap)
 
     for dn, entry in ldap_users.items():
-        print(f"- testing employee {dn}")
-        employee_nr = entry["employeeNumber"]
-        uid = entry["uid"]
+        print(f"- testing employee {dn} to be disabled")
+        if not userIsDummy(dn):
+            employee_nr = entry["employeeNumber"]
+            uid = entry["uid"]
 
-        if uid is not None and str(employee_nr) not in actieve_medewerkers:
-            deactivate_ldap_account(conn_ldap, dn)
+            if uid is not None and str(employee_nr) not in actieve_medewerkers:
+                deactivate_ldap_account(conn_ldap, dn)
+        else:
+            print(f"! Skipping {dn}")
+
+    conn_ldap.unbind()
+def enabled_reinstated_users():
+    print("------------------------------------------------------------------------------------------")
+    print("-------------------  activeren accounts die weer in medewerkerslijst staan ---------------")
+    print("------------------------------------------------------------------------------------------")
+    conn_ldap = connect_ldap()
+
+    ldap_users = get_all_disabled_ldap_users(conn_ldap)
+    actieve_medewerkers = get_medewerkers_employeeNumber()
+    actieve_medewerkers = {str(num) for num in actieve_medewerkers}
+
+    for dn, entry in ldap_users.items():
+        print(f"- testing if employee {dn} must be enabled again")
+        if not userIsDummy(dn):
+            employee_nr = entry["employeeNumber"]
+
+            if str(employee_nr) in actieve_medewerkers:
+                activate_ldap_account(conn_ldap, dn, entry)
+        else:
+            print(f"! Skipping {dn}")
 
     conn_ldap.unbind()
 
@@ -427,4 +481,5 @@ def deactivate_removed_users():
 if __name__ == "__main__":
     sync_medewerkers()
     deactivate_removed_users()
-    print(f"Finished User Provisioning synchronisation")
+    enabled_reinstated_users()
+    print("User provisioning done.")
