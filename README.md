@@ -146,13 +146,28 @@ Er is een [toelichting](./Documentation/Websites.md) beschikbaar over de werking
 
 ---
 
+# Automatische tests met Playwright
+
+Er wordt gewerkt aan automatische tests. Deze worden vormgegeven met [Playwright](https://playwright.dev/). Deze zijn
+te vinden in de map [tests](./tests/playwright).
+
+Om deze tests te draaien moet in die map `npm install` gedraaid worden na installatie van Playwright en de headless 
+browsers (zie installatiehandleiding van [Playwright](https://playwright.dev/docs/intro)).
+
+Daarna kunnen de tests gedraaid worden vanuit de map [tests](./tests/playwright):
+
+```bash
+npx playwright test --config=playwright.config.ts
+npx playwright show-report
+```
+
 # Ambitie
 
 Natuurlijk zijn er nog meer onderwerpen te implementeren. Deze staan voorlopig nog op de lijst met 'ambities':
 
 * Twee factor authenticatie via TOTP met een Authenticator app, voor bijvoorbeeld de Admin Portal
 * Verdere beveiliging van user input (sanitation).
-* Automatische tests met Playwright
+* (Meer) automatische tests met Playwright: het automatisch testen van de oefeningen
 
 # Colofon
 
