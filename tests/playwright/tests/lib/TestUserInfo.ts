@@ -53,7 +53,7 @@ export const  USER_ICT = new DockerWebUser(
     USER_ROLE_medewerker_ICT_Support, 'staff'
 );
 export const USER_ICT_AUTHMGR = new DockerWebUser(
-    'jmeijer1', 'Test1234!', 'Jeroen Meijer', 'cn=Jeroen Meijer,ou=ICT Support,ou=Staff,dc=NHLStenden,dc=com',
+    'jmeijer2', 'Test1234!', 'Jeroen Meijer', 'cn=Jeroen Meijer,ou=ICT Support,ou=Staff,dc=NHLStenden,dc=com',
     USER_ROLE_medewerker_ICT_AuthorisationManager, 'staff'
 );
 
