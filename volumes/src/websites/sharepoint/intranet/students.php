@@ -55,7 +55,7 @@ $studentActions = [
     <section class="tiles">
         <div class="container">
       <?php foreach ($studentActions as $tool): ?>
-          <div class="tile">
+          <div class="tile" role="gridcell" aria-label="<?= $tool['title'] ?>">
               <div class="icon"><?= htmlspecialchars($tool['icon'], ENT_QUOTES) ?></div>
               <div class="tile-title"><?= htmlspecialchars($tool['title'], ENT_QUOTES) ?></div>
           </div>

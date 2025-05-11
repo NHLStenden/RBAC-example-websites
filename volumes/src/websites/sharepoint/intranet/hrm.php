@@ -12,7 +12,28 @@ if (!$rbac->has(Permission_SharePoint_HRM)) {
   echo "You do not have permission to access this page to show your student info.";
   die();
 }
-
+$tiles = [
+  ['icon' => '💼', 'title' => 'Declareren'],
+  ['icon' => '📄', 'title' => 'Salarisstroken'],
+  ['icon' => '💪', 'title' => 'Vitaliteit'],
+  ['icon' => '🗓️', 'title' => 'Verlof aanvragen'],
+  ['icon' => '📚', 'title' => 'Trainingen'],
+  ['icon' => '📝', 'title' => 'Feedback geven'],
+  ['icon' => '👤', 'title' => 'Persoonlijke gegevens'],
+  ['icon' => '👥', 'title' => 'Teamoverzicht'],
+  ['icon' => '📊', 'title' => 'Projecten'],
+  ['icon' => '📁', 'title' => 'Documenten'],
+  ['icon' => '🚀', 'title' => 'Onboarding'],
+  ['icon' => '🏁', 'title' => 'Offboarding'],
+  ['icon' => '🏢', 'title' => 'Organigram'],
+  ['icon' => '📰', 'title' => 'Nieuws'],
+  ['icon' => '🎉', 'title' => 'Evenementen'],
+  ['icon' => '📖', 'title' => 'Medewerkers-gids'],
+  ['icon' => '📜', 'title' => 'HR Beleid'],
+  ['icon' => '🔒', 'title' => 'Veiligheid'],
+  ['icon' => '💻', 'title' => 'IT Support'],
+  ['icon' => '📞', 'title' => 'Contact HR'],
+];
 
 ?>
 <!DOCTYPE html>
@@ -41,88 +62,15 @@ if (!$rbac->has(Permission_SharePoint_HRM)) {
     </section>
     <section class="tiles">
         <div class="container">
-            <div class="tile">
-                <div class="icon">💼</div>
-                <div class="tile-title">Declareren</div>
-            </div>
-            <div class="tile">
-                <div class="icon">📄</div>
-                <div class="tile-title">Salarisstroken</div>
-            </div>
-            <div class="tile">
-                <div class="icon">💪</div>
-                <div class="tile-title">Vitaliteit</div>
-            </div>
-            <div class="tile">
-                <div class="icon">🗓️</div>
-                <div class="tile-title">Verlof aanvragen</div>
-            </div>
-            <div class="tile">
-                <div class="icon">📚</div>
-                <div class="tile-title">Trainingen</div>
-            </div>
-            <div class="tile">
-                <div class="icon">📝</div>
-                <div class="tile-title">Feedback geven</div>
-            </div>
-            <div class="tile">
-                <div class="icon">👤</div>
-                <div class="tile-title">Persoonlijke gegevens</div>
-            </div>
-            <div class="tile">
-                <div class="icon">👥</div>
-                <div class="tile-title">Teamoverzicht</div>
-            </div>
-            <div class="tile">
-                <div class="icon">📊</div>
-                <div class="tile-title">Projecten</div>
-            </div>
-            <div class="tile">
-                <div class="icon">📁</div>
-                <div class="tile-title">Documenten</div>
-            </div>
-            <div class="tile">
-                <div class="icon">🚀</div>
-                <div class="tile-title">Onboarding</div>
-            </div>
-            <div class="tile">
-                <div class="icon">🏁</div>
-                <div class="tile-title">Offboarding</div>
-            </div>
-            <div class="tile">
-                <div class="icon">🏢</div>
-                <div class="tile-title">Organigram</div>
-            </div>
-            <div class="tile">
-                <div class="icon">📰</div>
-                <div class="tile-title">Nieuws</div>
-            </div>
-            <div class="tile">
-                <div class="icon">🎉</div>
-                <div class="tile-title">Evenementen</div>
-            </div>
-            <div class="tile">
-                <div class="icon">📖</div>
-                <div class="tile-title">Medewerkers-gids</div>
-            </div>
-            <div class="tile">
-                <div class="icon">📜</div>
-                <div class="tile-title">HR Beleid</div>
-            </div>
-            <div class="tile">
-                <div class="icon">🔒</div>
-                <div class="tile-title">Veiligheid</div>
-            </div>
-            <div class="tile">
-                <div class="icon">💻</div>
-                <div class="tile-title">IT Support</div>
-            </div>
-            <div class="tile">
-                <div class="icon">📞</div>
-                <div class="tile-title">Contact HR</div>
-            </div>
+          <?php foreach ($tiles as $tile): ?>
+              <div class="tile" role="gridcell" aria-label="<?= $tile['title'] ?>">
+                  <div class="icon"><?= htmlspecialchars($tile['icon']) ?></div>
+                  <div class="tile-title"><?= htmlspecialchars($tile['title']) ?></div>
+              </div>
+          <?php endforeach; ?>
         </div>
     </section>
+
 </article>
 </body>
 </html>

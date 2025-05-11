@@ -13,7 +13,7 @@ if (!$rbac->has(Permission_SharePoint_TeacherTools)) {
   die();
 }
 
-$studentActions = [
+$teacherActions = [
   ['title' => 'Lesroosters beheren', 'icon' => '📅'],
   ['title' => 'Toetsen maken', 'icon' => '✏️'],
   ['title' => 'Studenten beoordelen', 'icon' => '✅'],
@@ -52,8 +52,8 @@ $studentActions = [
   </section>
   <section class="tiles">
     <div class="container">
-      <?php foreach ($studentActions as $tool): ?>
-        <div class="tile">
+      <?php foreach ($teacherActions as $tool): ?>
+        <div class="tile" aria-label="<?=$tool['title'] ?>" role="gridcell">
           <div class="icon"><?= htmlspecialchars($tool['icon'], ENT_QUOTES) ?></div>
           <div class="tile-title"><?= htmlspecialchars($tool['title'], ENT_QUOTES) ?></div>
         </div>

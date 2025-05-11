@@ -59,9 +59,9 @@ if ($rbac->has(Permission_SharePoint_News)) {
             <header>
                 <h3>Nieuws</h3>
             </header>
-            <div class="items">
+            <div class="items" role="list" aria-label="news">
               <?php foreach ($randomNews as $news): ?>
-                  <div class="card">
+                  <div class="card" role="listitem" aria-label="news">
                       <h2><?php echo htmlspecialchars($news['title']); ?></h2>
                       <p><span  class="datetime"><?php echo htmlspecialchars($news['date']); ?> </span>| <span class="audience"><?php echo htmlspecialchars($news['audience']); ?></span></p>
                       <div class="story-container">

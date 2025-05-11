@@ -88,7 +88,10 @@ function showheader(Websites $forWebsite, string $route, RBACSupport $rbac): str
       $hasPermissions = true;
       $isActiveRoute  = $nav['route'] == $route;
 
-      $html = '<a href="' . $nav['route'] . '" ';
+      $title = $nav['title'];
+      $route = $nav['route'];
+
+      $html = "<a href='$route' aria-label='$title'" ;
       $html .= $isActiveRoute ? 'class="active" ' : '';
       $html .= '>';
       $html .= $nav['title'];
@@ -117,11 +120,11 @@ function showheader(Websites $forWebsite, string $route, RBACSupport $rbac): str
   $host = $_SERVER['HTTP_HOST'];
 
   $result = <<< EOF_HEADER
-<section class="navigation-header">
+<section class="navigation-header" role="navigation">
     <header>
         <h1>
             <a href="http://sharepoint.docker/intranet"><span class="home">&#127968;</span></a>
-            <a href="/intranet">$sitename</a>
+            <a href="/intranet" aria-label="home">$sitename</a>
         </h1>
         <h2>Welkom $fullname</h2>
         
