@@ -89,7 +89,19 @@ services:
         source: ./volumes/src/user-provisioning
         target: /app/logs
 
-
+  iam-example-ldap-gui:
+    image: osixia/phpldapadmin:0.9.0
+    container_name: phpldapadmin
+    environment:
+      PHPLDAPADMIN_LDAP_HOSTS: iam-example-identity-server
+      PHPLDAPADMIN_HTTPS: "false"
+      LDAP_ADMIN_PASSWORD: test12345!
+    networks:
+      - iam-example
+    ports:
+      - "8080:80"
+    depends_on:
+      - iam-example-identity-server
 
 networks:
   iam-example:
