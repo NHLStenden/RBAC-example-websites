@@ -301,15 +301,29 @@ willekeurig gekozen uit die rollen.
 Hieronder een aantal schermafdrukken over de instellingen voor *Apache Directory Studio*. Gebruik na het opstarten
 van Apache Directory Studio het menu `LDAP --> New Connection` om een nieuwe verbinding op te zetten.
 
+## Verbinding opzetten
+
 ![ldap-connect-01.png](images/ldap-connect-01.png)
 
 Gebruik de button `Check Network Parameter` om te kijken of de server op deze manier te bereiken is.
+
+## Account gegevens invoeren
+
+Als de verbinding op technisch vlak gelukt is, dan moeten we nog een account invoeren om te zorgen dat we toestemming
+krijgen om de LDAP-administratie te beheren. Dat doen we met de genoemde informatie:
+
+* Authenticatie
+    * Authentication method: `Simple Authentication`
+    * Gebruikersnaam / DN: `cn=admin,dc=NHLStenden,dc=com`
+    * Wachtwoord: `test12345!`
 
 ![ldap-connect-02.png](images/ldap-connect-02.png)
 
 Gebruik de button `Check Authentication` om te kijken of de gebruikersnaam en wachtwoord correct zijn.
 
 ![ldap-connect-03.png](images/ldap-connect-03.png)
+
+## Eventueel extra parameters instellen
 
 ![ldap-connect-04.png](images/ldap-connect-04.png)
 

@@ -12,6 +12,17 @@ Installatie van de Apache Directory Studio doe je eenvoudig via deze
 [pagina](https://directory.apache.org/studio/downloads.html). Een uitgebreide gebruikershandleiding
 is [hier](https://directory.apache.org/studio/users-guide.html) beschikbaar.
 
+
+## Problemen met Java & Apache Directory Studio
+
+Mocht je tegen problemen aanlopen met de installatie van Java en het gebruik van Apache Directory Studio dan
+is er alternatief. Er is een extra Docker container waarin een web gebaseerde LDAP-administratie website op
+geinstalleerd is. Deze kun je vinden op [http://localhost:8080/](http://localhost:8080/).
+
+De gebruikers interface is iets anders, maar lijkt in het gebruik sterk op de interface van Apache Directory
+Studio. De login gegevens zijn identiek (zie bij de oefeningen)
+
+
 # Meer informatie over LDAP
 
 ## Wat kun je met LDAP op Debian doen?

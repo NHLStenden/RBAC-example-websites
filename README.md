@@ -92,6 +92,18 @@ De volgende eisen worden gesteld aan de werkplek (jouw computer / laptop):
 5. Een recente Browser zoals Google Chrome, Brave, Firefox, Chromium, Vivaldi of Microsoft Edge. Lees voor gebruik
    van Microsoft Edge goed de benodigde aanpassingen in de installatie handleiding van deze repository.
 
+Let op:
+> Om met Docker te kunnen werken moet je zorgen dat je Administrator rechten hebt op je werkplek. Installatie kan
+> mogelijk
+> zonder deze rechten maar het lukt daarna niet om Docker daadwerkelijk te kunnen gebruiken.
+>
+> Docker draait op een virtualisatie laag. Die hangt af van software en hardware.
+> * Advies is om op Windows het **Windows Subsystem voor Linux** (WSL) te gebruiken.
+> * Je laptop moet Virtualisatie toestaan. Dit is te regelen in de BIOS van je computer.
+>
+> Kijk voor meer informatie op
+> de [installatie handleiding](https://docs.docker.com/desktop/setup/install/windows-install/) van Docker!
+
 Eventueel handig om te hebben:
 
 * **Docker Desktop** voor het managen van de containers (maar dit kan ook volledig vanaf de command line).
@@ -110,6 +122,18 @@ Eventueel handig om te hebben:
   aan [Visual Studio Code](https://code.visualstudio.com/) of  [PHP Storm](https://www.jetbrains.com/phpstorm/).
   Eventueel kun je ook gewoon [Notepad++](https://notepad-plus-plus.org/)  installeren met
   de [Markdown Viewer ++](https://github.com/nea/MarkdownViewerPlusPlus)
+
+## Problemen met Java & Apache Directory Studio
+
+Mocht je tegen problemen aanlopen met de installatie van Java en het gebruik van Apache Directory Studio dan
+is er alternatief. Er is een extra Docker container waarin een web gebaseerde LDAP-administratie website op
+geinstalleerd is. Deze kun je vinden op [http://localhost:8080/](http://localhost:8080/).
+
+De gebruikers interface is iets anders, maar lijkt in het gebruik sterk op de interface van Apache Directory
+Studio. De login gegevens zijn identiek (zie bij de oefeningen en eventueel
+de [installatie handleiding](./Install/README.md#account-gegevens-invoeren)).
+
+Meer informatie over het gebruik kun je vinden op [phpLdapAdmin](https://github.com/leenooks/phpLDAPadmin). 
 
 ---
 
@@ -151,7 +175,7 @@ Er is een [toelichting](./Documentation/Websites.md) beschikbaar over de werking
 Er wordt gewerkt aan automatische tests. Deze worden vormgegeven met [Playwright](https://playwright.dev/). Deze zijn
 te vinden in de map [tests](./tests/playwright).
 
-Om deze tests te draaien moet in die map `npm install` gedraaid worden na installatie van Playwright en de headless 
+Om deze tests te draaien moet in die map `npm install` gedraaid worden na installatie van Playwright en de headless
 browsers (zie installatiehandleiding van [Playwright](https://playwright.dev/docs/intro)).
 
 Daarna kunnen de tests gedraaid worden vanuit de map [tests](./tests/playwright):

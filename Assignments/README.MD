@@ -20,6 +20,9 @@ Er verschijnt een popup waar je moet inloggen. Het wachtwoord is altijd `Test123
 
 Later zul je ook op een andere manier gaan inloggen. De instructies daarvoor volgen in de opdrachten.
 
+Er is nog een extra website die als alternatief geldt voor de _Apache Directory Studio_:
+de [PHP Ldap Admin](http://localhost:8080/). 
+
 ## Opdrachten
 
 De volgende opdrachten en oefeningen zijn opgenomen:
@@ -38,9 +41,9 @@ De volgende opdrachten en oefeningen zijn opgenomen:
 12. [Instellen van functiescheiding](./Oefening%2012.MD)
 
 Je vindt de oefeningen in apart genummerde bestanden in deze map. In het bestand [Oplossingen](./Oplossingen.MD) vind
-je de uitwerkingen van de oefeningen. 
+je de uitwerkingen van de oefeningen.
 
-Als je klaar bent met de oefeningen dan kun je eventueel aan de slag met het zelf uitbreiden van de permissies in de 
+Als je klaar bent met de oefeningen dan kun je eventueel aan de slag met het zelf uitbreiden van de permissies in de
 broncode. Zie hiervoor het bestand [Autorisaties toevoegen](./Autorisaties%20toevoegen.MD).
 
 ---

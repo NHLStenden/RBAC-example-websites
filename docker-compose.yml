@@ -52,9 +52,9 @@ services:
         source: ./volumes/src/dbserver
         target: /app
     ports:
-      - '3306:3306'
+      - '3308:3306' # Use 3308 to prevent already installed MySQL native installs
     expose:
-      - 3306
+      - 3308
     environment:
       MARIADB_ROOT_PASSWORD: test1234!
 
@@ -72,9 +72,9 @@ services:
         source: ./volumes/src/hrm
         target: /app
     ports:
-      - '3307:3306'
+      - '3307:3306' # Use 3307 to prevent already installed MySQL native installs
     expose:
-      - 3306
+      - 3307
     environment:
       MARIADB_ROOT_PASSWORD: test1234!
 
@@ -90,9 +90,11 @@ services:
         target: /app/logs
 
   iam-example-ldap-gui:
-    image: osixia/phpldapadmin:0.9.0
+    image: osixia/phpldapadmin:latest
+    # image: phpldapadmin/phpldapadmin # has login problems!
     container_name: phpldapadmin
     environment:
+      #LDAP_HOST: iam-example-identity-server
       PHPLDAPADMIN_LDAP_HOSTS: iam-example-identity-server
       PHPLDAPADMIN_HTTPS: "false"
       LDAP_ADMIN_PASSWORD: test12345!
