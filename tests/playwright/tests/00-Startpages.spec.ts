@@ -1,5 +1,5 @@
 import {expect, test} from "@playwright/test";
-import {ALL_DOCKER_URLS, URL_SHAREPOINT} from "./lib/urls";
+import {ALL_DOCKER_URLS} from "./lib/urls";
 
 
 test('test', async ({page}) => {

@@ -13,7 +13,7 @@ import {
     URL_ADMIN_INTRANET,
     URL_GRADES_INTRANET,
     URL_HRM_INTRANET,
-    URL_MARKETING_INTRANET,
+    URL_MARKETING_INTRANET, URL_PORTAL, URL_SHAREPOINT,
     URL_SHAREPOINT_INTRANET
 } from "./lib/urls";
 
@@ -23,8 +23,21 @@ export async function gotoSharepointPageAndTestBasics(page: Page, user: DockerWe
         try {
             console.log(`- User: ${user.username}`);
 
-            const url = `http://${user.username}:${user.password}@${URL_SHAREPOINT_INTRANET}`;
+            const logoutURL =`http://${URL_PORTAL}/logout.php`;
+            console.log(logoutURL);
+            await page.goto(logoutURL);
+
+            const url = `http://${URL_SHAREPOINT_INTRANET}`;
             await page.goto(url);
+
+            await expect(page.url()).toContain(`http://${URL_PORTAL}/?redirect`);
+
+            const usernameField = page.getByRole('textbox', {name:'username'});
+            const passwordField = page.getByRole('textbox', {name:'password'});
+            await usernameField.fill(user.username);
+            await passwordField.fill(user.password);
+            await page.getByRole('button',{name:'submit'}).click();
+            await expect(page.url()).toBe(`http://${URL_SHAREPOINT_INTRANET}/`);
 
             await expect(page.getByRole('list', {name: 'news'})).toBeVisible();
             const items = await page.getByRole('list', {name: 'news'}).getByRole('listitem');
@@ -149,19 +162,9 @@ export async function gotoSharepointPageAndTestBasics(page: Page, user: DockerWe
 }
 
 test('Test SharePoint basics for all types of users', async ({page}) => {
-    const browser = await chromium.launch({headless: true});
 
     for (let user of ALL_TEST_USERS) {
-        const context = await browser.newContext({
-            httpCredentials: {
-                username: user.username,
-                password: user.password,
-            },
-        });
 
-        const page = await context.newPage();
         await gotoSharepointPageAndTestBasics(page, user);
-        await context.close();
     }
-    await browser.close();
 });
