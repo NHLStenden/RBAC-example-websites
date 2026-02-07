@@ -190,4 +190,4 @@ Docent bij NHL Stenden, opleidingen Bachelor HBO-ICT en Associate Degree Cyber S
 
 [martin.molema@nhlstenden.com](mailto:martin.molema@nhlstenden.com)
 
-December 2024.
+Februari 2026

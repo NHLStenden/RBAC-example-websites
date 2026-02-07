@@ -166,7 +166,7 @@ Instructies per OS volgen verderop.
 3. **Voeg de regels toe**:
     - Voeg de volgende regels aan het einde van het bestand toe:
       ```
-      127.0.0.1    grades.rbac.docker sharepoint.rbac.docker admin.rbac.docker marketing.docker hrm.rbac.docker
+      127.0.0.1    grades.rbac.docker sharepoint.rbac.docker admin.rbac.docker marketing.docker hrm.rbac.docker portal.rbac.docker
       ```
 
 4. **Sla het bestand op**:
@@ -187,7 +187,7 @@ Instructies per OS volgen verderop.
 3. **Voeg de regels toe**:
     - Voeg de volgende regels aan het einde van het bestand toe:
       ```
-      127.0.0.1    grades.rbac.docker sharepoint.rbac.docker admin.rbac.docker marketing.docker hrm.rbac.docker
+      127.0.0.1    grades.rbac.docker sharepoint.rbac.docker admin.rbac.docker marketing.docker hrm.rbac.docker portal.rbac.docker
       ```
 
 4. **Sla het bestand op en sluit nano**:
