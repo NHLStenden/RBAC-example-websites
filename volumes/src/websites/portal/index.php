@@ -1,4 +1,6 @@
 <?php
+include_once 'config/config.inc.php';
+
   if (isset($_GET['redirect'])) {
       $redirect = urldecode($_GET['redirect']);
   }
@@ -26,6 +28,7 @@
                 <br>
                 <label for="password">Password</label>
                 <input type="password" required maxlength="30" id="password" name="password">
+                <br>
                 <?php if (isset($redirect)) {
                     echo "<input type='hidden' name='redirect' value='$redirect'>";
                 } ?>
@@ -34,6 +37,18 @@
             </form>
         </section>
     </article>
-</main>
+    <footer>
+        <?php
+        echo <<< EOF_FOOTER
+        <p>
+            <span>Last Commit: <a href="mailto:$config_git_email">$config_git_email</a></span>
+            <span>@ </span>
+            <span>$config_git_date</span>
+        </p>
+    </footer>
+EOF_FOOTER
+    ?>
+    </main>
+
 </body>
 </html>
