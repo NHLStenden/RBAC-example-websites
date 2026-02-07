@@ -17,25 +17,29 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
         die("Cannot find user $username in LDAP");
     }
 
-    if (ldap_bind($lnk, $dn, $password)) {
-        $userInfo = GetUserDataFromDN($lnk, $dn);
-        session_start();
-        $_SESSION['username'] = $username;
-        $_SESSION['dn']       = $dn;
-        $_SESSION['valid']    = true;
-        $_SESSION['fullname'] = $userInfo['givenname'] . ' ' . $userInfo['sn'];
+    try {
+        if (@ldap_bind($lnk, $dn, $password)) {
+            $userInfo = GetUserDataFromDN($lnk, $dn);
+            session_start();
+            $_SESSION['username'] = $username;
+            $_SESSION['dn']       = $dn;
+            $_SESSION['valid']    = true;
+            $_SESSION['fullname'] = $userInfo['givenname'] . ' ' . $userInfo['sn'];
 
-        if (isset($_POST['redirect'])) {
-            $url = $_POST['redirect'];
-            header('Location: ' . $url);
+            if (isset($_POST['redirect'])) {
+                $url = $_POST['redirect'];
+                header('Location: ' . $url);
+            } else {
+                header('Location: http://sharepoint.rbac.docker/intranet');
+            }
+
+
+        } else {
+            die('Onjuiste gebruikersnaam');
+            error_log("Could not login user $username : wrong password");
+            header(403);
         }
-        else {
-            header('Location: http://sharepoint.rbac.docker/intranet');
-        }
-
-
-    } else {
-        error_log("Could not login user $username : wrong password");
-        header(403);
+    }catch (Exception $e) {
+        die('Onjuiste gebruikersnaam');
     }
 }
