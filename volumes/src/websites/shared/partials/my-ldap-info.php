@@ -19,6 +19,7 @@ function GenerateSectionForMyLdapInfo(array $userInfoLDAP): string|null
     "Organisatie" => $userInfoLDAP['o'],
     "Postcode" => $userInfoLDAP['postalcode'],
     "Kamernummer" => $userInfoLDAP['roomnumber'],
+    "2FA Enabled" => isset($userInfoLDAP['labeleduri'])  ? "Ja": "Nee",
   ];
 
   $jpegPhoto = '';
