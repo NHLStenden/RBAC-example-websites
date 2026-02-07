@@ -15,15 +15,6 @@ RUN apt update && apt-get install libldap2-dev \
 # Disable default site and enable our own
 RUN a2dissite 000-default default-ssl \
     && rm /etc/apache2/sites-available/000-default.conf  /etc/apache2/sites-available/default-ssl.conf \
-    && a2ensite grades.conf sharepoint.conf admin.conf marketing.conf hrm.conf \
+    && a2ensite grades.conf sharepoint.conf admin.conf marketing.conf hrm.conf portal.conf \
     && a2enmod ldap authnz_ldap
-
-# create password files for integration of LDAP with Apache
-RUN mkdir -p /root/website-passwords/ \
-    && echo "Test1234!" > /root/website-passwords/passwd-grades \
-    && echo "Test1234!" > /root/website-passwords/passwd-sharepoint \
-    && echo "Test1234!" > /root/website-passwords/passwd-admin \
-    && echo "Test1234!" > /root/website-passwords/passwd-marketing \
-    && echo "Test1234!" > /root/website-passwords/passwd-hrm \
-    && chmod 600 /root/website-passwords/passwd-*
 

@@ -148,7 +148,7 @@ Instructies per OS volgen verderop.
 
 ```text
 # Docker RBAC Example
-127.0.0.1	grades.docker sharepoint.docker admin.docker marketing.docker hrm.docker
+127.0.0.1	grades.rbac.docker sharepoint.rbac.docker admin.rbac.docker marketing.docker hrm.rbac.docker
 ```
 
 ### Windows
@@ -166,7 +166,7 @@ Instructies per OS volgen verderop.
 3. **Voeg de regels toe**:
     - Voeg de volgende regels aan het einde van het bestand toe:
       ```
-      127.0.0.1    grades.docker sharepoint.docker admin.docker marketing.docker hrm.docker
+      127.0.0.1    grades.rbac.docker sharepoint.rbac.docker admin.rbac.docker marketing.docker hrm.rbac.docker
       ```
 
 4. **Sla het bestand op**:
@@ -187,7 +187,7 @@ Instructies per OS volgen verderop.
 3. **Voeg de regels toe**:
     - Voeg de volgende regels aan het einde van het bestand toe:
       ```
-      127.0.0.1    grades.docker sharepoint.docker admin.docker marketing.docker hrm.docker
+      127.0.0.1    grades.rbac.docker sharepoint.rbac.docker admin.rbac.docker marketing.docker hrm.rbac.docker
       ```
 
 4. **Sla het bestand op en sluit nano**:
@@ -209,7 +209,7 @@ Instructies per OS volgen verderop.
 3. **Voeg de regels toe**:
     - Voeg de volgende regels aan het einde van het bestand toe:
       ```
-      127.0.0.1    grades.docker sharepoint.docker admin.docker marketing.docker hrm.docker
+      127.0.0.1    grades.rbac.docker sharepoint.rbac.docker admin.rbac.docker marketing.docker hrm.rbac.docker
       ```
 
 4. **Sla het bestand op en sluit nano**:
@@ -261,10 +261,10 @@ De volgende websites zijn beschikbaar:
 | Beschrijving                                     | URL                       | Rol in Identity Server                                                                                           | 
 |--------------------------------------------------|---------------------------|------------------------------------------------------------------------------------------------------------------| 
 | De website voor Marketing:                       | http://marketing.docker/  | `cn=marketing,ou=roles,dc=NHLStenden,dc=com`                                                                     |
-| De Cijfer Administratie                          | http://grades.docker/     | `cn=Grades Students,ou=roles,dc=NHLStenden,dc=com` of `cn=Grades Teachers,ou=roles,dc=NHLStenden,dc=com`         |
-| Het Admin panel van de beheerder                 | http://admin.docker/      | `cn=ICT Support,ou=roles,dc=NHLStenden,dc=com`                                                                   |
-| Het Human Resource Management systeem            | http://hrm.docker/        | `cn=hrm,ou=roles,dc=NHLStenden,dc=com`                                                                           |
-| Het SharePoint platform voor gedeelde informatie | http://sharepoint.docker/ | `cn=SharePoint Students,ou=roles,dc=NHLStenden,dc=com` of `cn=SharePoint Teachers,ou=roles,dc=NHLStenden,dc=com` |
+| De Cijfer Administratie                          | http://grades.rbac.docker/     | `cn=Grades Students,ou=roles,dc=NHLStenden,dc=com` of `cn=Grades Teachers,ou=roles,dc=NHLStenden,dc=com`         |
+| Het Admin panel van de beheerder                 | http://admin.rbac.docker/      | `cn=ICT Support,ou=roles,dc=NHLStenden,dc=com`                                                                   |
+| Het Human Resource Management systeem            | http://hrm.rbac.docker/        | `cn=hrm,ou=roles,dc=NHLStenden,dc=com`                                                                           |
+| Het SharePoint platform voor gedeelde informatie | http://sharepoint.rbac.docker/ | `cn=SharePoint Students,ou=roles,dc=NHLStenden,dc=com` of `cn=SharePoint Teachers,ou=roles,dc=NHLStenden,dc=com` |
 
 Je kunt hierbij inloggen met de volgende gebruikers. Het wachtwoord is altijd  `Test1234!`. Je kunt met Apache Directory
 Studio (zie verderop) ook kijken in de aangegeven rollen in de Identity Server. De onderstaande gebruikersaccounts zijn
@@ -272,15 +272,15 @@ willekeurig gekozen uit die rollen.
 
 * http://marketing.docker/
     * username : `fbos`
-* http://grades.docker/
+* http://grades.rbac.docker/
     * student username : `edeboer`
     * teacher username : `gwillems`
-* http://admin.docker/
+* http://admin.rbac.docker/
     * username: `tvisser`
-* http://sharepoint.docker/
+* http://sharepoint.rbac.docker/
     * student username : `edeboer`
     * teacher username : `gwillems`
-* http://hrm.docker
+* http://hrm.rbac.docker
     * username: `kmulder`
 
 # Verbinding maken met de Identity Server (LDAP)

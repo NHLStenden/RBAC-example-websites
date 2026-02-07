@@ -52,4 +52,5 @@ COPY *.py /app
 # Now start the LDAP daemon. it is not possible to execute commands after this
 # So loading the LDIF-files must be done afterwards
 #
-ENTRYPOINT slapd -h "ldap:/// ldapi:///" -d 0
+RUN mkdir -p /var/run/slapd/
+ENTRYPOINT slapd -h "ldap://0.0.0.0:389" -d 512

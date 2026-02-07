@@ -5,16 +5,11 @@ include_once '../../shared/lib/RBACSupport.php';
 include_once '../../shared/partials/header.php';
 include_once 'lib/attestation-functions.inc.php';
 include_once '../../shared/lib/db.php';
+include_once '../../shared/lib/login-session.inc.php';
 
-$rbac = new RBACSupport($_SERVER["AUTHENTICATE_UID"]);
-if (!$rbac->process()) {
-    die('Could not connect to RBAC server.');
-}
-if (!$rbac->has(Permission_AdminPanel_Attestation_Roles)) {
-    echo "Attestation roles: Missing permissions\n";
-    die();
-}
-// LDAP server details
+
+$rbac = checkLoginOrFail(Permission_AdminPanel_Attestation_Roles);
+check2faOrValidate();
 
 function createAttestationTable()
 {

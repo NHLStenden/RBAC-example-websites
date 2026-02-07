@@ -52,22 +52,22 @@ Synchronisatie voltooid. Er zijn 1 nieuwe rollen aangemaakt in de permissie admi
 
 Nu gaan we een gebruiker autoriseren voor deze rol
 
-1. Login bij het [Admin Panel](http://admin.docker/intranet)
-2. Ga naar [Autorisatie Aanvraag](http://admin.docker/intranet/AssignUserToRoleForm.php)
+1. Login bij het [Admin Panel](http://admin.rbac.docker/intranet)
+2. Ga naar [Autorisatie Aanvraag](http://admin.rbac.docker/intranet/AssignUserToRoleForm.php)
 3. Kies de nieuwe rol **'Campagne Monitors'** bij de rol
 4. Kies een stafmedewerker (niet een medewerker die al bij de afdeling Marketing zit!) bijv. Sophie Bakker van HRM
 5. Druk op Autoriseer
 
 We gaan nu kijken of de nieuwe medewerker ook daadwerkelijk naar de Marketing Website mag
 
-1. Ga naar de SharePoint [website](http://sharepoint.docker/)
+1. Ga naar de SharePoint [website](http://sharepoint.rbac.docker/)
 2. Login als de gebruiker die je net geautoriseerd hebt
 3. Zie dat er in de menu balk nu een button staat voor Marketing
 4. Druk op de button Marketing
 5. Login in bij de website voor Marketing (let op: als je al ingelogd was eerder moet je mogelijk daar eerst uitloggen).
 
 Het blijkt dat we mogelijk nog niet de juiste autorisaties hebben. Je kunt dit controleren op het 
-[Admin Panel](http://admin.docker/intranet/logging.php) bij de Apache Logfiles van "Marketing".
+[Admin Panel](http://admin.rbac.docker/intranet/logging.php) bij de Apache Logfiles van "Marketing".
 
 1. Waarom lukt het maar niet om in te loggen op de marketing website? Welke autorisatie mist er (zie de tabel bij
    opdracht 7 )

@@ -2,15 +2,10 @@
 
 include_once '../../shared/lib/RBACSupport.php';
 include_once '../../shared/partials/header.php';
+include_once '../../shared/lib/login-session.inc.php';
 
-$rbac = new RBACSupport($_SERVER["AUTHENTICATE_UID"]);
-if (!$rbac->process()) {
-  die('Could not connect to RBAC server.');
-}
-if (!$rbac->has(Permission_Grades_BasicAccess)) {
-  echo "Not allowed to create grades grade lists.\n";
-  die();
-}
+$rbac = checkLoginOrFail(Permission_Grades_BasicAccess);
+
 $roles = $rbac->groups;
 $isStudent = in_array('cn=Grades Students,ou=roles,dc=NHLStenden,dc=com', $roles);
 $isTeacher = in_array('cn=Grades Teachers,ou=roles,dc=NHLStenden,dc=com', $roles);

@@ -1,8 +1,11 @@
 <?php
-
+include_once '../../shared/lib/login-session.inc.php';
 include_once '../../shared/lib/RBACSupport.php';
 include_once '../../shared/partials/header.php';
 include_once '../../shared/lib/db.php';
+
+session_start();
+check2faOrValidate();
 
 $rbac = new RBACSupport($_SERVER["AUTHENTICATE_UID"]);
 if (!$rbac->process()) {

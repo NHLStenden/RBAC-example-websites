@@ -1,16 +1,9 @@
 <?php
 include_once '../../shared/lib/RBACSupport.php';
 include_once '../../shared/partials/header.php';
+include_once '../../shared/lib/login-session.inc.php';
 
-$rbac = new RBACSupport($_SERVER["AUTHENTICATE_UID"]);
-
-if (!$rbac->process()) {
-  die('Could not connect to RBAC server.');
-}
-if (!$rbac->has(Permission_Grades_Create_Gradelists)) {
-  echo "Not allowed to create grades gradelists.\n";
-  die();
-}
+$rbac = checkLoginOrFail(Permission_Grades_Create_Gradelists);
 
 ?>
 <!doctype html>

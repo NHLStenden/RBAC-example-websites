@@ -2,17 +2,12 @@
 include_once '../../shared/lib/RBACSupport.php';
 include_once '../../shared/partials/header.php';
 include_once '../../shared/lib/db.php';
+include_once '../../shared/lib/login-session.inc.php';
 
 define('MAX_LINES_DISPLAYED_PER_LOGFILE', 20);
 
-$rbac = new RBACSupport($_SERVER["AUTHENTICATE_UID"]);
-if (!$rbac->process()) {
-    die('Could not connect to RBAC server.');
-}
-if (!$rbac->has(Permission_Admin_Panel)) {
-    echo "Logging: Missing permissions\n";
-    die();
-}
+$rbac = checkLoginOrFail(Permission_Admin_Panel);
+check2faOrValidate();
 
 $header = showheader(Websites::WEBSITE_ADMIN, basename(__FILE__), $rbac);
 

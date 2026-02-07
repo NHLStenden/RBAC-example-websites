@@ -29,20 +29,20 @@ Tip
 
 ## Opdracht
 
-1. Log in bij de website [http://grades.docker/](http://grades.docker/) met diverse rollen (student, teacher).
+1. Log in bij de website [http://grades.rbac.docker/](http://grades.rbac.docker/) met diverse rollen (student, teacher).
 2. Merk op hoe de navigatiebalk steeds veranderd afhankelijk van wie er inlogt.
 3. Maak een tabel met de mogelijke navigatie voor de verschillende gebruikers.
 
-We gaan nu inloggen op [de cijferadministratie](http://grades.docker/) als student. Na inloggen krijg je een navigatiebalk met
+We gaan nu inloggen op [de cijferadministratie](http://grades.rbac.docker/) als student. Na inloggen krijg je een navigatiebalk met
 locaties/applicaties waar je naar toe mag. We gaan nu proberen om een pagina te benaderen die niet in de navigatie zit
 maar wel in de website beschikbaar is.
 
-1. Probeer eens of je deze URL kunt openen: https://grades.docker/intranet/view-student.php.
+1. Probeer eens of je deze URL kunt openen: https://grades.rbac.docker/intranet/view-student.php.
 
 Kijk eens in dit project in de map `{ROOT}volumes/src/websites/grades/intranet`. Hier zie je diverse bestanden staan
 eindigend op de extensie `.php`. Elk bestand is een webpagina. Dus `my-data.php` kun je openen met:
 
-[https://grades.docker/intranet/my-data.php](https://grades.docker/intranet/my-data.php)
+[https://grades.rbac.docker/intranet/my-data.php](https://grades.rbac.docker/intranet/my-data.php)
 
 Probeer verschillende van deze pagina's te openen en noteer het resultaat in een lijstje.
 

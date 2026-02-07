@@ -2,27 +2,26 @@
 include_once '../../shared/lib/RBACSupport.php';
 include_once '../../shared/partials/header.php';
 include_once '../../shared/partials/my-ldap-info.php';
+include_once '../../shared/lib/login-session.inc.php';
 
-$rbac = new RBACSupport($_SERVER["AUTHENTICATE_UID"]);
+$rbac = checkLoginOrFail(Permission_Admin_Panel);
+check2faOrValidate();
 
-if (!$rbac->process()) {
-    die('Could not connect to RBAC server.');
-}
-if (!$rbac->has(Permission_Admin_Panel)) {
-    echo "You do not have permission to access this page to show other user's info.";
-    die();
-}
-
-$hasOtherUserData = isset($_POST['userid']);
-$found = false;
+$hasOtherUserData = isset($_GET['userid']);
+$hasSearchString  = isset($_POST['search']);
+$found            = false;
+$lnk              = ConnectAndCheckLDAP();
+$users            = [];
 
 if ($hasOtherUserData) {
 // FIXME: prevent hacking; do some sanitation!
-    $user = $_POST['userid'];
+    $user            = $_GET['userid'];
+    $userDN          = GetUserDNFromUID($lnk, $user);
+    $rbac_other_user = new RBACSupport($userDN);
+    $found           = $rbac_other_user->process();
 
-    $rbac_other_user = new RBACSupport($user);
-    $found = $rbac_other_user->process();
-
+} else if ($hasSearchString) {
+    $users = searchLDAP($lnk, $_POST['search']);
 }
 ?>
 <!doctype html>
@@ -49,8 +48,8 @@ if ($hasOtherUserData) {
     <fieldset>
         <legend>Zoeken</legend>
         <form action="view-user.php" method="POST">
-            <label for="username">Username:</label>
-            <input type="text" maxlength="24" name="userid">
+            <label for="search">Username:</label>
+            <input type="text" maxlength="24" name="search" id="search" required>
             <button type="submit">Zoek!</button>
         </form>
     </fieldset>
@@ -65,6 +64,34 @@ if ($hasOtherUserData) {
         echo "<p class='error'>Niet gevonden</p>";
     }
     ?>
+</article>
+<article class="list">
+    <table>
+        <?php
+        if (count($users) > 0) {
+            echo "<thead><th>Username</th><th>CN</th><th>DN</th><th>Voornaam</th><th>Achternaam</th></thead>";
+            foreach ($users as $user) {
+                if (isset($user['givenname'])) {
+                    echo "<tr>";
+                    $username  = $user['uid'][0];
+                    $cn        = $user['cn'][0];
+                    $givenname = $user['givenname'][0];
+                    $lastname  = $user['sn'][0];
+
+                    $dn = substr($user['dn'], 0, strlen($user['dn']) - strlen(BASE_DN) - 1);
+
+                    echo "<td class='username'><a href='?userid=$username'>$username</a></td>";
+                    echo "<td class='cn'>$cn</td>";
+                    echo "<td class='dn'>$dn</td>";
+                    echo "<td class='givenname'>$givenname</td>";
+                    echo "<td class='lastname'>$lastname</td>";
+                    echo "</tr>";
+                }
+            }
+        }
+
+        ?>
+    </table>
 </article>
 </body>
 </html>

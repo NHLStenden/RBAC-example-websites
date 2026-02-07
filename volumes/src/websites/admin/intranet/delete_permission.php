@@ -3,6 +3,10 @@
 include_once '../../shared/lib/RBACSupport.php';
 include_once '../../shared/partials/header.php';
 include_once '../../shared/lib/db.php';
+include_once '../../shared/lib/login-session.inc.php';
+
+$rbac = checkLoginOrFail(Permission_AdminPanel_Manage_RolePermissions);
+check2faOrValidate();
 
 // set expires header
 header('Expires: Thu, 1 Jan 1970 00:00:00 GMT');
@@ -13,16 +17,6 @@ header('Cache-Control: post-check=0, pre-check=0', false);
 
 // set pragma header
 header('Pragma: no-cache');
-
-
-$rbac = new RBACSupport($_SERVER["AUTHENTICATE_UID"]);
-if (!$rbac->process()) {
-  die('Could not connect to RBAC server.');
-}
-if (!$rbac->has(Permission_AdminPanel_Manage_RolePermissions)) {
-  echo "Not allowed to manage roles/permissions\n";
-  die();
-}
 
 if (!is_numeric($_GET["id"])) {
   http_response_code(406);

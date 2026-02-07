@@ -2,15 +2,10 @@
 
 include_once '../../shared/lib/RBACSupport.php';
 include_once '../../shared/partials/header.php';
+include_once '../../shared/lib/login-session.inc.php';
 
-$rbac = new RBACSupport($_SERVER["AUTHENTICATE_UID"]);
-if (!$rbac->process()) {
-  die('Could not connect to RBAC server.');
-}
-if (!$rbac->has(Permission_Marketing_Create_Campaign)) {
-  echo "Not allowed to open the SharePoint intranet\n";
-  die();
-}
+$rbac = checkLoginOrFail(Permission_Marketing_Create_Campaign);
+
 
 ?>
 <html lang="NL">

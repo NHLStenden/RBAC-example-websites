@@ -3,6 +3,9 @@ include_once '../../shared/lib/RBACSupport.php';
 include_once '../../shared/partials/header.php';
 include_once '../../shared/lib/ldap_support.inc.php';
 include_once '../../shared/lib/db.php';
+include_once '../../shared/lib/login-session.inc.php';
+
+$rbac = checkLoginOrFail(Permission_HRM_Manage_Employees);
 
 function formatDate($date)
 {
@@ -28,17 +31,6 @@ function formatDate($date)
 
     // Anders volledige datum in Nederlands formaat
     return $dateTime->format('l j F Y H:i');  // Volledige datum met dagnaam volledig uitgeschreven
-}
-
-
-$rbac = new RBACSupport($_SERVER["AUTHENTICATE_UID"]);
-if (!$rbac->process()) {
-    die('Could not connect to RBAC server.');
-}
-
-if (!$rbac->has(Permission_HRM_Manage_Employees)) {
-    echo "Not allowed to open the manage employees\n";
-    die();
 }
 
 // index.php - Medewerkers lijst

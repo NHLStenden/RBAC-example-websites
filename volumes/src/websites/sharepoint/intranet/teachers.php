@@ -2,16 +2,9 @@
 include_once '../../shared/lib/RBACSupport.php';
 include_once '../../shared/partials/header.php';
 include_once '../../shared/partials/my-ldap-info.php';
+include_once '../../shared/lib/login-session.inc.php';
 
-$rbac = new RBACSupport($_SERVER["AUTHENTICATE_UID"]);
-
-if (!$rbac->process()) {
-  die('Could not connect to RBAC server.');
-}
-if (!$rbac->has(Permission_SharePoint_TeacherTools)) {
-  echo "You do not have permission to access this page to show the teachers portal.";
-  die();
-}
+$rbac = checkLoginOrFail(Permission_SharePoint_TeacherTools);
 
 $teacherActions = [
   ['title' => 'Lesroosters beheren', 'icon' => '📅'],

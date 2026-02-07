@@ -26,7 +26,7 @@ Marketing medewerker. Een medewerker kan nu een campagne maken én goedkeuren zo
 
 ## Opdracht
 
-Login bij het [Admin Panel](http://admin.docker) en experimenteer eens met beide mechanismen. Verander de autorisaties
+Login bij het [Admin Panel](http://admin.rbac.docker) en experimenteer eens met beide mechanismen. Verander de autorisaties
 door onderstaande procedures te volgen.
 
 **Rol toevoegen**

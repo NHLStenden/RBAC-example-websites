@@ -27,10 +27,10 @@ function showheader(Websites $forWebsite, string $route, RBACSupport $rbac): str
     ['route' => 'hrm.php', 'permission' => Permission_SharePoint_HRM, 'title' => 'Medewerkersportaal'],
     ['route' => 'students.php', 'permission' => Permission_SharePoint_StudentTools, 'title' => 'Studenten Portaal'],
     ['route' => 'teachers.php', 'permission' => Permission_SharePoint_TeacherTools, 'title' => 'Docenten Portaal'],
-    ['route' => 'http://grades.docker/intranet', 'permission' => Permission_Grades_BasicAccess, 'title' => 'Cijfers'],
+    ['route' => 'http://grades.rbac.docker/intranet', 'permission' => Permission_Grades_BasicAccess, 'title' => 'Cijfers'],
     ['route' => 'http://marketing.docker/intranet', 'permission' => Permission_Marketing_Read_Campaign, 'title' => 'Marketing'],
-    ['route' => 'http://admin.docker/intranet', 'permission' => Permission_Admin_Panel, 'title' => 'Admin Panel'],
-    ['route' => 'http://hrm.docker/intranet', 'permission' => Permission_HRM_Manage_Employees, 'title' => 'Beheer medewerkers'],
+    ['route' => 'http://admin.rbac.docker/intranet', 'permission' => Permission_Admin_Panel, 'title' => 'Admin Panel'],
+    ['route' => 'http://hrm.rbac.docker/intranet', 'permission' => Permission_HRM_Manage_Employees, 'title' => 'Beheer medewerkers'],
   ];
 
   $navigationAdmin     = [
@@ -117,20 +117,22 @@ function showheader(Websites $forWebsite, string $route, RBACSupport $rbac): str
     }
   }
 
-  $host = $_SERVER['HTTP_HOST'];
+
+  $has2fa = isset($_SESSION['2fa-checked']) ? "2FA" : "";
 
   $result = <<< EOF_HEADER
 <section class="navigation-header" role="navigation">
     <header>
         <h1>
-            <a href="http://sharepoint.docker/intranet"><span class="home">&#127968;</span></a>
+            <a href="http://sharepoint.rbac.docker/intranet"><span class="home">&#127968;</span></a>
             <a href="/intranet" aria-label="home">$sitename</a>
         </h1>
         <h2>Welkom $fullname</h2>
         
         <p class="right">
-          <span class="logout"><a href="http://log:out@$host/intranet/logout">Logout</a></span>
+          <span class="logout"><a href="http://portal.rbac.docker/logout.php">Logout</a></span>
           <img src="data:image/jpeg;base64, $jpegPhoto" alt="Gebruikersafbeelding">
+          <span class="has2fa-label">$has2fa</span>
         </p>
     </header>
 EOF_HEADER;

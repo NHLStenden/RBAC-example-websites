@@ -1,16 +1,11 @@
 <?php
-
+include_once '../../shared/lib/login-session.inc.php';
 include_once '../../shared/lib/RBACSupport.php';
 include_once '../../shared/partials/header.php';
+include_once '../../shared/lib/login-session.inc.php';
 
-$rbac = new RBACSupport($_SERVER["AUTHENTICATE_UID"]);
-if (!$rbac->process()) {
-  die('Could not connect to RBAC server.');
-}
-if (!$rbac->has(Permission_Admin_Panel)) {
-  echo "Home Page: Missing permissions\n";
-  die();
-}
+$rbac = checkLoginOrFail(Permission_Admin_Panel);
+check2faOrValidate();
 
 ?>
 <html lang="NL">
@@ -26,7 +21,7 @@ if (!$rbac->has(Permission_Admin_Panel)) {
 <main class="container-fluid">
 
     <article>
-      <?= showheader(Websites::WEBSITE_ADMIN, basename(__FILE__), $rbac) ?>
+        <?= showheader(Websites::WEBSITE_ADMIN, basename(__FILE__), $rbac) ?>
         <section class="welcome" aria-label="Welcome section">
             <h1>Welkom bij het Admin panel van NHL Stenden.</h1>
             <p>

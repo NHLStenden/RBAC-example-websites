@@ -9,12 +9,12 @@ gegevens.
 | URL                       | rol       | username   |
 |---------------------------|-----------|------------|
 | http://marketing.docker/  | gebruiker | `fbos`     | 
-| http://grades.docker/     | student   | `edeboer`  |
-| http://grades.docker/     | teacher   | `gwillems` |
-| http://admin.docker/      | admin     | `tvisser`  |
-| http://sharepoint.docker/ | student   | `edeboer`  |
-| http://sharepoint.docker/ | teacher   | `gwillems` |
-| http://hrm.docker/        | HRM       | `kmulder`  |
+| http://grades.rbac.docker/     | student   | `edeboer`  |
+| http://grades.rbac.docker/     | teacher   | `gwillems` |
+| http://admin.rbac.docker/      | admin     | `tvisser`  |
+| http://sharepoint.rbac.docker/ | student   | `edeboer`  |
+| http://sharepoint.rbac.docker/ | teacher   | `gwillems` |
+| http://hrm.rbac.docker/        | HRM       | `kmulder`  |
 
 Er verschijnt een popup waar je moet inloggen. Het wachtwoord is altijd `Test1234!`.
 

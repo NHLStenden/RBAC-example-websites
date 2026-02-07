@@ -4,16 +4,9 @@ use Couchbase\Role;
 
 include_once '../../shared/lib/RBACSupport.php';
 include_once '../../shared/partials/header.php';
+include_once '../../shared/lib/login-session.inc.php';
 
-$rbac = new RBACSupport($_SERVER["AUTHENTICATE_UID"]);
-
-if (!$rbac->process()) {
-  die('Could not connect to RBAC server.');
-}
-if (!$rbac->has(Permission_Grades_Create_Gradelists)) {
-  echo "You do not have permission to create a new list.";
-  die();
-}
+$rbac = checkLoginOrFail(Permission_Grades_Create_Gradelists);
 
 include "./lib/subjects.php";
 

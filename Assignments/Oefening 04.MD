@@ -43,7 +43,7 @@ gebruikelijk.
 
 ## Opdracht
 
-1. Login als Isabel Dekker bij [SharePoint](http://sharepoint.docker)
+1. Login als Isabel Dekker bij [SharePoint](http://sharepoint.rbac.docker)
 2. Navigeer via de menubalk naar 'Mijn gegevens'
 3. Verwijder de rol "Teacher HBO-ICT" bij Isabel Dekker.
     1. Ga naar "cn=Teachers HBO-ICT,ou=opleidingen,ou=roles,dc=NHLStenden,dc=com"

@@ -1,0 +1,31 @@
+main {
+    font-family: sans-serif;
+
+    & article {
+        width: 100vw;
+        height: 100vh;
+        & header {
+            & h1 {
+                text-align: center;
+            }
+        }
+
+        & section {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
+            form {
+                font-size:15pt;
+                label {
+                    display: inline-block;
+                    width:10em;
+                }
+                input {
+                    border-radius: 2px;
+                }
+            }
+        }
+    }
+}

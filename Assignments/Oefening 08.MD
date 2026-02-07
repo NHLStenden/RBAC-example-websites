@@ -33,7 +33,7 @@ Kijk terug naar de wijzigingen in [opdracht 5](./Oefening%2005.MD) (ongewenste c
 de wijziging door die daar beschreven staat: het toevoegen van een permissie aan een rol en het toevoegen van een rol
 aan één gebruiker.
 
-1. Ga op zoek naar afwijkingen. Kijk in het [Admin Panel](http://admin.docker/intranet) bijvoorbeeld of een student 
+1. Ga op zoek naar afwijkingen. Kijk in het [Admin Panel](http://admin.rbac.docker/intranet) bijvoorbeeld of een student 
    geen rechten heeft die er niet thuishoren.
 2. Maak bewust afwijkingen via het scherm "Rollen": voeg bijvoorbeeld "Teacher" of "Marketing" rechten toe.
 3. Ga op zoek naar de afwijkingen

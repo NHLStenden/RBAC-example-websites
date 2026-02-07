@@ -18,11 +18,11 @@ accounts. Vul bij 'Toegang' in welke functionele mogelijkheden je ziet (bijvoorb
 | URL                       | rol       | username   | Toegang |
 |---------------------------|-----------|------------|---------| 
 | http://marketing.docker/  | gebruiker | `fbos`     |         | 
-| http://grades.docker/     | student   | `edeboer`  |         |
-| http://grades.docker/     | teacher   | `gwillems` |         |
-| http://admin.docker/      | admin     | `tvisser`  |         |
-| http://sharepoint.docker/ | student   | `edeboer`  |         |
-| http://sharepoint.docker/ | teacher   | `gwillems` |         |
+| http://grades.rbac.docker/     | student   | `edeboer`  |         |
+| http://grades.rbac.docker/     | teacher   | `gwillems` |         |
+| http://admin.rbac.docker/      | admin     | `tvisser`  |         |
+| http://sharepoint.rbac.docker/ | student   | `edeboer`  |         |
+| http://sharepoint.rbac.docker/ | teacher   | `gwillems` |         |
 
 ## Vragen
 

@@ -10,7 +10,7 @@ Het admin panel stelt ons in staat om de permissies bij een rol in te zien.
 
 ## Opdracht
 
-1. Navigeer naar [Admin Panel](http://admin.docker/intranet) en login met een gebruiker van ICT Support.
+1. Navigeer naar [Admin Panel](http://admin.rbac.docker/intranet) en login met een gebruiker van ICT Support.
 2. Gebruik de knop 'Rollen' om naar de administratie van de rollen te gaan. Er volgt een lijst met beschikbare rollen.
 3. Klik op de knop 'Edit' achter de rol "All Students".
 
@@ -18,10 +18,10 @@ Het admin panel stelt ons in staat om de permissies bij een rol in te zien.
 
 1. Welke permissies heeft deze rol momenteel?
 2. Wat zegt dit over de permissies van één individuele student?
-3. Login als een student bij [SharePoint](http://sharepoint.docker)
+3. Login als een student bij [SharePoint](http://sharepoint.rbac.docker)
 4. Ga naar de pagina "Mijn Gegevens" en vergelijk de lijst met Permissies met die in het admin panel
 
-5. Log de student uit, sluit het tabblad en login bij [SharePoint](http://sharepoint.docker) als een Marketing 
+5. Log de student uit, sluit het tabblad en login bij [SharePoint](http://sharepoint.rbac.docker) als een Marketing 
    Manager (zie  `cn=Marketing managers,ou=roles,dc=NHLStenden,dc=com`)
 6. Ga naar de pagina met "Mijn Gegevens"
 7. Ga in het Admin Panel terug naar de pagina met rollen en zoek de rol van Marketing Manager

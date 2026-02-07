@@ -1,16 +1,11 @@
 <?php
 
+include_once '../../shared/lib/login-session.inc.php';
+
 include_once '../../shared/lib/RBACSupport.php';
 include_once '../../shared/partials/header.php';
 
-$rbac = new RBACSupport($_SERVER["AUTHENTICATE_UID"]);
-if (!$rbac->process()) {
-  die('Could not connect to RBAC server.');
-}
-if (!$rbac->has(Permission_SharePoint_All_Users)) {
-  echo "Not allowed to open the SharePoint intranet\n";
-  die();
-}
+$rbac = checkLoginOrFail(Permission_SharePoint_All_Users);
 
 include_once 'lib/news-items.php';
 

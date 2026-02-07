@@ -13,14 +13,14 @@ ondersteunen met bruikbare informatie.
 
 We gaan eerst kijken naar welke rechten één gebruiker heeft. Dit kan op twee manieren:
 
-1. we gaan naar http://sharepoint.docker/intranet/my-data.php om onze eigen gegevens in te zien
-2. de administrator kan via http://admin.docker/intranet een gebruiker opzoeken
+1. we gaan naar http://sharepoint.rbac.docker/intranet/my-data.php om onze eigen gegevens in te zien
+2. de administrator kan via http://admin.rbac.docker/intranet een gebruiker opzoeken
 
 ## Opdracht
 
-1. Login met een normale gebruiker op [SharePoint](http://sharepoint.docker/intranet/) en navigeer naar de
+1. Login met een normale gebruiker op [SharePoint](http://sharepoint.rbac.docker/intranet/) en navigeer naar de
    "Mijn gegevens" pagina
-2. Login met een admin-gebruiker op het [Admin Panel](http://admin.docker/intranet) en zoek een gebruiker op via de 
+2. Login met een admin-gebruiker op het [Admin Panel](http://admin.rbac.docker/intranet) en zoek een gebruiker op via de 
    knop 'Zoeken...'
 
 ## Vragen

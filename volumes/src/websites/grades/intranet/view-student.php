@@ -2,16 +2,10 @@
 include_once '../../shared/lib/RBACSupport.php';
 include_once '../../shared/partials/header.php';
 include_once '../../shared/partials/my-ldap-info.php';
+include_once '../../shared/lib/login-session.inc.php';
 
-$rbac = new RBACSupport($_SERVER["AUTHENTICATE_UID"]);
+$rbac = checkLoginOrFail(Permission_Grades_Read_StudentDetails);
 
-if (!$rbac->process()) {
-  die('Could not connect to RBAC server.');
-}
-if (!$rbac->has(Permission_Grades_Read_StudentDetails)) {
-  echo "You do not have permission to access this page and view student details.";
-  die();
-}
 $searchResults  = [];
 $studentDetails = null;
 

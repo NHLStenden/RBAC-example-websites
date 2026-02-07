@@ -3,17 +3,10 @@
 include_once '../../shared/lib/RBACSupport.php';
 include_once '../../shared/partials/header.php';
 include_once '../../shared/lib/db.php';
+include_once '../../shared/lib/login-session.inc.php';
 
-$rbac = new RBACSupport($_SERVER["AUTHENTICATE_UID"]);
-if (!$rbac->process()) {
-    die('Could not connect to RBAC server.');
-}
-if (!$rbac->has(Permission_HRM_Manage_Employees)) {
-    echo "Not allowed to open the manage employees\n";
-    die();
-}
+$rbac = checkLoginOrFail(Permission_HRM_Manage_Employees);
 
-// form.php - Toevoegen/bewerken
 
 $id = $_GET['id'] ?? null;
 $medewerker = [

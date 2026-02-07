@@ -1,13 +1,13 @@
-export const URL_SHAREPOINT = 'sharepoint.docker';
-export const URL_HRM = 'hrm.docker';
-export const URL_ADMIN = 'admin.docker';
-export const URL_GRADES = 'grades.docker';
+export const URL_SHAREPOINT = 'sharepoint.rbac.docker';
+export const URL_HRM = 'hrm.rbac.docker';
+export const URL_ADMIN = 'admin.rbac.docker';
+export const URL_GRADES = 'grades.rbac.docker';
 export const URL_MARKETING = 'marketing.docker';
 
-export const URL_SHAREPOINT_INTRANET = 'sharepoint.docker/intranet';
-export const URL_HRM_INTRANET = 'hrm.docker/intranet';
-export const URL_ADMIN_INTRANET = 'admin.docker/intranet';
-export const URL_GRADES_INTRANET = 'grades.docker/intranet';
+export const URL_SHAREPOINT_INTRANET = 'sharepoint.rbac.docker/intranet';
+export const URL_HRM_INTRANET = 'hrm.rbac.docker/intranet';
+export const URL_ADMIN_INTRANET = 'admin.rbac.docker/intranet';
+export const URL_GRADES_INTRANET = 'grades.rbac.docker/intranet';
 export const URL_MARKETING_INTRANET = 'marketing.docker/intranet';
 
 

@@ -1,7 +1,7 @@
 .material-icons.icon-small {
-    font-size:14px !important;
+    font-size: 14px !important;
     display: inline-block;
-    margin-left:8px;
+    margin-left: 8px;
     vertical-align: top;
 }
 
@@ -37,6 +37,15 @@ section.navigation-header {
                 max-height: 48px;
                 border-radius: 35%;
             }
+
+            & .has2fa-label {
+                border: 1px solid darkgrey;
+                border-radius: 3px;
+                padding: 2px;
+                background-color: gold;
+                margin-inline: 4px;
+            }
+
         }
 
         & a {
@@ -86,6 +95,7 @@ section.navigation-header {
         }
 
         background-color: lightblue;
+
     }
 }
 

@@ -30,6 +30,26 @@ section.ldap-permissions {
         & tr td {
             border-bottom: 1px solid black;
             padding:4px;
+
+        }
+    }
+}
+
+article.list {
+    & table {
+        td {
+            padding:4px;
+            border-bottom: 1px solid black;
+            &.dn {
+                text-align: right;
+            }
+            & a {
+                color:black;
+                &:hover {
+                    font-weight: bold;
+                    text-decoration: none;
+                }
+            }
         }
     }
 }

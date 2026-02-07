@@ -4,7 +4,7 @@ In opdracht 7 zijn de volgende vragen geformuleerd:
 
 1. Welke permissies heeft deze rol momenteel?
 2. Wat zegt dit over de permissies van één individuele student?
-3. Login als een student bij [SharePoint](http://sharepoint.docker)
+3. Login als een student bij [SharePoint](http://sharepoint.rbac.docker)
 4. Ga naar de pagina "Mijn Gegevens" en vergelijk de lijst met Permissies met die in het admin panel
 
 5. Log de student uit, sluit het tabblad en login bij SharePoint als een Marketing Manager (zie

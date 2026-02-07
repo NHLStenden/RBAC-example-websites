@@ -3,15 +3,10 @@
 include_once '../../shared/lib/RBACSupport.php';
 include_once '../../shared/partials/header.php';
 include_once '../../shared/lib/ldap_support.inc.php';
+include_once '../../shared/lib/login-session.inc.php';
 
-$rbac = new RBACSupport($_SERVER["AUTHENTICATE_UID"]);
-if (!$rbac->process()) {
-    die('Could not connect to RBAC server.');
-}
-if (!$rbac->has(Permission_AdminPanel_AddUserToRole)) {
-    echo "Add user to role form : Missing permissions\n";
-    die();
-}
+$rbac = checkLoginOrFail(Permission_AdminPanel_AddUserToRole);
+check2faOrValidate();
 
 $lnk = ConnectAndCheckLDAP();
 $users_staff['HRM'] = GetAllUsersInDN($lnk, 'ou=HRM,ou=Staff,dc=NHLStenden,dc=com');
