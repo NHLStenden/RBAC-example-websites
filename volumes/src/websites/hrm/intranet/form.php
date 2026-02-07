@@ -5,7 +5,7 @@ include_once '../../shared/partials/header.php';
 include_once '../../shared/lib/db.php';
 include_once '../../shared/lib/login-session.inc.php';
 
-$rbac = checkLoginOrFail(Permission_HRM_Manage_Employees);
+$rbac = checkLoginOrFail([Permission_HRM_Manage_Employees]);
 
 
 $id = $_GET['id'] ?? null;

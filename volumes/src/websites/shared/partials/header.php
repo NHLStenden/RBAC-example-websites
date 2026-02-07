@@ -28,7 +28,7 @@ function showheader(Websites $forWebsite, string $route, RBACSupport $rbac): str
     ['route' => 'students.php', 'permission' => Permission_SharePoint_StudentTools, 'title' => 'Studenten Portaal'],
     ['route' => 'teachers.php', 'permission' => Permission_SharePoint_TeacherTools, 'title' => 'Docenten Portaal'],
     ['route' => 'http://grades.rbac.docker/intranet', 'permission' => Permission_Grades_BasicAccess, 'title' => 'Cijfers'],
-    ['route' => 'http://marketing.docker/intranet', 'permission' => Permission_Marketing_Read_Campaign, 'title' => 'Marketing'],
+    ['route' => 'http://marketing.rbac.docker/intranet', 'permission' => Permission_Marketing_Read_Campaign, 'title' => 'Marketing'],
     ['route' => 'http://admin.rbac.docker/intranet', 'permission' => Permission_Admin_Panel, 'title' => 'Admin Panel'],
     ['route' => 'http://hrm.rbac.docker/intranet', 'permission' => Permission_HRM_Manage_Employees, 'title' => 'Beheer medewerkers'],
   ];

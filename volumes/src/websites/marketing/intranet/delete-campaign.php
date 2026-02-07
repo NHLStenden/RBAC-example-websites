@@ -5,7 +5,7 @@ include_once '../../shared/partials/header.php';
 include_once './partials/fake-campaign-list.php';
 include_once '../../shared/lib/login-session.inc.php';
 
-$rbac = checkLoginOrFail(Permission_Marketing_Delete_Campaign);
+$rbac = checkLoginOrFail([Permission_Marketing_Delete_Campaign]);
 
 $campaignListButtonCaption = 'Delete';
 ?>

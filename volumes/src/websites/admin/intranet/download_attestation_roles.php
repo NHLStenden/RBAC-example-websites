@@ -4,7 +4,7 @@ include_once '../../shared/lib/RBACSupport.php';
 include_once '../../shared/lib/db.php';
 include_once '../../shared/lib/login-session.inc.php';
 
-$rbac = checkLoginOrFail(Permission_AdminPanel_Attestation_Roles);
+$rbac = checkLoginOrFail([Permission_AdminPanel_Attestation_Roles]);
 check2faOrFail();
 
 $pdo = ConnectDatabaseIAM();

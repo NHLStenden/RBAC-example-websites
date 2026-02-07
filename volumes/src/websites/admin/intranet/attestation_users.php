@@ -5,7 +5,7 @@ include_once '../../shared/partials/header.php';
 include_once 'lib/attestation-functions.inc.php';
 include_once '../../shared/lib/login-session.inc.php';
 
-$rbac = checkLoginOrFail(Permission_AdminPanel_Attestation_Users);
+$rbac = checkLoginOrFail([Permission_AdminPanel_Attestation_Users]);
 
 function createAttestationTable()
 {

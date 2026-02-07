@@ -4,7 +4,7 @@ include_once '../../shared/partials/header.php';
 include_once '../../shared/lib/db.php';
 include_once '../../shared/lib/login-session.inc.php';
 
-$rbac = checkLoginOrFail(Permission_AdminPanel_Manage_RolePermissions);
+$rbac = checkLoginOrFail([Permission_AdminPanel_Manage_RolePermissions]);
 check2faOrValidate();
 
 $permission1 = (int)$_POST['permission1'];

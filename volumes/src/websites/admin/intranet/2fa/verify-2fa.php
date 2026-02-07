@@ -9,7 +9,7 @@ include_once '../../../shared/lib/RBACSupport.php';
 include_once '../../../shared/lib/ldap_support.inc.php';
 
 
-$rbac = checkLoginOrFail(Permission_Admin_Panel);
+$rbac = checkLoginOrFail([Permission_Admin_Panel]);;
 $userDN = $rbac->userDN;
 $google2fa = new Google2FA();
 $error = '';

@@ -4,7 +4,7 @@ include_once '../../shared/lib/RBACSupport.php';
 include_once '../../shared/partials/header.php';
 include_once '../../shared/lib/login-session.inc.php';
 
-$rbac = checkLoginOrFail(Permission_Grades_BasicAccess);
+$rbac = checkLoginOrFail([Permission_Grades_BasicAccess]);
 
 $roles = $rbac->groups;
 $isStudent = in_array('cn=Grades Students,ou=roles,dc=NHLStenden,dc=com', $roles);

@@ -6,7 +6,7 @@ include_once '../../shared/lib/RBACSupport.php';
 include_once '../../shared/partials/header.php';
 include_once '../../shared/lib/login-session.inc.php';
 
-$rbac = checkLoginOrFail(Permission_Grades_Create_Gradelists);
+$rbac = checkLoginOrFail([Permission_Grades_Create_Gradelists]);
 
 include "./lib/subjects.php";
 

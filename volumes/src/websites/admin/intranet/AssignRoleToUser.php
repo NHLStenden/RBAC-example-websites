@@ -6,7 +6,7 @@ include_once '../../shared/lib/ldap_support.inc.php';
 include_once '../../shared/lib/db.php';
 include_once '../../shared/lib/login-session.inc.php';
 
-$rbac = checkLoginOrFail(Permission_AdminPanel_AddUserToRole);
+$rbac = checkLoginOrFail([Permission_AdminPanel_AddUserToRole]);;
 $lnk = ConnectAndCheckLDAP();
 
 if (isset($_POST['user']) && isset($_POST['role'])) {

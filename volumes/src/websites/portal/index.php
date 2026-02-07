@@ -1,3 +1,8 @@
+<?php
+  if (isset($_GET['redirect'])) {
+      $redirect = urldecode($_GET['redirect']);
+  }
+?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -21,7 +26,11 @@
                 <br>
                 <label for="password">Password</label>
                 <input type="password" required maxlength="30" id="password" name="password">
-                <button type="submit">Login</button>
+                <?php if (isset($redirect)) {
+                    echo "<input type='hidden' name='redirect' value='$redirect'>";
+                } ?>
+
+                <button type="submit" aria-label="submit">Login</button>
             </form>
         </section>
     </article>

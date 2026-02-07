@@ -4,7 +4,7 @@ include_once '../../shared/lib/RBACSupport.php';
 include_once '../../shared/partials/header.php';
 include_once '../../shared/lib/login-session.inc.php';
 
-$rbac = checkLoginOrFail(Permission_Marketing_Create_Campaign);
+$rbac = checkLoginOrFail([Permission_Marketing_Create_Campaign]);
 
 
 ?>

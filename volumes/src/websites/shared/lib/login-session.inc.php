@@ -12,9 +12,12 @@ session_start();
  * @param string $permission
  * @return RBACSupport
  */
-function checkLoginOrFail(string $permission): RBACSupport {
+function checkLoginOrFail(array $permissions): RBACSupport {
+    $scheme = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
+    $url = urlencode( $scheme . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+
     if (!isset($_SESSION['valid'])) {
-        header(403);
+        header('Location: http://portal.rbac.docker?redirect=' . $url, true, 301);
         die();
     }
     $userDN = $_SESSION['dn'];
@@ -22,7 +25,7 @@ function checkLoginOrFail(string $permission): RBACSupport {
     if (!$rbac->process()) {
         die('Could not connect to RBAC server.');
     }
-    if (!$rbac->has($permission)) {
+    if (!$rbac->hasOneOfThesePermissions($permissions)) {
         echo "Not allowed to open this page\n";
         die();
     }

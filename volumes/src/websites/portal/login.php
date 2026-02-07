@@ -25,7 +25,15 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
         $_SESSION['valid']    = true;
         $_SESSION['fullname'] = $userInfo['givenname'] . ' ' . $userInfo['sn'];
 
-        header('Location: http://sharepoint.rbac.docker/intranet');
+        if (isset($_POST['redirect'])) {
+            $url = $_POST['redirect'];
+            header('Location: ' . $url);
+        }
+        else {
+            header('Location: http://sharepoint.rbac.docker/intranet');
+        }
+
+
     } else {
         error_log("Could not login user $username : wrong password");
         header(403);

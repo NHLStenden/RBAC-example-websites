@@ -4,7 +4,7 @@ include_once '../../shared/partials/header.php';
 include_once '../../shared/partials/my-ldap-info.php';
 include_once '../../shared/lib/login-session.inc.php';
 
-$rbac = checkLoginOrFail(Permission_SharePoint_HRM);
+$rbac = checkLoginOrFail([Permission_SharePoint_HRM]);
 
 $tiles = [
   ['icon' => '💼', 'title' => 'Declareren'],

@@ -4,7 +4,7 @@ include_once '../../shared/partials/header.php';
 include_once './lib/subjects.php';
 include_once '../../shared/lib/login-session.inc.php';
 
-$rbac = checkLoginOrFail(Permission_Grades_Read_Own_Grades);
+$rbac = checkLoginOrFail([Permission_Grades_Read_Own_Grades]);
 
 function randomDate()
 {

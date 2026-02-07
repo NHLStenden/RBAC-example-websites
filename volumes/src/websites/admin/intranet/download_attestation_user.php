@@ -4,7 +4,7 @@ include_once 'lib/attestation-functions.inc.php';
 include_once '../../shared/lib/RBACSupport.php';
 include_once '../../shared/lib/login-session.inc.php';
 
-$rbac = checkLoginOrFail(Permission_AdminPanel_Attestation_Users);
+$rbac = checkLoginOrFail([Permission_AdminPanel_Attestation_Users]);
 check2faOrFail();
 if (!$rbac->has(Permission_AdminPanel_Attestation_Users)) {
     echo "Attestation users: Missing permissions\n";

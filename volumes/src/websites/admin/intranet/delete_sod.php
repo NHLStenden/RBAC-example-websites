@@ -4,7 +4,7 @@ include_once '../../shared/lib/RBACSupport.php';
 include_once '../../shared/partials/header.php';
 include_once '../../shared/lib/db.php';
 
-$rbac = checkLoginOrFail(Permission_AdminPanel_Manage_RolePermissions);
+$rbac = checkLoginOrFail([Permission_AdminPanel_Manage_RolePermissions]);
 check2faOrValidate();
 
 // set expires header

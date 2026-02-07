@@ -5,7 +5,7 @@ include_once '../../shared/lib/login-session.inc.php';
 
 define('MAX_LINES_DISPLAYED_PER_LOGFILE', 20);
 
-$rbac = checkLoginOrFail(Permission_Admin_Panel);
+$rbac = checkLoginOrFail([Permission_Admin_Panel]);
 check2faOrValidate();
 
 // Lijst met paden naar je Apache-errorlogbestanden

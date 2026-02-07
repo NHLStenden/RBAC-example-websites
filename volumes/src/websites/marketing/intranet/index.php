@@ -4,7 +4,7 @@ include_once '../../shared/lib/RBACSupport.php';
 include_once '../../shared/partials/header.php';
 include_once '../../shared/lib/login-session.inc.php';
 
-$rbac = checkLoginOrFail(Permission_SharePoint_All_Users);
+$rbac = checkLoginOrFail([Permission_Marketing_Approve_Campaign, Permission_Marketing_Read_Campaign]);
 
 ?>
 <html lang="NL">

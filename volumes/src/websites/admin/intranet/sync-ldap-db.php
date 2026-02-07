@@ -5,7 +5,7 @@ include_once '../../shared/partials/header.php';
 include_once '../../shared/lib/db.php';
 include_once '../../shared/lib/login-session.inc.php';
 
-$rbac = checkLoginOrFail(Permission_Admin_Panel);
+$rbac = checkLoginOrFail([Permission_Admin_Panel]);
 check2faOrValidate();
 
 function DoSync()
