@@ -17,7 +17,7 @@ accounts. Vul bij 'Toegang' in welke functionele mogelijkheden je ziet (bijvoorb
 
 | URL                       | rol       | username   | Toegang |
 |---------------------------|-----------|------------|---------| 
-| http://marketing.docker/  | gebruiker | `fbos`     |         | 
+| http://marketing.rbac.docker/  | gebruiker | `fbos`     |         | 
 | http://grades.rbac.docker/     | student   | `edeboer`  |         |
 | http://grades.rbac.docker/     | teacher   | `gwillems` |         |
 | http://admin.rbac.docker/      | admin     | `tvisser`  |         |

@@ -8,7 +8,7 @@ gegevens.
 
 | URL                       | rol       | username   |
 |---------------------------|-----------|------------|
-| http://marketing.docker/  | gebruiker | `fbos`     | 
+| http://marketing.rbac.docker/  | gebruiker | `fbos`     | 
 | http://grades.rbac.docker/     | student   | `edeboer`  |
 | http://grades.rbac.docker/     | teacher   | `gwillems` |
 | http://admin.rbac.docker/      | admin     | `tvisser`  |

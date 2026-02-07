@@ -148,7 +148,7 @@ Instructies per OS volgen verderop.
 
 ```text
 # Docker RBAC Example
-127.0.0.1	grades.rbac.docker sharepoint.rbac.docker admin.rbac.docker marketing.docker hrm.rbac.docker
+127.0.0.1	grades.rbac.docker sharepoint.rbac.docker admin.rbac.docker marketing.rbac.docker hrm.rbac.docker
 ```
 
 ### Windows
@@ -166,7 +166,7 @@ Instructies per OS volgen verderop.
 3. **Voeg de regels toe**:
     - Voeg de volgende regels aan het einde van het bestand toe:
       ```
-      127.0.0.1    grades.rbac.docker sharepoint.rbac.docker admin.rbac.docker marketing.docker hrm.rbac.docker portal.rbac.docker
+      127.0.0.1    grades.rbac.docker sharepoint.rbac.docker admin.rbac.docker marketing.rbac.docker hrm.rbac.docker portal.rbac.docker
       ```
 
 4. **Sla het bestand op**:
@@ -187,7 +187,7 @@ Instructies per OS volgen verderop.
 3. **Voeg de regels toe**:
     - Voeg de volgende regels aan het einde van het bestand toe:
       ```
-      127.0.0.1    grades.rbac.docker sharepoint.rbac.docker admin.rbac.docker marketing.docker hrm.rbac.docker portal.rbac.docker
+      127.0.0.1    grades.rbac.docker sharepoint.rbac.docker admin.rbac.docker marketing.rbac.docker hrm.rbac.docker portal.rbac.docker
       ```
 
 4. **Sla het bestand op en sluit nano**:
@@ -209,17 +209,16 @@ Instructies per OS volgen verderop.
 3. **Voeg de regels toe**:
     - Voeg de volgende regels aan het einde van het bestand toe:
       ```
-      127.0.0.1    grades.rbac.docker sharepoint.rbac.docker admin.rbac.docker marketing.docker hrm.rbac.docker
+      127.0.0.1    grades.rbac.docker sharepoint.rbac.docker admin.rbac.docker marketing.rbac.docker hrm.rbac.docker
       ```
 
 4. **Sla het bestand op en sluit nano**:
     - Druk op `Ctrl + O` om op te slaan, druk op Enter om te bevestigen.
     - Druk op `Ctrl + X` om nano af te sluiten.
 
-
 # Linux gebruikers opgelet!
 
-Als je werkt op een Linux systeem dan moet er mogelijk een extra aanpassing gedaan worden voordat je kunt testen. Dat 
+Als je werkt op een Linux systeem dan moet er mogelijk een extra aanpassing gedaan worden voordat je kunt testen. Dat
 komt omdat de map met de websites verbonden wordt met een map in jouw eigen Linux host systeem! Het betreft de map
 
 > volumes/src/websites
@@ -228,7 +227,7 @@ die wordt verbonden aan de map
 
 > /var/www
 
-in de Docker container. Zorg dat iedereen daar lees- en schrijfrechten heeft! Dus bijvoorbeeld door onderstaande 
+in de Docker container. Zorg dat iedereen daar lees- en schrijfrechten heeft! Dus bijvoorbeeld door onderstaande
 commando uit te voeren in de Docker container óf op je host systeem
 
 In de container
@@ -236,6 +235,7 @@ In de container
 ```bash
 docker exec -it iam-example-webserver  chmod -R a+rwX /var/www
 ```
+
 (Let op de hoofdletter X: dit zorgt dat de X-bit alleen op mappen wordt ingesteld en niet op bestanden.)
 
 Of op je Linux Host:
@@ -243,7 +243,6 @@ Of op je Linux Host:
 ```bash
 chmod -R a+rwX /mijn/map/met/projecten/RBAC-example-websites/volumes/src/websites
 ```
-
 
 # Testen van de websites
 
@@ -258,9 +257,9 @@ en `edge://policy/` (zoek naar AuthSchemes) en check of `basic` daar bij staat. 
 
 De volgende websites zijn beschikbaar:
 
-| Beschrijving                                     | URL                       | Rol in Identity Server                                                                                           | 
-|--------------------------------------------------|---------------------------|------------------------------------------------------------------------------------------------------------------| 
-| De website voor Marketing:                       | http://marketing.docker/  | `cn=marketing,ou=roles,dc=NHLStenden,dc=com`                                                                     |
+| Beschrijving                                     | URL                            | Rol in Identity Server                                                                                           | 
+|--------------------------------------------------|--------------------------------|------------------------------------------------------------------------------------------------------------------| 
+| De website voor Marketing:                       | http://marketing.rbac.docker/       | `cn=marketing,ou=roles,dc=NHLStenden,dc=com`                                                                     |
 | De Cijfer Administratie                          | http://grades.rbac.docker/     | `cn=Grades Students,ou=roles,dc=NHLStenden,dc=com` of `cn=Grades Teachers,ou=roles,dc=NHLStenden,dc=com`         |
 | Het Admin panel van de beheerder                 | http://admin.rbac.docker/      | `cn=ICT Support,ou=roles,dc=NHLStenden,dc=com`                                                                   |
 | Het Human Resource Management systeem            | http://hrm.rbac.docker/        | `cn=hrm,ou=roles,dc=NHLStenden,dc=com`                                                                           |
@@ -270,7 +269,7 @@ Je kunt hierbij inloggen met de volgende gebruikers. Het wachtwoord is altijd  `
 Studio (zie verderop) ook kijken in de aangegeven rollen in de Identity Server. De onderstaande gebruikersaccounts zijn
 willekeurig gekozen uit die rollen.
 
-* http://marketing.docker/
+* http://marketing.rbac.docker/
     * username : `fbos`
 * http://grades.rbac.docker/
     * student username : `edeboer`
