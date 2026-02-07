@@ -16,6 +16,7 @@ include_once '../../../shared/lib/RBACSupport.php';
 
 $rbac = checkLoginOrFail([Permission_Admin_Panel]);;
 $userDN = $rbac->userDN;
+$userID = $rbac->username;
 $google2fa = new Google2FA();
 
 if (empty($user['labeledURI'])) {
