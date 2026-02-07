@@ -203,4 +203,8 @@ class RBACSupport
         return array_key_exists($permission, $this->permissions);
     }
 
+    public function hasOneOfThesePermissions(array $permission): bool {
+        return count(array_intersect($permission, array_keys($this->permissions)) ) > 0;
+    }
+
 }

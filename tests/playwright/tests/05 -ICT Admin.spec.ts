@@ -7,7 +7,8 @@ import {
 } from "./lib/TestUserInfo";
 import {gotoWebsiteAndTestNavigationForUser} from "./lib/NavigationTestSupport";
 
-
+// DUE to 2FA this test needs to be redesigned.
+/*
 
 test('ICT - normal user', async ({page}) => {
 
@@ -18,3 +19,4 @@ test('ICT - AuthMgr', async ({page}) => {
 
     await gotoWebsiteAndTestNavigationForUser(page, URL_ADMIN_INTRANET, USER_ICT_AUTHMGR);
 });
+*/
