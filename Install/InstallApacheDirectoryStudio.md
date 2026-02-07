@@ -22,6 +22,7 @@ geinstalleerd is. Deze kun je vinden op [http://localhost:8080/](http://localhos
 De gebruikers interface is iets anders, maar lijkt in het gebruik sterk op de interface van Apache Directory
 Studio. De login gegevens zijn identiek (zie bij de oefeningen)
 
+---
 
 # Meer informatie over LDAP
 

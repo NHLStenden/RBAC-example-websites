@@ -148,7 +148,7 @@ Instructies per OS volgen verderop.
 
 ```text
 # Docker RBAC Example
-127.0.0.1	grades.rbac.docker sharepoint.rbac.docker admin.rbac.docker marketing.rbac.docker hrm.rbac.docker
+127.0.0.1	grades.rbac.docker sharepoint.rbac.docker admin.rbac.docker marketing.rbac.docker hrm.rbac.docker portal.rbac.docker
 ```
 
 ### Windows
@@ -165,7 +165,8 @@ Instructies per OS volgen verderop.
 
 3. **Voeg de regels toe**:
     - Voeg de volgende regels aan het einde van het bestand toe:
-      ```
+      
+      ```text
       127.0.0.1    grades.rbac.docker sharepoint.rbac.docker admin.rbac.docker marketing.rbac.docker hrm.rbac.docker portal.rbac.docker
       ```
 
@@ -186,7 +187,7 @@ Instructies per OS volgen verderop.
 
 3. **Voeg de regels toe**:
     - Voeg de volgende regels aan het einde van het bestand toe:
-      ```
+      ```text
       127.0.0.1    grades.rbac.docker sharepoint.rbac.docker admin.rbac.docker marketing.rbac.docker hrm.rbac.docker portal.rbac.docker
       ```
 
@@ -209,7 +210,7 @@ Instructies per OS volgen verderop.
 3. **Voeg de regels toe**:
     - Voeg de volgende regels aan het einde van het bestand toe:
       ```
-      127.0.0.1    grades.rbac.docker sharepoint.rbac.docker admin.rbac.docker marketing.rbac.docker hrm.rbac.docker
+      127.0.0.1    grades.rbac.docker sharepoint.rbac.docker admin.rbac.docker marketing.rbac.docker hrm.rbac.docker portal.rbac.docker
       ```
 
 4. **Sla het bestand op en sluit nano**:
@@ -246,24 +247,22 @@ chmod -R a+rwX /mijn/map/met/projecten/RBAC-example-websites/volumes/src/website
 
 # Testen van de websites
 
-Nu de Docker Containers goed draaien is het tijd om een eerste test uit te voeren. Dit doen we door de websites te
-openen in een browser die **BasicAuthentication** beschikbaar heeft. Let op: in Microsoft Edge kan het zijn dat een
-policy
-niet langer BasicAuthentication (`basic`) toestaat.
-
-Zie https://answers.microsoft.com/en-us/microsoftedge/forum/all/latest-version-of-edge-no-longer-shows-basic/3601252b-e56b-46c0-a088-0f6084eabe47
-en `edge://policy/` (zoek naar AuthSchemes) en check of `basic` daar bij staat. Zo niet, gebruik dan een andere browser
-(Brave, Firefox, Chromium, Opera, Vivaldi of Google Chrome).
-
-De volgende websites zijn beschikbaar:
+Nu de Docker Containers goed draaien is het tijd om een eerste test uit te voeren. De volgende websites zijn beschikbaar:
 
 | Beschrijving                                     | URL                            | Rol in Identity Server                                                                                           | 
 |--------------------------------------------------|--------------------------------|------------------------------------------------------------------------------------------------------------------| 
-| De website voor Marketing:                       | http://marketing.rbac.docker/       | `cn=marketing,ou=roles,dc=NHLStenden,dc=com`                                                                     |
+| De website voor Marketing:                       | http://marketing.rbac.docker/  | `cn=marketing,ou=roles,dc=NHLStenden,dc=com`                                                                     |
 | De Cijfer Administratie                          | http://grades.rbac.docker/     | `cn=Grades Students,ou=roles,dc=NHLStenden,dc=com` of `cn=Grades Teachers,ou=roles,dc=NHLStenden,dc=com`         |
 | Het Admin panel van de beheerder                 | http://admin.rbac.docker/      | `cn=ICT Support,ou=roles,dc=NHLStenden,dc=com`                                                                   |
 | Het Human Resource Management systeem            | http://hrm.rbac.docker/        | `cn=hrm,ou=roles,dc=NHLStenden,dc=com`                                                                           |
 | Het SharePoint platform voor gedeelde informatie | http://sharepoint.rbac.docker/ | `cn=SharePoint Students,ou=roles,dc=NHLStenden,dc=com` of `cn=SharePoint Teachers,ou=roles,dc=NHLStenden,dc=com` |
+| De login portaal                                 | https://portal.rbac.docker     | Geen rol; iedereen heeft toegang                                                                                 | 
+
+De **Login Portaal** fungeert als enige punt waar ingelogd kan worden. Als je wilt inloggen bij de HRM-website, dan zul je omgeleid worden naar
+deze login portaal. Na inloggen wordt je doorgestuurd naar de website waar je wilde inloggen (bijv. de HRM-intranet site).
+
+
+## Inloggen en wachtwoorden
 
 Je kunt hierbij inloggen met de volgende gebruikers. Het wachtwoord is altijd  `Test1234!`. Je kunt met Apache Directory
 Studio (zie verderop) ook kijken in de aangegeven rollen in de Identity Server. De onderstaande gebruikersaccounts zijn
@@ -283,6 +282,20 @@ willekeurig gekozen uit die rollen.
     * username: `kmulder`
 
 # Verbinding maken met de Identity Server (LDAP)
+
+De Identity Server wordt dus ingevuld met een Docker container die een LDAP-server draait (slapd). De informatie in deze
+LDAP-server kan bekeken worden met software op je eigen laptop/PC. Op deze manier kun je soms eenvoudig kijken welke
+gebruikers er bestaan.
+
+Er is tevens een aparte Docker container met een LDAP Administratie website (*PHPLdapAdmin*). Deze kun je openen op 
+web adres [http://localhost:8080](http://localhost:8080). Deze website is vrij eenvoudig maar bespaart dus wel een 
+installatie van Java en Apache Directory Studio.
+
+* Login DN : cn=admin,dc=NHLStenden,dc=com
+* Password : test12345!
+
+
+De software die je op je laptop kunt installeren is Apache Directory Studio. Een instructie vindt je hier onder.
 
 1. Installeer Apache Directory Studio via deze [handleiding](./InstallApacheDirectoryStudio.md).
 2. Maak verbinding met onderstaande informatie.
@@ -496,4 +509,4 @@ Docent bij NHL Stenden, opleidingen Bachelor HBO-ICT en Associate Degree Cyber S
 
 [martin.molema@nhlstenden.com](mailto:martin.molema@nhlstenden.com)
 
-5 april 2025
+7 februari 2026

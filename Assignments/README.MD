@@ -21,7 +21,13 @@ Er verschijnt een popup waar je moet inloggen. Het wachtwoord is altijd `Test123
 Later zul je ook op een andere manier gaan inloggen. De instructies daarvoor volgen in de opdrachten.
 
 Er is nog een extra website die als alternatief geldt voor de _Apache Directory Studio_:
-de [PHP Ldap Admin](http://localhost:8080/). 
+de [PHP Ldap Admin](http://localhost:8080/). Deze geeft een vrij basic User Experience om met het beheer van identiteiten
+om te gaat, maar het bespaart een installatie van Java en Apache Directory Studio. 
+
+Je logt hier op in met de volgende gegevens:
+
+* Login DN : cn=admin,dc=NHLStenden,dc=com
+* Password : test12345!
 
 ## Opdrachten
 
@@ -52,4 +58,4 @@ Martin Molema (martin.molema@nhlstenden.com)
 
 NHL Stenden
 
-Mei 2025
+Februari 2026

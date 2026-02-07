@@ -6,7 +6,11 @@ In deze opdracht gaan we in de account administratie kijken naar meer informatie
 ## Instructie
 
 Start nu een LDAP-management tool zoals de _Apache Directory Studio_. Zie de
-[installatiehandleiding](../Install/README.md#verbinding-maken-met-de-identity-server-ldap) voor instructies.
+[installatiehandleiding](../Install/README.md#verbinding-maken-met-de-identity-server-ldap) voor instructies. Of login op de website http://localhost:8080 
+
+* Login DN : cn=admin,dc=NHLStenden,dc=com
+* Password : test12345!
+
 
 ## Opdracht
 

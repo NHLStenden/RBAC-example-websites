@@ -1,5 +1,8 @@
 # Opdracht 3 - Accounts gebruiken om in te loggen
 
+In deze opdracht maken we weer gebruik van de informatie in de LDAP-server (via 
+[https://localhost:8080](https://localhost:8080) of Apache Directory Studio).
+
 ## Instructie
 
 Zoek nu een andere _student_ of _teacher_ op in deze lijst met accounts. De studenten vind je op
@@ -22,9 +25,7 @@ Bijvoorbeeld:
 
 Tip
 
-> Als je van gebruiker wilt wisselen, gebruik dan de `Logout` button. Je krijgt dan een popup om opnieuw in te loggen.
-> Druk op `Annuleren` om deze dialoog te sluiten. Sluit daarna het tabblad en open een nieuw tabblad om de nieuwe
-> gebruiker in te loggen.
+> Als je van gebruiker wilt wisselen, gebruik dan de `Logout` button. 
 
 
 ## Opdracht
